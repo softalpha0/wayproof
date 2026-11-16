@@ -394,7 +394,10 @@ All objectives began "Do not connect a wallet or sign anything."; flags `--agent
 | F-1 test only: false title assertion | example.com | Failed as intended | 1 | `assertion_error.final_verification` | 16.07 / 18.10 | 71 s |
 | F-2 test only: `--timeout 5` | example.com | Passed — did not time out | 0 | `success.complete` | 11.40 / 13.32 | 84 s |
 
-Total balance drop: **100.89 credits** (11,182.78 → 11,081.89). Blocked runs still cost ~13 credits each.
+| U-1 Uniswap bridging guide steps 2–5 (replacement for Arbitrum, TC-15): ETH on Ethereum → ETH on Base, 0.01 | app.uniswap.org/swap | Every step done (12 steps, no wallet needed); Buy field showed 0.00999713 ETH with the Base badge — **but the final assertion failed**. Kane's own summary: the result was visible; the check "expected different text or did not interpret the network icon" | 1 | `assertion_error.final_verification` | 32.23 / 34.47 | 198 s |
+
+Total balance drop: **135.36 credits** (11,182.78 → 11,047.42). Blocked runs still cost ~13 credits each.
+**U-1 lesson:** exit 1 does not always mean the guide is wrong — here an "analyze" step said the amount was shown, then the "assert" step failed, and Kane flagged "status_disagrees" on stderr. The judge (C-7 `judge`) must read `summary` and the remarks and return `flaky`/wording-problem in such cases, never `defect` (BR-11); the planner should write assertions about visible text/numbers, not icons.
 **Consequences:** Revoke.cash's pre-wallet steps are checkable. Every Arbitrum page Kane tried (bridge and portal) and Etherscan are behind a bot check Kane can't pass from this computer — Wayproof must report those as Couldn't check, and must not try to get around the check. Which guide to use instead of / alongside Arbitrum: **TC-15**.
 - **Docs:** https://github.com/LambdaTest/kane-cli · https://www.testmuai.com/support/docs/kane-cli-introduction/
 
@@ -670,7 +673,7 @@ flowchart LR
 
 | ID | Item | Affects |
 |---|---|---|
-| ~~TC-1~~ | Real guides **approved 16 Nov 2026** (Revoke.cash, Arbitrum; Across backup — its guide URL now returns 404) | Demo, evidence |
+| ~~TC-1~~ | Real guides **approved 16 Nov 2026** (Revoke.cash, Arbitrum; Across backup — its guide URL now returns 404). Arbitrum replaced by Uniswap bridging the same day (TC-15) | Demo, evidence |
 | TC-2 | Mostly answered 16 Nov (§13.1 day-0): Revoke.cash pre-wallet steps work; Etherscan and Arbitrum pages blocked by bot checks; pass, assertion-fail and blocker shapes recorded. **Still open:** exit 2 and exit 3 output shapes, and what `--timeout` actually limits | Adapter, scope |
 | TC-3 | Claude ~~model~~ (decided: `claude-opus-5-5`, 16 Nov) and **budget** (open) | C-7, cost |
 | TC-4 | Runner host (Chrome + kane-cli + persistent disk) | Deployment |
@@ -680,7 +683,7 @@ flowchart LR
 | TC-12 | Storage choice (SQLite recommended) | §11 |
 | ~~TC-13~~ | Kane CLI on Windows — **resolved 16 Nov 2026**: works (0.10.4, headless Chrome run passed) [Observed] | Local CLI |
 | TC-14 | Account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **+~2 on each of 6 day-0 runs** — what is the extra (a per-run fee?) | Budgets BR-9/BR-10, `ERR-BUDGET` |
-| TC-15 | **New:** Arbitrum's bridge and portal pages show Kane a Cloudflare bot check, so Arbitrum's guide steps can't be checked from here. Keep Arbitrum (report as Couldn't check), replace it with another approved guide, or check only Arbitrum's docs pages? | Demo, success metric "≥ 2 real guides" |
+| ~~TC-15~~ | Arbitrum's pages show Kane a Cloudflare bot check. **Decided 16 Nov 2026:** replaced by Uniswap "How to bridge tokens using the Uniswap web app" (its pre-wallet steps run in Kane — U-1); Arbitrum's blocked result kept as an honest Couldn't-check example | Demo, success metric "≥ 2 real guides" |
 | ~~ASSUMED-1~~ | Owner's computer is Windows with PowerShell — **confirmed 16 Nov 2026**: Windows 11 Pro 64-bit, Windows PowerShell 5.1 | Setup commands |
 | ASSUMED-2 | Grouping ≤ 3 steps per Kane run keeps failures locatable | Credits vs precision |
 | ASSUMED-3 | Readability extracts main text from the approved guide pages | `ERR-NO-STEPS` risk |
@@ -694,7 +697,7 @@ flowchart LR
 - Kane CLI: https://github.com/LambdaTest/kane-cli · https://www.testmuai.com/support/docs/kane-cli-introduction/ · cookbook: https://www.testmuai.com/kane-cli-cookbook/
 - Anthropic (Claude): https://docs.anthropic.com/
 - Node.js https://nodejs.org/ · pnpm https://pnpm.io/ · TypeScript https://www.typescriptlang.org/docs/ · Zod https://zod.dev/ · Hono https://hono.dev/ · Next.js https://nextjs.org/docs · Vitest https://vitest.dev/ · Commander https://github.com/tj/commander.js · execa https://github.com/sindresorhus/execa · Mozilla Readability https://github.com/mozilla/readability · better-sqlite3 https://github.com/WiseLibs/better-sqlite3
-- Proposed guides (TC-1): https://revoke.cash/learn/approvals/how-to-revoke-token-approvals · https://docs.arbitrum.io/getting-started-users · https://docs.across.to/user-docs/how-to-use-across/bridging
+- Approved guides (TC-1, TC-15): https://revoke.cash/learn/approvals/how-to-revoke-token-approvals · https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app · (replaced) https://docs.arbitrum.io/getting-started-users · (backup, 404) https://docs.across.to/user-docs/how-to-use-across/bridging
 
 ---
 

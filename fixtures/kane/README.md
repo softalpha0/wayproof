@@ -18,5 +18,6 @@ Cleaned before committing: TestMu share links (`test_url`) are replaced with `<r
 | `arbitrum-bridge-captcha-blocked` | 1 | `blocker.captcha` | Arbitrum bridge showed a Cloudflare bot check |
 | `arbitrum-portal-captcha-blocked` | 1 | `blocker.captcha` | Arbitrum portal showed a Cloudflare bot check |
 | `example-timeout5-still-passed` | 0 | `success.complete` | `--timeout 5` did not stop a 23-second run |
+| `uniswap-bridge-assertion-too-strict` | 1 | `assertion_error.final_verification` | Uniswap bridging guide steps 2–5 all worked (0.01 ETH → 0.00999713 ETH on Base shown), but Kane's final assertion failed; Kane's own summary says the result was visible and the check was worded too strictly. **Not a guide defect**: the judge must catch this case |
 
 Not yet recorded: exit 2 (auth/setup/infrastructure error) and exit 3 (timeout/cancelled).

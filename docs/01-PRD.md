@@ -53,6 +53,7 @@ Full personas in [02-UX-USER-FLOWS.md §1](02-UX-USER-FLOWS.md).
 ## 6. Real projects to check [Decided — TC-1 approved 16 Nov 2026]
 
 Approved by the owner on 16 Nov 2026. URL status on that date (plain HTTP): Revoke.cash 200; Arbitrum guide redirects to `docs.arbitrum.io/arbitrum-bridge/quickstart`; `bridge.arbitrum.io` redirects to `portal.arbitrum.io/bridge/`; **Across guide URL 404** (backup needs a new URL if used).
+**Update 16 Nov 2026 (TC-15):** day-0 Kane runs found Arbitrum's bridge and portal pages behind a Cloudflare bot check, so **Arbitrum is replaced by Uniswap — "How to bridge tokens using the Uniswap web app"** (https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app, updated 24 Nov 2025). Pre-wallet steps: pick the token, pick the destination network, enter the amount on app.uniswap.org — Kane did all of them in a test run. Arbitrum's blocked result stays as an honest "Couldn't check" example.
 
 | Guide | Link | Pre-wallet steps (from the guide itself) |
 |---|---|---|

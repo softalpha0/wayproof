@@ -76,6 +76,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | **Real projects only** — no self-built demo site with planted mistakes | 16 Nov 2026 |
 | Real guides: Claude proposes, owner approves before use | 16 Nov 2026 |
 | Real guides approved (TC-1): **Revoke.cash** and **Arbitrum**; **Across** as backup | 16 Nov 2026 |
+| Arbitrum replaced by **Uniswap — "How to bridge tokens using the Uniswap web app"** (Arbitrum's pages are behind a bot check Kane can't pass; its blocked result is kept as a Couldn't-check example) (TC-15) | 16 Nov 2026 |
 | Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
 
 ## To-confirm register
@@ -96,7 +97,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | TC-12 | Whether to store web app reports in a database or files | Shareable report links | Owner + architect (proposal: SQLite, TDD.md ADR-003) |
 | ~~TC-13~~ | Whether Kane CLI runs on Windows — **resolved 16 Nov 2026: yes.** Kane 0.10.4 installed with npm and passed a headless Chrome run on Windows 11 [Observed] | Local CLI on the owner's computer | Done (setup steps 6 and 9) |
 | TC-14 | Why the account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **about +2 on each of the 6 day-0 runs** (100.89 credits used in total) — a per-run fee? | Budgets (BR-9, BR-10) and `ERR-BUDGET` would undercount real spend | Budget with `credits_consumed` + 2 for now; ask in Slack |
-| TC-15 | Arbitrum's bridge and portal pages show Kane a **Cloudflare bot check**, so Arbitrum's guide steps can't be checked from here (day-0, 16 Nov). Keep Arbitrum and report it as Couldn't check, replace it with another guide, or check only its docs pages? | Demo; PRD success metric "≥ 2 real guides checked" | Owner decides |
+| ~~TC-15~~ | Arbitrum's bridge and portal pages show Kane a **Cloudflare bot check** (day-0, 16 Nov). **Decided:** replaced by Uniswap's bridging guide, https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app — a Kane test run did all its pre-wallet steps (TDD.md §13.1, U-1) | Demo; PRD success metric "≥ 2 real guides checked" | Done |
 
 ---
 

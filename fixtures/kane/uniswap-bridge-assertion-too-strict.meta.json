@@ -1,0 +1,8 @@
+{
+  "objective": "Do not connect a wallet or sign anything. Never press 'Connect wallet', 'Review', 'Approve and swap' or any confirm button. Select the first token drop-down and choose ETH on the Ethereum network. Then select the second token drop-down and choose ETH on the Base network. Enter 0.01 in the amount box. Assert that the page shows an amount of ETH to receive on Base.",
+  "exit_code": 1,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: 1 status_disagrees advisory(ies) — self-explained by triaged failure record(s)\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\25c89538-71f0-44ee-a6b6-4275a3588ea8\\evidence\\0aa0faa1-b8e2-4ce3-b15e-708fb89c3224.evidence`\n"
+}
