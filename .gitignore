@@ -1,0 +1,24 @@
+# Secrets: never commit (CLAUDE.md, TDD.md §16)
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output
+node_modules/
+dist/
+.next/
+coverage/
+*.tsbuildinfo
+
+# Wayproof run output (run.json, reports, copied evidence; may contain Kane share links)
+.wayproof/
+
+# Kane CLI local files (variables here can hold secrets)
+.testmuai/
+
+# Logs, OS and editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
