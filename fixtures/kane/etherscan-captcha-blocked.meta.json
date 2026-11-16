@@ -1,0 +1,8 @@
+{
+  "objective": "Do not connect a wallet or sign anything. Open the 'More' menu in the top navigation bar and click 'Token Approvals'. Enter the address 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045, select the ERC20 token type and turn on 'Show all approvals'. Assert that a list of token approvals is shown.",
+  "exit_code": 1,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: 1 status_disagrees advisory(ies) — self-explained by triaged failure record(s)\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\2c0b58de-0a27-4001-9cb4-99a7be4a3d26\\evidence\\98c5e75c-913d-43b4-a802-8ed4fdb5bfc9.evidence`\n"
+}

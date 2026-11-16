@@ -1,0 +1,8 @@
+{
+  "objective": "Go to https://example.com and assert the title contains 'Example'",
+  "exit_code": 0,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\be352e3d-3d1f-4e1e-b32b-cad2ff88f314\\evidence\\288dd396-a5a8-4466-986d-7f150972c2e2.evidence`\n"
+}

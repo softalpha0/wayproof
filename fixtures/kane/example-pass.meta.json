@@ -1,0 +1,8 @@
+{
+  "objective": "Go to https://example.com and assert the title contains 'Example'",
+  "exit_code": 0,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Skill update available: not installed → 0.1.4 — run `kane-cli install skill`\n\nRunning on: Desktop · Chrome\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\ab89c4ba-7cdb-4740-90e9-26e802197bf4\\evidence\\75ea8f48-245c-41d5-b098-94b20df0e032.evidence`\n"
+}

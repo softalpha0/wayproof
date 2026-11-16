@@ -353,12 +353,12 @@ Request size limit 64 KB; Zod validation on every body; unknown fields rejected.
 - **Connect:** spawn `kane-cli run "<objective>" --url <url> --agent --headless --timeout <s> --max-steps <n>` (no shell). Login done beforehand with `kane-cli login` (CI: `--username/--access-key`); check with `kane-cli whoami`.
 - **Send:** objective text, start URL, options. **Receive:** NDJSON progress `{step, status, remark}` and `run_end` (fields: see "Observed" below — the docs' `credits` field does **not** exist; it is `credits_consumed`); exit code 0 passed · 1 failed · 2 error · 3 timeout/cancelled; an `.evidence` pack (location: see "Observed").
 - **Credentials:** Kane's own store under `~/.testmuai/kaneai/profiles/…` — Wayproof never reads or prints them.
-- **Unavailable:** exit 2 → `ERR-KANE` (Couldn't check, BR-6); timeout → retry once → `ERR-KANE-TIMEOUT`.
+- **Unavailable:** exit 2 → `ERR-KANE` (Couldn't check, BR-6); timeout → retry once → `ERR-KANE-TIMEOUT`. **[Observed] a bot check (Cloudflare captcha) comes back as exit 1 with `run_end.reason_code: "blocker.captcha"`** — the adapter must treat any `reason_code` starting with `blocker.` as Couldn't check (BR-6), never send it to the judge/fix loop, and never report it as a guide defect (BR-11).
 - **Limits:** credits per run reported in `run_end.credits_consumed` [Observed]; the account balance fell by more than that on the first run (TC-14), so budgets must not rely on `credits_consumed` alone; `kane-cli balance` prints the account's available credits [Observed]. Free credits for a month [Rule].
 - **Unverified:** what Kane sends to TestMu's cloud (TC-5); field names on **failed / error / timeout** runs (only a passing run has been seen, TC-2); why balance drop ≠ `credits_consumed` (TC-14).
 
 #### Observed on the installed version — CONFIRMED [Observed]
-Source: first real run on the owner's Windows computer, 16 Nov 2026, Kane CLI **0.10.4**, `kane-cli run "Go to https://example.com and assert the title contains 'Example'" --agent --headless` → **exit 0**. Raw output kept in `kane-first-run/run-1.ndjson` (to be copied to `fixtures/kane/` when the repo exists). One passing run only — failure shapes still unknown.
+Source: first real run on the owner's Windows computer, 16 Nov 2026, Kane CLI **0.10.4**, `kane-cli run "Go to https://example.com and assert the title contains 'Example'" --agent --headless` → **exit 0**. Then six day-0 runs the same day (owner-approved plan; table "Day-0 runs" below). Cleaned copies of all seven outputs are in `fixtures/kane/` (share links and the Windows username removed); raw output stays outside the repo. Exit 0 and exit 1 shapes are now known; **exit 2 and exit 3 have not been seen yet**.
 
 | Item | Observed | Differs from docs? |
 |---|---|---|
@@ -372,10 +372,30 @@ Source: first real run on the owner's Windows computer, 16 Nov 2026, Kane CLI **
 | Paths | Windows paths mix `/` and `\` (e.g. `C:\Users\…/.testmuai/kaneai/sessions\…`) | Normalise before use |
 | `test_url` | A share link to TestMu Test Manager (contains a share token) | Treat as shareable-but-not-secret; see TC-5 |
 | Timing | ~75 s wall clock, of which ~45 s before the first step (start-up/planning) | Affects run-time estimates (§18) |
-| Credits | `credits_consumed: 2.88`; account balance 11,200 → 11,182.78 (−17.22) | **TC-14** |
+| Credits | First run: `credits_consumed: 2.88`, balance −17.22. Day-0 runs: balance fell by `credits_consumed` **+ about 2** on every run (+5.75, +2.09, +2.25, +1.93, +2.03, +1.92) | **TC-14** (partly explained) |
+| Failed run (assertion) | exit 1; a progress line with `status: "failed"`; `run_end.status: "failed"`, `reason: "Final verification failed: …"`, `reason_code: "assertion_error.final_verification"`, `result_code: 710`, empty `final_state`, extra `verdict` field; Kane's `summary` also suggests a fix ("Update the test URL…") | Matches docs (exit 1); fields new |
+| Blocked run (bot check) | exit **1** (not 2); `run_end.status: "failed"`, `reason: "Hard blocker: captcha"`, `reason_code: "blocker.captcha"`, `result_code: 610`; `summary` quotes the HTTP 403 "Just a moment..." page | **Differs from what we assumed**: a blocker is not exit 2 → map `blocker.*` to Couldn't check |
+| `test_url` | Missing from one `run_end` (Arbitrum bridge run) | Treat as optional |
+| `--timeout 5` | Did **not** time out: run took 23 s and passed (exit 0) — the limit does not seem to count from process start | Don't rely on `--timeout` alone; Wayproof needs its own process timer. Exit 3 shape still unknown |
+| stderr on failures | Extra line "1 status_disagrees advisory(ies) — self-explained by triaged failure record(s)" | Ignore |
 | `kane-cli run --help` | Has every flag Wayproof uses (`--url --agent --headless --timeout --max-steps`, default 50). Also `--mode action|testing`, `--analyzer-only`, `--bug-detection`, `--final-validation` — not used in v1 | Extra options exist |
 | Skill install | `kane-cli install skill` (the CLI suggests it) besides `npx @testmuai/kane-cli-skill` | New route for setup step 10 |
 | npm install | 177 packages; npm blocked the install script of dependency `sharp@0.34.5` (allowScripts), but sharp's prebuilt Windows binary loads fine — not enabled | Watch if image errors appear |
+
+#### Day-0 runs on the approved guides — CONFIRMED [Observed], 16 Nov 2026
+All objectives began "Do not connect a wallet or sign anything."; flags `--agent --headless --max-steps 25 --timeout 240`. No wallet prompt or wallet wording appeared in any progress remark.
+
+| Run | Start page | Result | Exit | `reason_code` | `credits_consumed` / balance drop | Time |
+|---|---|---|---|---|---|---|
+| R-1 Revoke.cash steps 1–4 (look up `vitalik.eth`, Ethereum, sort Newest to Oldest, list shown) | revoke.cash | **Passed** — 8 steps, ended on `revoke.cash/address/vitalik.eth` | 0 | `success.complete` | 23.29 / 29.04 | 196 s |
+| R-2 Revoke.cash guide's Etherscan section | etherscan.io | **Blocked by Cloudflare bot check** (HTTP 403) | 1 | `blocker.captcha` | 10.97 / 13.06 | 88 s |
+| A-1 Arbitrum step 3 before the wallet | bridge.arbitrum.io → portal.arbitrum.io/bridge/ | **Blocked by Cloudflare bot check** | 1 | `blocker.captcha` | 11.32 / 13.57 | 84 s |
+| A-2 Arbitrum step 1 exchanges link | portal.arbitrum.io/projects… | **Blocked by Cloudflare bot check** | 1 | `blocker.captcha` | 11.88 / 13.81 | 95 s |
+| F-1 test only: false title assertion | example.com | Failed as intended | 1 | `assertion_error.final_verification` | 16.07 / 18.10 | 71 s |
+| F-2 test only: `--timeout 5` | example.com | Passed — did not time out | 0 | `success.complete` | 11.40 / 13.32 | 84 s |
+
+Total balance drop: **100.89 credits** (11,182.78 → 11,081.89). Blocked runs still cost ~13 credits each.
+**Consequences:** Revoke.cash's pre-wallet steps are checkable. Every Arbitrum page Kane tried (bridge and portal) and Etherscan are behind a bot check Kane can't pass from this computer — Wayproof must report those as Couldn't check, and must not try to get around the check. Which guide to use instead of / alongside Arbitrum: **TC-15**.
 - **Docs:** https://github.com/LambdaTest/kane-cli · https://www.testmuai.com/support/docs/kane-cli-introduction/
 
 ### 13.2 Anthropic API (Claude) — CONFIRMED provider [Decided]
@@ -446,7 +466,7 @@ stateDiagram-v2
   RunKane --> RetryInfra: exit 3
   RetryInfra --> RunKane: first time
   RetryInfra --> CouldntCheck: second time
-  RunKane --> CouldntCheck: exit 2 or no run_end
+  RunKane --> CouldntCheck: exit 2, no run_end, or reason_code blocker.*
   Judge --> Passed: pass, attempt 1
   Judge --> VerifiedFixed: pass after fix
   Judge --> RunKane: flaky (once, same objective)
@@ -584,8 +604,10 @@ Every screen has loading, empty, success and error states (`docs/03`).
 |---|---|---|
 | ~~Kane doesn't run on Windows (TC-13)~~ | Resolved 16 Nov: Kane 0.10.4 ran a headless Chrome test on Windows [Observed] | — |
 | Kane output differs from its docs (seen: `credits_consumed`, evidence location, extra event types) | Parser/budget bugs | Build the adapter against recorded real output; ignore unknown event types; read evidence path from `coverage.pack` |
-| Balance drops more than `credits_consumed` (TC-14) | Budgets undercount spend | Measure with `kane-cli balance` before/after; budget conservatively until resolved |
-| Real guides need a wallet before most steps (TC-2) | Few checkable steps | Choose guides with pre-wallet steps (Revoke.cash allows address lookup); report wallet steps honestly |
+| Balance drops more than `credits_consumed` (TC-14) | Budgets undercount spend | Day-0: drop ≈ `credits_consumed` + ~2 per run; budget with that margin until resolved |
+| Real guides need a wallet before most steps (TC-2) | Few checkable steps | Choose guides with pre-wallet steps (Revoke.cash allows address lookup — **confirmed working**); report wallet steps honestly |
+| **Sites behind bot checks** (seen: Etherscan, every Arbitrum bridge/portal page tried) | Those steps can't be checked; a blocked run still costs ~13 credits | Map `blocker.*` to Couldn't check (never a defect); never try to bypass a bot check; pick guides whose pages Kane can open (TC-15) |
+| Kane `--timeout` not counting from start (day-0 F-2) | A stuck run could run long | Wayproof enforces its own wall-clock limit on the `kane-cli` process |
 | Real guides may have no defects | Fewer "caught" moments | "Proved" also counts [Rule wording]; check several guides; never fabricate (BR-11) |
 | Sites block automated browsers | Couldn't check | Reported as such; pick other guides |
 | Credit burn | Runs stop | Budgets, limits, grouping |
@@ -649,7 +671,7 @@ flowchart LR
 | ID | Item | Affects |
 |---|---|---|
 | ~~TC-1~~ | Real guides **approved 16 Nov 2026** (Revoke.cash, Arbitrum; Across backup — its guide URL now returns 404) | Demo, evidence |
-| TC-2 | What Kane can do before a wallet on each site; NDJSON shape of **failed / error / timeout** runs (passing run recorded 16 Nov, §13.1) | Adapter, scope |
+| TC-2 | Mostly answered 16 Nov (§13.1 day-0): Revoke.cash pre-wallet steps work; Etherscan and Arbitrum pages blocked by bot checks; pass, assertion-fail and blocker shapes recorded. **Still open:** exit 2 and exit 3 output shapes, and what `--timeout` actually limits | Adapter, scope |
 | TC-3 | Claude ~~model~~ (decided: `claude-opus-5-5`, 16 Nov) and **budget** (open) | C-7, cost |
 | TC-4 | Runner host (Chrome + kane-cli + persistent disk) | Deployment |
 | TC-5 | What Kane sends to TestMu's cloud | Privacy text |
@@ -657,7 +679,8 @@ flowchart LR
 | TC-11 | Web domain/host | Live URL |
 | TC-12 | Storage choice (SQLite recommended) | §11 |
 | ~~TC-13~~ | Kane CLI on Windows — **resolved 16 Nov 2026**: works (0.10.4, headless Chrome run passed) [Observed] | Local CLI |
-| TC-14 | **New:** account balance fell 17.22 credits on a run whose `run_end.credits_consumed` was 2.88 — what else is billed (start-up, planning, summary?) or is the balance delayed? | Budgets BR-9/BR-10, `ERR-BUDGET` |
+| TC-14 | Account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **+~2 on each of 6 day-0 runs** — what is the extra (a per-run fee?) | Budgets BR-9/BR-10, `ERR-BUDGET` |
+| TC-15 | **New:** Arbitrum's bridge and portal pages show Kane a Cloudflare bot check, so Arbitrum's guide steps can't be checked from here. Keep Arbitrum (report as Couldn't check), replace it with another approved guide, or check only Arbitrum's docs pages? | Demo, success metric "≥ 2 real guides" |
 | ~~ASSUMED-1~~ | Owner's computer is Windows with PowerShell — **confirmed 16 Nov 2026**: Windows 11 Pro 64-bit, Windows PowerShell 5.1 | Setup commands |
 | ASSUMED-2 | Grouping ≤ 3 steps per Kane run keeps failures locatable | Credits vs precision |
 | ASSUMED-3 | Readability extracts main text from the approved guide pages | `ERR-NO-STEPS` risk |

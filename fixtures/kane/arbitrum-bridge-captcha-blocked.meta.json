@@ -1,0 +1,8 @@
+{
+  "objective": "Do not connect a wallet or sign anything. Never press 'Move' or 'Move funds'. Assert that the Arbitrum bridge page loads with a 'From' amount box. Without connecting a wallet, select Arbitrum One as the destination network and ETH as the token, then type 0.01 in the From box. Assert that the From box shows 0.01.",
+  "exit_code": 1,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: 1 status_disagrees advisory(ies) — self-explained by triaged failure record(s)\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\6e5da72d-1706-45b1-b289-f4da12bbe4cd\\evidence\\a4726460-c257-45c5-b8fe-d8409b846489.evidence`\n"
+}

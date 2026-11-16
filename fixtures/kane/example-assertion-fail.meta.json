@@ -1,0 +1,8 @@
+{
+  "objective": "Go to https://example.com and assert the title contains 'Arbitrum'",
+  "exit_code": 1,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: 1 status_disagrees advisory(ies) — self-explained by triaged failure record(s)\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\ec34d09c-7b06-4371-b0ff-62da72d431d6\\evidence\\03d6413c-a358-446a-8838-d5f6e7f88c25.evidence`\n"
+}

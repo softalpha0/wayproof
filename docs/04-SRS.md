@@ -27,7 +27,7 @@ No user accounts. **[Decided]** Access codes are the only web permission mechani
 | **BR-3** | A check is **Passed** only if Kane's `run_end.status` is passed (exit code 0) **and** the judge confirms the expected result. | [Kane doc] exit codes; [Proposed] |
 | **BR-4** | A failed check gets at most **3 attempts** in total (1 original + 2 fixes). Then it is **Needs a human**. | [Proposed] |
 | **BR-5** | A fix may change the **wording of the guide step** (or a link), never the **expected result** being checked. A fix that changes the expected result is rejected. | [Proposed] — prevents “passing” by weakening the test |
-| **BR-6** | Kane infrastructure errors (exit 2, or exit 3 after one retry) are **Couldn't check**, never counted as guide defects. | [Kane doc] exit codes; [Proposed] |
+| **BR-6** | Kane infrastructure errors (exit 2, or exit 3 after one retry) are **Couldn't check**, never counted as guide defects. So is a run Kane reports as blocked — `run_end.reason_code` starting with `blocker.` (e.g. a captcha / bot check, which comes back as exit 1). Wayproof never tries to get around a bot check. | [Kane doc] exit codes; [Observed] `blocker.captcha`; [Proposed] |
 | **BR-7** | Reports contain only: public page content, Kane outputs and evidence, Claude's text, timestamps. No IP addresses, no personal data, no API keys. | [Proposed] |
 | **BR-8** | Every verdict in a report links to the Kane evidence that supports it. No evidence, no verdict. | [Proposed]; judging bar 2 [Rule] |
 | **BR-9** | Web app run limits protect Kane credits (10,000 free for one month [Rule]). Proposed: 2 checks of a guide per visitor per day, max 20 Kane runs per check; codes raise the limit. Exact values: **TC-10**. | [Proposed] / TC-10 |

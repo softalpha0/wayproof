@@ -1,0 +1,8 @@
+{
+  "objective": "Do not connect a wallet or sign anything. Type vitalik.eth into the address search bar and press Enter. Make sure the selected network is Ethereum. Wait until the list of token approvals has finished loading, then sort the list by 'Newest to Oldest'. Assert that a list of token approvals is shown.",
+  "exit_code": 0,
+  "kane_cli_version": "0.10.4",
+  "recorded": "2026-11-16",
+  "os": "Windows 11",
+  "stderr": "Running on: Desktop · Chrome\nevidence: view locally with `kane-cli evidence serve ~\\.testmuai\\kaneai\\sessions\\432fc065-880e-4a3a-b85c-7e8ea830d889\\evidence\\ca5ab8c7-cbd4-42c3-be70-9ee426a6cf08.evidence`\n"
+}
