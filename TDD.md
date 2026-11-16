@@ -171,7 +171,7 @@ Status column: what is installed **on the owner's computer** (checked 16 Nov 202
 | **Node.js 20+ LTS** | Runtime for everything | Kane is an npm package needing Node 18+; one language for all parts | Python (would split the codebase) | — | RECOMMENDATION | Installed v26.13.0 (LTS); Corepack not bundled |
 | **TypeScript** | All code | Type safety helps a beginner + agent catch mistakes early | JavaScript | Build step | RECOMMENDATION | — |
 | **pnpm workspaces** | Monorepo (engine, cli, runner, web) | Share the engine package without publishing it | npm workspaces | Extra tool | RECOMMENDATION | Installed 12.18.0 (via npm) |
-| **Anthropic SDK (Claude)** | Extract / plan / judge / fix (C-7) | Owner decision | — | Cost; model choice TC-3 | CONFIRMED provider [Decided]; model NEEDS CONFIRMATION | Not installed |
+| **Anthropic SDK (Claude)** | Extract / plan / judge / fix (C-7) | Owner decision | — | Cost; budget TC-3 | CONFIRMED provider and model `claude-opus-5-5` [Decided]; budget NEEDS CONFIRMATION | SDK not installed; API key in `.env` verified 16 Nov |
 | **Zod** | Validate config, Kane NDJSON, Claude JSON, API bodies | One validation tool everywhere | Ajv | — | RECOMMENDATION | — |
 | **Commander** | CLI commands | Small and common | yargs, oclif | — | RECOMMENDATION | — |
 | **execa** | Spawn `kane-cli` without a shell | Safe argument arrays, streaming stdout | Node `child_process` | — | RECOMMENDATION | — |
@@ -383,7 +383,10 @@ Source: first real run on the owner's Windows computer, 16 Nov 2026, Kane CLI **
 - **Connect:** official Anthropic TypeScript SDK; key in `ANTHROPIC_API_KEY` (server/CLI only).
 - **Send:** public page text, steps, Kane summaries/remarks — inside "untrusted content" blocks. Never keys or personal data.
 - **Receive:** JSON matching our Zod schemas (§14.2). How to request JSON-only output (prompting vs tool use) follows Anthropic's docs — **NEEDS CONFIRMATION** when implementing.
-- **Model, limits, cost:** **NEEDS CONFIRMATION** (TC-3).
+- **Model:** **Claude Opus 5.5, `claude-opus-5-5`** [Decided 16 Nov 2026]; $4 / $20 per million input / output tokens; 1M-token context, 128K max output (confirmed via the Models API with the owner's key). Read from `ANTHROPIC_MODEL`, never hard-coded.
+- **Verified 16 Nov 2026 [Observed]:** `GET /v1/models/claude-opus-5-5` → 200; one test message (effort `low`) → 200, `stop_reason: end_turn`, 20 input / 4 output tokens (≈ $0.0002). Request header used: `anthropic-version: 2026-10-21`.
+- **Model rules that shape C-7** (Anthropic API reference, checked 16 Nov 2026 — re-check when implementing): thinking can't be turned off (control depth with `output_config.effort`; default is `medium`, so set it explicitly per prompt); no assistant prefill (400) — get JSON via structured outputs, not prefill; forced `tool_choice` `any`/`tool` returns 400; always check `stop_reason` (incl. `refusal`) before reading content; `temperature`/`top_p`/`top_k` are rejected.
+- **Budget / limits:** **NEEDS CONFIRMATION** (TC-3).
 - **Unavailable:** retry once on invalid JSON/5xx → `ERR-AI` for that check; run continues.
 - **Docs:** https://docs.anthropic.com/
 
@@ -544,7 +547,7 @@ Every screen has loading, empty, success and error states (`docs/03`).
 
 | Environment | What runs | Config |
 |---|---|---|
-| **Local development** | CLI + engine; optional runner + web locally | `.env`: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` (TC-3); Kane logged in locally |
+| **Local development** | CLI + engine; optional runner + web locally | `.env`: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL=claude-opus-5-5`; Kane logged in locally |
 | **Demo / staging** | Same as production, used to publish fallback reports | Separate access codes |
 | **Production (judging)** | Web front end (TC-11) + runner container with Chrome, kane-cli, persistent disk for SQLite + files (TC-4) | Host secrets: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, Kane login (`LT_USERNAME`, `LT_ACCESS_KEY` for `kane-cli login` [Kane doc]), `RUNNER_PUBLIC_ORIGIN`, `WEB_ORIGIN`, `CREDIT_BUDGET_PER_RUN`, `VISITOR_DAILY_RUNS`; web: `NEXT_PUBLIC_RUNNER_URL` |
 
@@ -647,7 +650,7 @@ flowchart LR
 |---|---|---|
 | TC-1 | Approve real guides (Revoke.cash, Arbitrum; Across backup) | Demo, evidence |
 | TC-2 | What Kane can do before a wallet on each site; NDJSON shape of **failed / error / timeout** runs (passing run recorded 16 Nov, §13.1) | Adapter, scope |
-| TC-3 | Claude model and budget | C-7, cost |
+| TC-3 | Claude ~~model~~ (decided: `claude-opus-5-5`, 16 Nov) and **budget** (open) | C-7, cost |
 | TC-4 | Runner host (Chrome + kane-cli + persistent disk) | Deployment |
 | TC-5 | What Kane sends to TestMu's cloud | Privacy text |
 | TC-10 | Web limits and access-code policy | BR-9, BR-10 |

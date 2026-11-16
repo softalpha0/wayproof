@@ -79,7 +79,7 @@ Copy this block into Claude Code each time something breaks.
 | `ERR-URL-INVALID`, `ERR-DOMAIN-INVALID` | Input checks | C-3 / C-2 | 04-SRS §4 rules vs the input |
 | `ERR-FETCH` | Fetching the guide page | C-8 | HTTP status, redirect chain, timeout; open the URL in a normal browser |
 | `ERR-NO-STEPS` | Step extraction | C-7 (`extract`) | Extracted page text; Claude response; schema errors |
-| `ERR-AI` | Claude call | C-7 | API status code, response body, Zod validation error, model name (TC-3), API key set |
+| `ERR-AI` | Claude call | C-7 | API status code, response body, Zod validation error, model name (`ANTHROPIC_MODEL`, decided `claude-opus-5-5`), API key set, `stop_reason` (e.g. `refusal`) |
 | `ERR-KANE` | Kane run | C-5 | Exit code (2 = auth/setup/infra); raw NDJSON log; whether `run_end` exists; `kane-cli whoami` |
 | `ERR-KANE-TIMEOUT` | Kane run | C-5 | Exit code 3; `--timeout` value; site speed |
 | `ERR-BOUNDARY` | Safety gate | C-6 | Which objective or Kane remark tripped the wallet check — **expected behaviour, not a bug, unless it fired on a non-wallet step** |

@@ -137,7 +137,7 @@ Winners announcement date · workshops and recordings · team-change rules / one
 ### 3.2 Claude / Anthropic API [Decided]
 - Used inside Wayproof for four jobs: extract guide steps, write Kane objectives, judge Kane's result, propose fixes.
 - Needs an **Anthropic API key** in an environment variable `ANTHROPIC_API_KEY` (never in code, never committed).
-- **Which model and budget: [TC]** — I'll check my Anthropic console.
+- **Model: Claude Opus 5.5 (`claude-opus-5-5`) [Decided 16 Nov 2026]** — key and model verified with a test call. **Budget: [TC]** — I'll check Billing in my Anthropic console.
 - Docs: https://docs.anthropic.com/
 
 ### 3.3 Tools the project uses [Proposed in TDD.md]

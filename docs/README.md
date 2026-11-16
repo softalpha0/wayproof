@@ -75,6 +75,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | AI provider for Wayproof's agents: **Anthropic (Claude)** | 16 Nov 2026 |
 | **Real projects only** — no self-built demo site with planted mistakes | 16 Nov 2026 |
 | Real guides: Claude proposes, owner approves before use | 16 Nov 2026 |
+| Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
 
 ## To-confirm register
 
@@ -82,7 +83,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 |---|---|---|---|
 | TC-1 | **Approval of the real guides** to check. Proposed: Revoke.cash "How to revoke token approvals", Arbitrum "Quickstart: Arbitrum bridge"; backup: Across "How to Bridge with Across" | Wayproof's demo and evidence depend on them | Owner approves or replaces |
 | TC-2 | Whether Kane can operate each proposed site's pre-wallet steps (e.g. choose networks on bridge.arbitrum.io before connecting a wallet); and what Kane's output looks like on **failed / error / timeout** runs (a passing run was recorded 16 Nov — TDD.md §13.1) | Decides how many guide steps can be checked; the adapter must parse every outcome | Day-0 Kane runs |
-| TC-3 | Which Claude model to use, and the API credit budget | Cost, speed, quality | Owner checks their Anthropic console |
+| TC-3 | ~~Which Claude model to use~~ (**decided 16 Nov: `claude-opus-5-5`**; key and model verified with a test call), and the API credit budget (**still open**) | Cost, speed, quality | Owner checks Billing in the Anthropic console |
 | TC-4 | Hosting provider for the web app's Kane runner (needs Chrome + kane-cli) | Web app can't run checks without it | Owner chooses; Kane docs list Docker/CI recipes |
 | TC-5 | What data Kane sends to TestMu AI's cloud during a run (runs return a `test_url`) | Privacy statement in the web app | Read Kane's docs / ask in the hackathon Slack |
 | TC-6 | Whether one person can be on two teams, and team-change rules | Team planning | Ask in Slack (not stated on the site) |
