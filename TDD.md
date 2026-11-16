@@ -648,7 +648,7 @@ flowchart LR
 
 | ID | Item | Affects |
 |---|---|---|
-| TC-1 | Approve real guides (Revoke.cash, Arbitrum; Across backup) | Demo, evidence |
+| ~~TC-1~~ | Real guides **approved 16 Nov 2026** (Revoke.cash, Arbitrum; Across backup — its guide URL now returns 404) | Demo, evidence |
 | TC-2 | What Kane can do before a wallet on each site; NDJSON shape of **failed / error / timeout** runs (passing run recorded 16 Nov, §13.1) | Adapter, scope |
 | TC-3 | Claude ~~model~~ (decided: `claude-opus-5-5`, 16 Nov) and **budget** (open) | C-7, cost |
 | TC-4 | Runner host (Chrome + kane-cli + persistent disk) | Deployment |

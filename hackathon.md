@@ -91,7 +91,7 @@ Winners announcement date · workshops and recordings · team-change rules / one
 - AI for Wayproof's own agents: **Claude (Anthropic API)** [Decided]
 - **Real projects only**, no fake demo site [Decided]
 - **Never connects a wallet, signs or sends a transaction**; only visits allowed domains [Proposed, business rules BR-1/BR-2]
-- Real guides to check — **waiting for my approval** [TC]:
+- Real guides to check — **approved 16 Nov 2026** [Decided] (Across guide URL returned 404 that day):
   - Revoke.cash — https://revoke.cash/learn/approvals/how-to-revoke-token-approvals
   - Arbitrum — https://docs.arbitrum.io/getting-started-users
   - Backup: Across — https://docs.across.to/user-docs/how-to-use-across/bridging

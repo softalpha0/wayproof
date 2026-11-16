@@ -407,7 +407,7 @@ Must stay available on phones: **everything** in surfaces 1–3 (no desktop-only
 | Q-1 | Corrected-guide route: `/guide` vs `/guide/:guideId` (§10) | NEEDS CONFIRMATION |
 | Q-2 | Can anyone with the run link press Stop? | NEEDS CONFIRMATION |
 | Q-3 | Are visitor reports unlisted by default (only operator-marked ones on Home)? | NEEDS CONFIRMATION (RECOMMENDATION: yes) |
-| TC-1, TC-2, TC-4, TC-10, TC-11 | Guides, Kane's reach before the wallet, hosting, limits, domain | NEEDS CONFIRMATION |
+| TC-2, TC-4, TC-10, TC-11 | Kane's reach before the wallet, hosting, limits, domain (TC-1 guides approved 16 Nov 2026) | NEEDS CONFIRMATION |
 
 ---
 

@@ -50,9 +50,9 @@ Full personas in [02-UX-USER-FLOWS.md §1](02-UX-USER-FLOWS.md).
 
 **Out of scope (v1):** wallet connection, signing or transactions; mobile app targets (need macOS Apple Silicon or a paid plan **[Kane doc]**); accounts and logins for Wayproof users; self-built demo site with planted mistakes **[Decided]**; checking pages not declared by the user.
 
-## 6. Real projects to check [TC-1]
+## 6. Real projects to check [Decided — TC-1 approved 16 Nov 2026]
 
-Proposed, awaiting owner approval:
+Approved by the owner on 16 Nov 2026. URL status on that date (plain HTTP): Revoke.cash 200; Arbitrum guide redirects to `docs.arbitrum.io/arbitrum-bridge/quickstart`; `bridge.arbitrum.io` redirects to `portal.arbitrum.io/bridge/`; **Across guide URL 404** (backup needs a new URL if used).
 
 | Guide | Link | Pre-wallet steps (from the guide itself) |
 |---|---|---|
