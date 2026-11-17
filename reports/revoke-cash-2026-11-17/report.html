@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Proof Report · How to Revoke Token Approvals</title>
+<style>
+:root{--bg:#FAFAF7;--surface:#FFFFFF;--line:#E4E4DE;--text:#141716;--muted:#5F6764;--accent:#2F5BEA;--ok:#1E7A46;--fixed:#7A4FD6;--warn:#A86A00;--bad:#C2362B}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1110;--surface:#161A19;--line:#2A302E;--text:#ECEFEC;--muted:#9AA3A0;--accent:#7C9BFF;--ok:#4CC383;--fixed:#B49BFF;--warn:#F2B84B;--bad:#FF7A6E}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/24px Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+a{color:var(--accent)} a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{font-weight:700;text-decoration:none;color:var(--text)}
+main{max-width:960px;margin:0 auto;padding:16px}
+h1{font-size:28px;line-height:36px;margin:8px 0}
+h2{font-size:22px;line-height:30px;margin:32px 0 8px}
+@media (min-width:768px){h1{font-size:36px;line-height:44px}}
+.meta,.small{font-size:14px;line-height:20px}
+.meta{color:var(--muted);overflow-wrap:anywhere}
+.lead{font-size:18px;line-height:28px;font-weight:600}
+.callout{font-size:15px;line-height:22px;border:1px solid var(--accent);border-radius:8px;padding:12px 16px;background:var(--surface)}
+.note{font-size:14px;line-height:20px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.summary{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:768px){.summary{grid-template-columns:240px 1fr}}
+.score .label{font-size:14px;color:var(--muted)}
+.big{font-size:48px;line-height:56px;font-weight:700}.big span{font-size:20px;color:var(--muted)}.big.none{font-size:28px;line-height:56px}
+.badges{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid currentColor;border-radius:999px;padding:2px 10px;font-size:14px;line-height:20px;white-space:nowrap}
+.badge.ok{color:var(--ok)}.badge.fixed{color:var(--fixed)}.badge.warn{color:var(--warn)}.badge.bad{color:var(--bad)}.badge.muted{color:var(--muted)}
+.check{margin:8px 0;padding:0}
+.check summary{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 16px;cursor:pointer;min-height:44px}
+.check .steps{font-weight:600}.check .text{flex:1 1 240px;min-width:0;overflow-wrap:anywhere}
+.check .body{padding:0 16px 16px;border-top:1px solid var(--line)}
+blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--line);color:var(--text);background:var(--bg);overflow-wrap:anywhere}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/20px "JetBrains Mono",ui-monospace,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;margin:4px 0}
+code{font:14px/20px "JetBrains Mono",ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.timeline{padding-left:20px}.timeline>li{margin:12px 0;padding-left:4px}
+.att-h{font-size:15px}
+.ksteps{font-size:14px;line-height:20px;padding-left:18px;color:var(--muted)}
+.evidence{overflow-wrap:anywhere}
+.bad-t{color:var(--bad)}
+table.diff{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table.diff th,table.diff td{border-top:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+del{color:var(--muted)} ins{text-decoration:none;color:var(--fixed);font-weight:600}
+footer{max-width:960px;margin:32px auto;padding:0 16px}
+@media (max-width:480px){table.diff,table.diff tbody,table.diff tr,table.diff td{display:block}table.diff thead{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="https://github.com/softalpha0/wayproof" rel="noopener noreferrer">Wayproof</a><span class="muted">Proof Report</span></header>
+<main>
+<section class="head">
+  <h1>How to Revoke Token Approvals</h1>
+  <p class="meta">Checked <time datetime="2026-11-17T16:16:45.814Z">17 Nov 2026, 17:16 (UTC+1)</time> · <a href="https://revoke.cash/learn/approvals/how-to-revoke-token-approvals" rel="noopener noreferrer">https://revoke.cash/learn/approvals/how-to-revoke-token-approvals</a></p>
+  <p class="lead">Every step Kane checked worked as the guide says.</p>
+  
+  <p class="note">Kane CLI followed this guide in a real browser. Wayproof never connects a wallet, signs or sends anything, so steps that need a wallet are marked “Not checked”. This report is a snapshot of 17 Nov 2026, 17:16 (UTC+1), not live status.</p>
+</section>
+
+<section class="summary" aria-label="Summary">
+  <div class="score card">
+    <div class="label">Score</div>
+    <div class="big">100<span>/100</span></div>
+    <div class="small">2 of 2 checked steps work (passed or verified fixed) = 100</div>
+    <div class="small muted">Only Passed, Verified fixed and Needs a human count.</div>
+  </div>
+  <div class="card counts">
+    <ul class="badges"><li class="badge ok"><span aria-hidden="true">✔</span> Passed <b>2</b></li><li class="badge muted"><span aria-hidden="true">🔒</span> Not checked — wallet step <b>4</b></li><li class="badge muted"><span aria-hidden="true">🚧</span> Not checked — outside allowed domains <b>1</b></li></ul>
+    <p class="small muted">Kane runs 3 · Kane credits 56.9 · duration 13m 48s · allowed sites: revoke.cash</p>
+  </div>
+</section>
+
+<section aria-labelledby="checks-h">
+  <h2 id="checks-h">Every check</h2>
+  <p class="small muted">Problems first. Open a check to see each Kane run, the judge's reason and the evidence.</p>
+  <details class="check card" id="check-1">
+  <summary>
+    <span class="badge ok"><span aria-hidden="true">✔</span> Passed</span>
+    <span class="steps">Step 1</span>
+    <span class="text">On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar</span>
+    <span class="small muted">1 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar</p>
+    <p><b>Expected:</b> Your address is entered and its token approvals start loading <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> Kane followed the guide and saw the expected result.</p>
+    <blockquote>Kane: “Searched the Revoke.cash home page for the public address vitalik.eth.
+The address page opened successfully and displayed vitalik.eth.
+An Ethereum token-approvals section was shown for the address, listing 2,193 approvals.
+No wallet was connected and no approval or fund-moving action was taken.”</blockquote>
+    
+    <ol class="timeline"><li>
+  <div class="att-h"><b>Attempt 1</b> · Original guide wording · Kane: <b>passed</b> (exit 0)</div>
+  
+  <p class="small"><b>Objective given to Kane:</b></p><pre>Do not connect a wallet or sign anything. On the Revoke.cash home page, find the search bar and type the public example address &#39;vitalik.eth&#39;, then submit the search (press Enter or click the search button). Never press &#39;Revoke&#39;, &#39;Connect Wallet&#39;, or any button that approves, confirms, or moves funds. Assert that the page now shows the entered address (e.g. &#39;vitalik.eth&#39; or its 0x address) and that a list or section of token approvals is visible or loading for that address.</pre>
+  <p class="small muted">Kane completed the objective (exit code 0, status passed). · 20.4 credits · 161 s</p>
+  <blockquote>Kane: “Searched the Revoke.cash home page for the public address vitalik.eth.
+The address page opened successfully and displayed vitalik.eth.
+An Ethereum token-approvals section was shown for the address, listing 2,193 approvals.
+No wallet was connected and no approval or fund-moving action was taken.”</blockquote>
+  <ul class="ksteps"><li>✔ navigate: Navigate to https://revoke.cash</li><li>✔ type: Typing vitalik.eth into the search bar</li><li>✔ press_key: PRIMARY: submit the search by pressing Enter</li><li>✔ wait: PRIMARY: wait for the address approvals page to finish loading</li><li>✔ analyze: ANALYZE(textual_visual, &#39;a list or section of token approvals is visible or load</li><li>✔ assert: the page now shows the entered address (e.g. &#39;vitalik.eth&#39; or its 0x address) an</li></ul>
+  <p><b>Judge (claude-opus-5-5):</b> <code>pass</code> — Kane searched vitalik.eth, the address page displayed that address, and an Ethereum token-approvals section was visible, which matches the expected result.<br><span class="small">Kane quote: “An Ethereum token-approvals section was shown for the address, listing 2,193 approvals.”</span></p>
+  
+  
+  <p class="small evidence">Evidence: Kane's sealed evidence pack is kept private (it contains Kane account details) · <a href="kane/check-1-attempt-1.ndjson">raw Kane output</a> · <a href="https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N4RGAF2632PEK68WF099CH/dashboard/share/US_AA0DF1K42KD132JZFFLKY2UR3SUQFB8DYJ7QVKXK4JKNCYI2881NE1BNV35JW5GQ?type=summary&amp;agentView=true&amp;fqdn=summary-page" rel="noopener noreferrer">Kane run on TestMu ↗</a></p>
+</li></ol>
+  </div>
+</details>
+<details class="check card" id="check-3">
+  <summary>
+    <span class="badge ok"><span aria-hidden="true">✔</span> Passed</span>
+    <span class="steps">Steps 3–5</span>
+    <span class="text">Select the network for which you want to revoke approvals</span>
+    <span class="small muted">2 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> Select the network for which you want to revoke approvals<br>Sort the list (e.g. by &quot;Newest to Oldest&quot; if you suspect you signed a malicious approval)<br>Apply filters or search by the approved spender address</p>
+    <p><b>Expected:</b> After loading finishes, a list of all the token approvals you have on that network is shown Then: The list is sorted, with the most recently signed approvals first when using &quot;Newest to Oldest&quot; Then: The list shows only the matching approvals <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> Kane followed the guide and saw the expected result.</p>
+    <blockquote>Kane: “Opened the approvals page for the public address vitalik.eth on revoke.cash without connecting a wallet or taking any approval/revocation action.
+Selected the Base network and waited for its approval list to load, showing 33 approvals.
+Changed the list order to “Last Updated: Newest to Oldest.”
+Searched by spender address 0x2626664c2603336E57B271c5C0b26F421741e481, leaving the list filtered to matching approvals.”</blockquote>
+    
+    <ol class="timeline"><li>
+  <div class="att-h"><b>Attempt 1</b> · Original guide wording · Kane: <b>timeout</b> (exit 1)</div>
+  
+  <p class="small"><b>Objective given to Kane:</b></p><pre>Do not connect a wallet or sign anything. On revoke.cash, type the public address &#39;vitalik.eth&#39; into the address search box at the top of the page and press Enter to open its approvals page. Select a network from the network selector (for example &#39;Ethereum&#39;). Wait for loading to finish and check that a list of token approvals is shown. Then open the sort control and choose &#39;Newest to Oldest&#39;. Then apply any filter or search by an approved spender address using the filter/search controls above the list. Never press &#39;Revoke&#39;, &#39;Approve&#39;, &#39;Confirm&#39; or any button that moves funds, and never connect a wallet. Assert that after loading, a list of token approvals is shown for the selected network, the list can be sorted by &#39;Newest to Oldest&#39;, and after applying a filter or spender search the list shows only the matching approvals.</pre>
+  <p class="small muted">Wayproof stopped Kane because it ran past the time limit. · 303 s</p>
+  
+  <ul class="ksteps"><li>✔ navigate: Navigate to https://revoke.cash</li><li>✔ type: Typing vitalik.eth in address search box</li><li>✔ press_key: PRIMARY: press the Enter key</li><li>✔ click: Clicking network selector</li><li>✔ click: Clicking the Ethereum approvals network selector button</li><li>✔ click: Clicking Ethereum network selector button in approvals page</li><li>✔ wait: PRIMARY: wait for loading to finish</li><li>✔ analyze: a list of token approvals is shown</li><li>✔ assert: a list of token approvals is shown</li><li>✔ click: Clicking Sort By control in approvals list</li><li>✔ click: Clicking Newest to Oldest in the Sort By dropdown</li><li>✔ type: Typing approved spender address in Search by Spender box</li><li>✔ analyze: ANALYZE(textual_visual, &#39;after applying a filter or spender search the list show</li><li>✔ assert: after loading, a list of token approvals is shown for the selected network, the </li></ul>
+  
+  
+  
+  <p class="small evidence">Evidence: Kane's sealed evidence pack is kept private (it contains Kane account details) · <a href="kane/check-3-attempt-1.ndjson">raw Kane output</a></p>
+</li>
+<li>
+  <div class="att-h"><b>Attempt 2</b> · Retry with more time · Kane: <b>passed</b> (exit 0)</div>
+  
+  <p class="small"><b>Objective given to Kane:</b></p><pre>Do not connect a wallet or sign anything. On revoke.cash, type the public address &#39;vitalik.eth&#39; into the address search box at the top of the page and press Enter to open its approvals page. Select a network from the network selector (for example &#39;Ethereum&#39;). Wait for loading to finish and check that a list of token approvals is shown. Then open the sort control and choose &#39;Newest to Oldest&#39;. Then apply any filter or search by an approved spender address using the filter/search controls above the list. Never press &#39;Revoke&#39;, &#39;Approve&#39;, &#39;Confirm&#39; or any button that moves funds, and never connect a wallet. Assert that after loading, a list of token approvals is shown for the selected network, the list can be sorted by &#39;Newest to Oldest&#39;, and after applying a filter or spender search the list shows only the matching approvals.</pre>
+  <p class="small muted">Kane completed the objective (exit code 0, status passed). · 36.4 credits · 335 s</p>
+  <blockquote>Kane: “Opened the approvals page for the public address vitalik.eth on revoke.cash without connecting a wallet or taking any approval/revocation action.
+Selected the Base network and waited for its approval list to load, showing 33 approvals.
+Changed the list order to “Last Updated: Newest to Oldest.”
+Searched by spender address 0x2626664c2603336E57B271c5C0b26F421741e481, leaving the list filtered to matching approvals.”</blockquote>
+  <ul class="ksteps"><li>✔ navigate: Navigate to https://revoke.cash</li><li>✔ wait: queued plan (2 steps): type &quot;Search Accounts by Address or Domain&quot;; press_key &quot;S</li><li>✔ type: Type &quot;vitalik.eth&quot; into &quot;Search Accounts by Address or Domain&quot;</li><li>✔ press_key: Press Enter</li><li>✔ wait: PRIMARY: wait 1000 ms for address search submission to load</li><li>✔ click: Selecting Ethereum in the network approvals list</li><li>✔ click: Selecting the network from the network selector</li><li>✔ wait: PRIMARY: wait 1500 ms for the selected network approvals to finish loading</li><li>✔ analyze: ANALYZE(textual_visual, &#39;a list of token approvals is shown for the selected net</li><li>✔ assert: a list of token approvals is shown for the selected network after loading finish</li><li>✔ click: Clicking the Sort By control</li><li>✔ click: Clicking Newest to Oldest in Sort By list</li><li>✔ type: Typing spender address in the Search by Spender field</li><li>✔ analyze: ANALYZE(textual_visual, &#39;after applying a filter or spender search the list show</li><li>✔ assert: after loading, a list of token approvals is shown for the selected network, the </li></ul>
+  <p><b>Judge (claude-opus-5-5):</b> <code>pass</code> — Kane loaded the Base network approvals list, sorted it Newest to Oldest, and filtered it by spender address, all as the guide expected.<br><span class="small">Kane quote: “Searched by spender address 0x2626664c2603336E57B271c5C0b26F421741e481, leaving the list filtered to matching approvals.”</span></p>
+  
+  
+  <p class="small evidence">Evidence: Kane's sealed evidence pack is kept private (it contains Kane account details) · <a href="kane/check-3-attempt-2.ndjson">raw Kane output</a> · <a href="https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N571F591MEF7D9JWKESF76/dashboard/share/US_3EF1X0W3K85LMF0YR2PVG388V1L5YC4OW6J6D8ANRTX7R1268E64NFLHU6CRBJC6?type=summary&amp;agentView=true&amp;fqdn=summary-page" rel="noopener noreferrer">Kane run on TestMu ↗</a></p>
+</li></ol>
+  </div>
+</details>
+<details class="check card" id="check-2">
+  <summary>
+    <span class="badge muted"><span aria-hidden="true">🔒</span> Not checked — wallet step</span>
+    <span class="steps">Step 2</span>
+    <span class="text">Alternatively, connect your wallet</span>
+    <span class="small muted">0 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> Alternatively, connect your wallet</p>
+    <p><b>Expected:</b> Your wallet is connected and its token approvals start loading <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> This step needs a wallet. Wayproof never connects one (BR-1).</p>
+    
+    
+    
+  </div>
+</details>
+<details class="check card" id="check-4">
+  <summary>
+    <span class="badge muted"><span aria-hidden="true">🔒</span> Not checked — wallet step</span>
+    <span class="steps">Step 6</span>
+    <span class="text">Find the approval you want to revoke and click the Revoke button</span>
+    <span class="small muted">0 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> Find the approval you want to revoke and click the Revoke button</p>
+    <p><b>Expected:</b> The approval is revoked <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> This step needs a wallet. Wayproof never connects one (BR-1).</p>
+    
+    
+    
+  </div>
+</details>
+<details class="check card" id="check-5">
+  <summary>
+    <span class="badge muted"><span aria-hidden="true">🔒</span> Not checked — wallet step</span>
+    <span class="steps">Step 7</span>
+    <span class="text">Alternatively, click the pencil icon next to the approved amount to update the approval to a different amount</span>
+    <span class="small muted">0 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> Alternatively, click the pencil icon next to the approved amount to update the approval to a different amount</p>
+    <p><b>Expected:</b> The approval is updated to the new amount <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> This step needs a wallet. Wayproof never connects one (BR-1).</p>
+    
+    
+    
+  </div>
+</details>
+<details class="check card" id="check-7">
+  <summary>
+    <span class="badge muted"><span aria-hidden="true">🔒</span> Not checked — wallet step</span>
+    <span class="steps">Step 12</span>
+    <span class="text">Find the approval you want to revoke and click the Revoke button</span>
+    <span class="small muted">0 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> Find the approval you want to revoke and click the Revoke button</p>
+    <p><b>Expected:</b> The approval is revoked <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> This step needs a wallet. Wayproof never connects one (BR-1).</p>
+    
+    
+    
+  </div>
+</details>
+<details class="check card" id="check-6">
+  <summary>
+    <span class="badge muted"><span aria-hidden="true">🚧</span> Not checked — outside allowed domains</span>
+    <span class="steps">Steps 8–11</span>
+    <span class="text">On Etherscan, open the More menu in the top navigation bar and go to the Token Approvals page</span>
+    <span class="small muted">0 Kane run(s)</span>
+  </summary>
+  <div class="body">
+    <p><b>Guide says:</b> On Etherscan, open the More menu in the top navigation bar and go to the Token Approvals page<br>Enter your wallet address<br>Select the token type (ERC20, ERC721, ERC1155) that you want to check approvals for<br>Flip the switch for Show all approvals</p>
+    <p><b>Expected:</b> The Token Approvals page is shown Then: Your address is entered Then: After loading, a list of all token approvals for the selected token type is shown Then: All your approvals are shown <span class="small muted">(never changed by a fix)</span></p>
+    <p><b>Verdict:</b> These steps happen on etherscan.io, which is not on the allowed sites list.</p>
+    
+    
+    
+  </div>
+</details>
+</section>
+
+<section aria-labelledby="fixed-h">
+  <h2 id="fixed-h">Corrected guide</h2>
+  <p class="muted">No steps needed changes — every checked step worked.</p>
+</section>
+</main>
+<footer><p class="small muted">Made by <a href="https://github.com/softalpha0/wayproof" rel="noopener noreferrer">Wayproof</a> with Kane CLI (browser checks) and Claude (reading, judging, fixing). Every verdict links to Kane's own evidence. Run 2026-11-17T16-16-45Z-iyvp.</p></footer>
+</body>
+</html>

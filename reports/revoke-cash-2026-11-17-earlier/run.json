@@ -1,0 +1,577 @@
+{
+  "id": "2026-11-17T15-54-14Z-33p4",
+  "source": "cli",
+  "createdAt": "2026-11-17T15:54:14.415Z",
+  "finishedAt": "2026-11-17T16:13:18.193Z",
+  "status": "finished",
+  "guideUrl": "https://revoke.cash/learn/approvals/how-to-revoke-token-approvals",
+  "guideTitle": "How to Revoke Token Approvals",
+  "allowedDomains": [
+    "revoke.cash"
+  ],
+  "creditBudget": 300,
+  "kaneCredits": 137.97445249999998,
+  "creditsCounted": 147.97445249999998,
+  "kaneRuns": 5,
+  "claudeTokens": {
+    "input": 12635,
+    "output": 4110
+  },
+  "steps": [
+    {
+      "n": 1,
+      "action": "On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar",
+      "expected": "Your address is entered and approvals start loading",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 2,
+      "action": "Alternatively, connect your wallet on Revoke.cash",
+      "expected": "Your wallet is connected and its approvals can be loaded",
+      "needsWallet": true,
+      "url": null
+    },
+    {
+      "n": 3,
+      "action": "Select the network for which you want to revoke approvals",
+      "expected": "After the loading is finished, you see a list of all the token approvals you have on that network",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 4,
+      "action": "Sort the list (e.g. by \"Newest to Oldest\" if you suspect you signed a malicious approval)",
+      "expected": "The most recently signed approvals are shown first",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 5,
+      "action": "Apply filters to the list",
+      "expected": "The approvals list is filtered",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 6,
+      "action": "Search by the approved spender address",
+      "expected": "Approvals for that spender are shown",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 7,
+      "action": "Find the approval you want to revoke and click the Revoke button",
+      "expected": "The approval is revoked",
+      "needsWallet": true,
+      "url": null
+    },
+    {
+      "n": 8,
+      "action": "Alternatively, click the pencil icon next to the approved amount to update the approval to a different amount",
+      "expected": "The approval is updated to the new amount",
+      "needsWallet": true,
+      "url": null
+    },
+    {
+      "n": 9,
+      "action": "On Etherscan, navigate to the Token Approvals page through the More menu in the top navigation bar",
+      "expected": "The Token Approvals page opens",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 10,
+      "action": "Enter your wallet address",
+      "expected": "Your address is entered",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 11,
+      "action": "Select the token type (ERC20, ERC721, ERC1155) that you want to check approvals for",
+      "expected": "After loading you see a list of all token approvals for your selected token type",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 12,
+      "action": "Flip the switch for Show all approvals",
+      "expected": "All your approvals are shown",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 13,
+      "action": "Find the approval you want to revoke and click the Revoke button",
+      "expected": "The approval is revoked",
+      "needsWallet": true,
+      "url": null
+    }
+  ],
+  "checks": [
+    {
+      "id": "check-1",
+      "stepNumbers": [
+        1
+      ],
+      "stepText": "On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar",
+      "expected": "Your address is entered and approvals start loading",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar",
+          "objective": "Do not connect a wallet or sign anything. On the Revoke.cash home page, click the search bar labelled with a placeholder like 'Search Accounts by Address or Domain', type the public address 'vitalik.eth', and press Enter. Wait for the account page to load. Never press 'Connect Wallet', 'Revoke', 'Revoke Selected' or any other button that changes approvals. Assert that the page shows the searched account (the text 'vitalik.eth' or its 0x address) and that an approvals section with visible text such as 'Approvals' or 'Asset' is displayed.",
+          "url": "https://revoke.cash/",
+          "startedAt": "2026-11-17T15:54:33.840Z",
+          "endedAt": "2026-11-17T15:57:53.748Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Searched Revoke.cash for the public account address vitalik.eth.\nThe vitalik.eth account page loaded and displayed its approvals section.\nNo wallet was connected and no approval-changing actions were taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://revoke.cash/address/vitalik.eth",
+              "searched_account_displayed": "true",
+              "approvals_section_displayed": "true"
+            },
+            "credits": 21.134307499999995,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N3FA6JAFTKZNRVZN44S70C/dashboard/share/US_SLG36YJ4GGUX9VQ4QACU0KHVWT9XYQB79DUGAHCPOR950L16KVJSE7LN9D93DBVD?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 199835,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://revoke.cash"
+              },
+              {
+                "status": "done",
+                "remark": "wait: queued plan (2 steps): type \"Search Accounts by Address or Domain\"; press_key \"S"
+              },
+              {
+                "status": "done",
+                "remark": "type: Type \"vitalik.eth\" into \"Search Accounts by Address or Domain\""
+              },
+              {
+                "status": "done",
+                "remark": "press_key: Press Enter"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking search for the public address 'vitalik.eth'"
+              },
+              {
+                "status": "done",
+                "remark": "wait: PRIMARY: wait for the account page to load"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, \"an approvals section with visible text such as 'Approva"
+              },
+              {
+                "status": "done",
+                "remark": "assert: the page shows the searched account (the text 'vitalik.eth' or its 0x address) a"
+              }
+            ],
+            "rawLog": "kane/check-1-attempt-1.ndjson",
+            "evidence": "evidence/check-1-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane searched for vitalik.eth, the account page loaded at the address URL, and the approvals section was displayed as expected.",
+            "quote": "The vitalik.eth account page loaded and displayed its approvals section.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-2",
+      "stepNumbers": [
+        2
+      ],
+      "stepText": "Alternatively, connect your wallet on Revoke.cash",
+      "expected": "Your wallet is connected and its approvals can be loaded",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-3",
+      "stepNumbers": [
+        3,
+        4,
+        5
+      ],
+      "stepText": "Select the network for which you want to revoke approvals\nSort the list (e.g. by \"Newest to Oldest\" if you suspect you signed a malicious approval)\nApply filters to the list",
+      "expected": "After the loading is finished, you see a list of all the token approvals you have on that network Then: The most recently signed approvals are shown first Then: The approvals list is filtered",
+      "needsWallet": false,
+      "verdict": "verified_fixed",
+      "verdictWhy": "Kane followed the corrected wording and saw the expected result.",
+      "correctedText": "Select the network for which you want to revoke approvals. Open the \"Sort By\" dropdown and choose \"Newest to Oldest\" if you suspect you signed a malicious approval. There is no separate filters control, so use the search field above the approvals list to narrow it down.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Select the network for which you want to revoke approvals\nSort the list (e.g. by \"Newest to Oldest\" if you suspect you signed a malicious approval)\nApply filters to the list",
+          "objective": "Do not connect a wallet or sign anything. On the Revoke.cash home page, type the public address 'vitalik.eth' into the address search field and press Enter to open its approvals page without connecting a wallet. Use the network selector to choose 'Ethereum' and wait for loading to finish so that the list of token approvals appears. Open the sort dropdown and choose 'Newest to Oldest'. Then open the filters control and apply one filter, for example the 'ERC20' token standard filter. Never press 'Connect Wallet', 'Revoke', 'Revoke Selected', 'Update', 'Approve' or 'Confirm'. Assert that the sort control shows the text 'Newest to Oldest', the applied filter's label is shown as active, and the approvals list displays rows of token approvals (or a visible 'No token approvals found' message).",
+          "url": "https://revoke.cash",
+          "startedAt": "2026-11-17T15:58:04.110Z",
+          "endedAt": "2026-11-17T16:01:51.006Z",
+          "kane": {
+            "exitCode": 1,
+            "outcome": "failed",
+            "why": "Kane could not complete the objective: No filters or ERC20 control exists in the loaded approvals dashboard after inspecting visible controls and DOM..",
+            "summary": "The test was written for a different version or state of the approvals dashboard. In the loaded page, the visible controls include search, sorting, collapse, and approval rows, but no filters control to open or ERC20 option to select.\nUpdate the scenario to match the current approvals dashboard. Remove or replace the ERC20-filter requirement, and retain assertions for the selected sort order and the rendered approvals rows or empty-state message.",
+            "reason": "No filters or ERC20 control exists in the loaded approvals dashboard after inspecting visible controls and DOM.",
+            "reasonCode": "assertion_error.step_not_achievable",
+            "finalState": {},
+            "credits": 35.721885,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N3NQX0KW1N5AZ48NJZ2RJK/dashboard/share/US_0V9SRTX8H8PZYL90ASHLBVL7ADVAW68EMEAJYMTM3B6C3OGGCZEOC06E1F137H6H?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 226875,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://revoke.cash"
+              },
+              {
+                "status": "done",
+                "remark": "type: Typing vitalik.eth into address search field"
+              },
+              {
+                "status": "done",
+                "remark": "press_key: PRIMARY: press the Enter key"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking network selector"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Ethereum network selector above approvals table"
+              },
+              {
+                "status": "done",
+                "remark": "click: Selecting Ethereum in the network dropdown"
+              },
+              {
+                "status": "done",
+                "remark": "wait: PRIMARY: wait for loading to finish so that the list of token approvals appears"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Sort By dropdown"
+              },
+              {
+                "status": "done",
+                "remark": "click: Selecting Newest to Oldest in the sort dropdown"
+              },
+              {
+                "status": "failed",
+                "remark": "wait: Waiting while checking for the filters control"
+              }
+            ],
+            "rawLog": "kane/check-3-attempt-1.ndjson",
+            "evidence": "evidence/check-3-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "defect",
+            "reason": "Kane loaded the approvals dashboard with sorting and approval rows, but found no filters control or ERC20 option, so the guide's filter step does not match the current site.",
+            "quote": "No filters or ERC20 control exists in the loaded approvals dashboard after inspecting visible controls and DOM.",
+            "model": "claude-opus-5-5"
+          },
+          "fix": {
+            "newStepText": "Select the network for which you want to revoke approvals. Open the \"Sort By\" dropdown and choose \"Newest to Oldest\" if you suspect you signed a malicious approval. There is no separate filters control, so use the search field above the approvals list to narrow it down.",
+            "rationale": "Kane found a \"Sort By\" dropdown with a \"Newest to Oldest\" option and a search control on the approvals dashboard, but no filters control or ERC20 option.",
+            "model": "claude-opus-5-5"
+          }
+        },
+        {
+          "n": 2,
+          "kind": "after_fix",
+          "stepText": "Select the network for which you want to revoke approvals. Open the \"Sort By\" dropdown and choose \"Newest to Oldest\" if you suspect you signed a malicious approval. There is no separate filters control, so use the search field above the approvals list to narrow it down.",
+          "objective": "Do not connect a wallet or sign anything. On the revoke.cash address page for vitalik.eth, wait for the approvals list to finish loading. Select a network from the network selector (for example Ethereum). Open the 'Sort By' dropdown and choose 'Newest to Oldest'. Then type a token name that appears in the list (for example 'USDC') into the search field above the approvals list. Never press 'Revoke' or any button that edits, approves or moves funds. Assert that the 'Sort By' control shows 'Newest to Oldest' and that the approvals list shows only rows whose visible token name matches the search text.",
+          "url": "https://revoke.cash/address/vitalik.eth",
+          "startedAt": "2026-11-17T16:02:05.847Z",
+          "endedAt": "2026-11-17T16:06:31.481Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Opened the approvals page for vitalik.eth and waited for the approvals list to load.\nSelected a network, changed the approval-list sorting to “Newest to Oldest,” and entered a token search in the list.\nThe list was filtered so that all visible approval rows matched the search text, and the selected sort order remained “Newest to Oldest.”\nNo wallet was connected and no approval or fund-changing action was taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://revoke.cash/address/vitalik.eth",
+              "sort_by": "Newest to Oldest",
+              "approvals_list_token_search_match": "true"
+            },
+            "credits": 32.8783375,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N3X38VNH1VCVEDSTKV9FRX/dashboard/share/US_8R4GJH57HI38WOBXFO0J77HH7JVUQ4GQPYHIV6XOKHHVBWJYGXKKZQYMR86QKPXC?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 265609,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://revoke.cash"
+              },
+              {
+                "status": "done",
+                "remark": "type: Typing vitalik.eth into the account search box"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Check Address for vitalik.eth"
+              },
+              {
+                "status": "done",
+                "remark": "wait: PRIMARY: wait for the approvals list to finish loading"
+              },
+              {
+                "status": "done",
+                "remark": "scroll: Scrolling to the network selector approvals section"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking the network selector dropdown below the approvals tables"
+              },
+              {
+                "status": "done",
+                "remark": "scroll: Scrolling into view the Ethereum network selector"
+              },
+              {
+                "status": "done",
+                "remark": "click: Selecting Ethereum network from the network selector approvals section"
+              },
+              {
+                "status": "done",
+                "remark": "scroll: Scrolling to the Sort By dropdown"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking the Sort By dropdown"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Newest to Oldest sort option"
+              },
+              {
+                "status": "done",
+                "remark": "type: Typing USDC into the token search field above the approvals list"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, 'the approvals list shows only rows whose visible token "
+              },
+              {
+                "status": "done",
+                "remark": "assert: the 'Sort By' control shows 'Newest to Oldest' and the approvals list shows only"
+              }
+            ],
+            "rawLog": "kane/check-3-attempt-2.ndjson",
+            "evidence": "evidence/check-3-attempt-2.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane completed the run and reported that the sort showed 'Newest to Oldest' and the approvals list was filtered to rows matching the search text, as expected.",
+            "quote": "The list was filtered so that all visible approval rows matched the search text, and the selected sort order remained “Newest to Oldest.”",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-4",
+      "stepNumbers": [
+        6
+      ],
+      "stepText": "Search by the approved spender address",
+      "expected": "Approvals for that spender are shown",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Search by the approved spender address",
+          "objective": "Do not connect a wallet or sign anything. Never press 'Revoke', 'Connect Wallet', or any button that moves funds or changes approvals. On revoke.cash, type the public address 'vitalik.eth' into the address search box at the top of the page and press Enter to open its approvals page without connecting a wallet. In the approvals table, note the spender address or name shown in the 'Approved Spender' column of the first row. Type that spender address or name into the search or filter box above the approvals table. Assert that the approvals table shows at least one row and that every visible row lists that same spender in the 'Approved Spender' column.",
+          "url": "https://revoke.cash",
+          "startedAt": "2026-11-17T16:06:40.906Z",
+          "endedAt": "2026-11-17T16:10:49.831Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Looked up the public address vitalik.eth on revoke.cash without connecting a wallet.\nIdentified the first approval’s approved spender as Uniswap.\nFiltered the approvals table for Uniswap; 25 matching approval rows were shown, and all visible rows listed Uniswap as the approved spender.\nNo wallet was connected and no approval or funds-changing action was taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://revoke.cash/address/vitalik.eth",
+              "approved_spender": "Uniswap",
+              "approvals_table_row_count": "25"
+            },
+            "credits": 33.21355249999999,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N45GS1NHMXCR9DX97ZDAN9/dashboard/share/US_9FPTFDED6TLKNRZ1MJT58X69ICJE1FDWTTGN797G5SE7XP9HZUVUJN99KPAOGC98?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 248899,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://revoke.cash"
+              },
+              {
+                "status": "done",
+                "remark": "type: Typing vitalik.eth into the address search box"
+              },
+              {
+                "status": "done",
+                "remark": "press_key: PRIMARY: press the Enter key"
+              },
+              {
+                "status": "done",
+                "remark": "wait: PRIMARY: wait for the approvals page to finish loading"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, \"The spender address or name shown in the 'Approved Spen"
+              },
+              {
+                "status": "done",
+                "remark": "type: Typing approved spender in search box above approvals table"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, \"Every visible row lists {{approved_spender}} in the 'Ap"
+              },
+              {
+                "status": "done",
+                "remark": "assert: The approvals table shows at least one row and every visible row lists {{approve"
+              }
+            ],
+            "rawLog": "kane/check-4-attempt-1.ndjson",
+            "evidence": "evidence/check-4-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane filtered the approvals table by the first row's spender, and every visible row showed that same spender, which matches the expected result.",
+            "quote": "Filtered the approvals table for Uniswap; 25 matching approval rows were shown, and all visible rows listed Uniswap as the approved spender.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-5",
+      "stepNumbers": [
+        7
+      ],
+      "stepText": "Find the approval you want to revoke and click the Revoke button",
+      "expected": "The approval is revoked",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-6",
+      "stepNumbers": [
+        8
+      ],
+      "stepText": "Alternatively, click the pencil icon next to the approved amount to update the approval to a different amount",
+      "expected": "The approval is updated to the new amount",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-7",
+      "stepNumbers": [
+        9,
+        10,
+        11
+      ],
+      "stepText": "On Etherscan, navigate to the Token Approvals page through the More menu in the top navigation bar\nEnter your wallet address\nSelect the token type (ERC20, ERC721, ERC1155) that you want to check approvals for",
+      "expected": "The Token Approvals page opens Then: Your address is entered Then: After loading you see a list of all token approvals for your selected token type",
+      "needsWallet": false,
+      "verdict": "not_checked_outside_domains",
+      "verdictWhy": "These steps happen on https://etherscan.io/tokenapprovalchecker, which is not on the allowed sites list.",
+      "attempts": []
+    },
+    {
+      "id": "check-8",
+      "stepNumbers": [
+        12
+      ],
+      "stepText": "Flip the switch for Show all approvals",
+      "expected": "All your approvals are shown",
+      "needsWallet": false,
+      "verdict": "couldnt_check",
+      "verdictWhy": "The site stopped Kane: Kane could not reach the approvals list or the switch because the page needs a connected wallet or account context, and connecting one was prohibited, so the guide step itself was never tested.",
+      "errorCode": "ERR-KANE",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Flip the switch for Show all approvals",
+          "objective": "Do not connect a wallet or sign anything. Never press 'Revoke', 'Approve', 'Confirm', or any button that moves funds. On the revoke.cash page, find the switch labelled 'Show all approvals' and flip it on. Assert that the 'Show all approvals' switch is now on and that the approvals list or its visible text updates to show all approvals.",
+          "url": "https://revoke.cash",
+          "startedAt": "2026-11-17T16:11:03.018Z",
+          "endedAt": "2026-11-17T16:13:13.528Z",
+          "kane": {
+            "exitCode": 1,
+            "outcome": "failed",
+            "why": "Kane could not complete the objective: The dashboard shows no such switch or approvals list without an account, and connecting a wallet is prohibited..",
+            "summary": "The test expected the approval dashboard and its “Show all approvals” switch to be available without an account. This page needs an account context to show approval data, while the instructions prohibited obtaining that context by connecting a wallet.\nRevise the test to use a safe preloaded read-only account/address or a mocked approval-data fixture, or change the objective to verify only the unauthenticated dashboard behavior.",
+            "reason": "The dashboard shows no such switch or approvals list without an account, and connecting a wallet is prohibited.",
+            "reasonCode": "assertion_error.step_not_achievable",
+            "finalState": {},
+            "credits": 15.02637,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7N4DJ66B9D4J87N17AC44K9/dashboard/share/US_NMM5RUBJ7DLHUX1FRN9JW7KBZE4NSIQ8FXJVT5RTW416TK65VXO1RZ02VLT80911?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 130502,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://revoke.cash"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Get Started to open the approval dashboard"
+              },
+              {
+                "status": "failed",
+                "remark": "wait: Waiting after checking the approval dashboard for the Show all approvals switch"
+              }
+            ],
+            "rawLog": "kane/check-8-attempt-1.ndjson",
+            "evidence": "evidence/check-8-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "blocked",
+            "reason": "Kane could not reach the approvals list or the switch because the page needs a connected wallet or account context, and connecting one was prohibited, so the guide step itself was never tested.",
+            "quote": "This page needs an account context to show approval data, while the instructions prohibited obtaining that context by connecting a wallet.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-9",
+      "stepNumbers": [
+        13
+      ],
+      "stepText": "Find the approval you want to revoke and click the Revoke button",
+      "expected": "The approval is revoked",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    }
+  ]
+}

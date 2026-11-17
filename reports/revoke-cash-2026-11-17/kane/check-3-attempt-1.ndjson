@@ -1,0 +1,32 @@
+{"type":"stream_start","cli_version":"0.10.4","surface":"run","pid":31992,"v":1,"ts":"2026-11-17T16:19:54.204Z"}
+{"type":"recording_state","enabled":true,"session_id":"638e7b61-ae7d-436a-a863-dce8bf3d0de1","persist":false,"v":1,"ts":"2026-11-17T16:19:54.270Z"}
+{"type":"update_available","current":"0.10.4","latest":"0.10.5","severity":"patch","v":1,"ts":"2026-11-17T16:19:58.863Z"}
+{"type":"bifurcation","flows":["Navigate to https://revoke.cash then Do not connect a wallet or sign anything.\nOn revoke.cash, type the public address 'vitalik.eth' into the address search box at the top of the page and press Enter to open its approvals page.\nSelect a network from the network selector (for example 'Ethereum').\nWait for loading to finish and check that a list of token approvals is shown.\nThen open the sort control and choose 'Newest to Oldest'.\nThen apply any filter or search by an approved spender address using the filter/search controls above the list.\nNever press 'Revoke', 'Approve', 'Confirm' or any button that moves funds, and never connect a wallet.\nAssert that after loading, a list of token approvals is shown for the selected network, the list can be sorted by 'Newest to Oldest', and after applying a filter or spender search the list shows only the matching approvals."],"count":1,"v":1,"ts":"2026-11-17T16:20:41.658Z"}
+{"step":2,"status":"running","remark":"Step 1","v":1,"ts":"2026-11-17T16:20:50.035Z"}
+{"step":2,"status":"done","remark":"navigate: Navigate to https://revoke.cash","v":1,"ts":"2026-11-17T16:20:50.073Z"}
+{"step":3,"status":"running","remark":"Step 2","v":1,"ts":"2026-11-17T16:21:00.381Z"}
+{"step":3,"status":"done","remark":"type: Typing vitalik.eth in address search box","v":1,"ts":"2026-11-17T16:21:14.853Z"}
+{"step":4,"status":"running","remark":"Step 3","v":1,"ts":"2026-11-17T16:21:17.240Z"}
+{"step":4,"status":"done","remark":"press_key: PRIMARY: press the Enter key","v":1,"ts":"2026-11-17T16:21:24.340Z"}
+{"step":5,"status":"running","remark":"Step 4","v":1,"ts":"2026-11-17T16:21:28.519Z"}
+{"step":5,"status":"done","remark":"click: Clicking network selector","v":1,"ts":"2026-11-17T16:21:45.002Z"}
+{"step":6,"status":"running","remark":"Step 5","v":1,"ts":"2026-11-17T16:21:47.378Z"}
+{"step":6,"status":"done","remark":"click: Clicking the Ethereum approvals network selector button","v":1,"ts":"2026-11-17T16:21:54.115Z"}
+{"step":7,"status":"running","remark":"Step 6","v":1,"ts":"2026-11-17T16:21:55.969Z"}
+{"step":7,"status":"done","remark":"click: Clicking Ethereum network selector button in approvals page","v":1,"ts":"2026-11-17T16:22:10.330Z"}
+{"step":8,"status":"running","remark":"Step 7","v":1,"ts":"2026-11-17T16:22:12.515Z"}
+{"step":8,"status":"done","remark":"wait: PRIMARY: wait for loading to finish","v":1,"ts":"2026-11-17T16:22:26.972Z"}
+{"step":9,"status":"running","remark":"Step 8","v":1,"ts":"2026-11-17T16:22:29.128Z"}
+{"step":9,"status":"done","remark":"analyze: a list of token approvals is shown","v":1,"ts":"2026-11-17T16:22:46.489Z"}
+{"step":10,"status":"running","remark":"Step 9","v":1,"ts":"2026-11-17T16:22:48.647Z"}
+{"step":10,"status":"done","remark":"assert: a list of token approvals is shown","v":1,"ts":"2026-11-17T16:22:48.686Z"}
+{"step":11,"status":"running","remark":"Step 10","v":1,"ts":"2026-11-17T16:22:50.884Z"}
+{"step":11,"status":"done","remark":"click: Clicking Sort By control in approvals list","v":1,"ts":"2026-11-17T16:23:03.442Z"}
+{"step":12,"status":"running","remark":"Step 11","v":1,"ts":"2026-11-17T16:23:05.999Z"}
+{"step":12,"status":"done","remark":"click: Clicking Newest to Oldest in the Sort By dropdown","v":1,"ts":"2026-11-17T16:23:16.662Z"}
+{"step":13,"status":"running","remark":"Step 12","v":1,"ts":"2026-11-17T16:23:18.886Z"}
+{"step":13,"status":"done","remark":"type: Typing approved spender address in Search by Spender box","v":1,"ts":"2026-11-17T16:23:35.016Z"}
+{"step":14,"status":"running","remark":"Step 13","v":1,"ts":"2026-11-17T16:23:36.779Z"}
+{"step":14,"status":"done","remark":"analyze: ANALYZE(textual_visual, 'after applying a filter or spender search the list show","v":1,"ts":"2026-11-17T16:24:47.924Z"}
+{"step":15,"status":"running","remark":"Step 14","v":1,"ts":"2026-11-17T16:24:49.438Z"}
+{"step":15,"status":"done","remark":"assert: after loading, a list of token approvals is shown for the selected network, the ","v":1,"ts":"2026-11-17T16:24:49.580Z"}

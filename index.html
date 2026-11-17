@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayproof · Proof Reports</title>
+<style>
+:root{--bg:#FAFAF7;--surface:#FFFFFF;--line:#E4E4DE;--text:#141716;--muted:#5F6764;--accent:#2F5BEA}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1110;--surface:#161A19;--line:#2A302E;--text:#ECEFEC;--muted:#9AA3A0;--accent:#7C9BFF}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/24px Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px}a{color:var(--accent)}h1{font-size:32px;line-height:40px;margin:0 0 8px}h2{font-size:22px;margin:32px 0 8px}
+.muted{color:var(--muted)}.small{font-size:14px;line-height:20px}ul{list-style:none;padding:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:8px 0;overflow-wrap:anywhere}
+</style></head><body><main>
+<h1>Wayproof · Proof Reports</h1>
+<p>Wayproof checks whether a crypto project's how-to guide still works: <b>Kane CLI</b> follows each step in a real browser, <b>Claude</b> proposes a fix when a step fails, and Kane re-runs to prove it. Wayproof never connects a wallet, signs or sends anything; wallet steps are marked "not checked".</p>
+<p class="small muted">These are real checks of real guides, each a dated snapshot. Every verdict quotes Kane's own output. Kane's sealed evidence packs stay private because they contain Kane account details; each report links Kane's raw output and Kane's own run page instead. Source and how to run it yourself: <a href="https://github.com/softalpha0/wayproof">https://github.com/softalpha0/wayproof</a></p>
+<h2>Revoke.cash — How to revoke token approvals</h2><ul><li class="card"><a href="reports/revoke-cash-2026-11-17/report.html"><b>Revoke.cash guide · main report</b></a>
+  <span class="muted">· checked 17 Nov 2026, 17:16 (UTC+1)</span><br>
+  <span>Score 100/100 · passed 2 · verified fixed 0 · needs a human 0 · wallet steps not run 4 · couldn't check 0 · other site 1 · Kane runs 3</span>
+  </li><li class="card"><a href="reports/revoke-cash-2026-11-17-earlier/report.html"><b>Revoke.cash guide · earlier run</b></a>
+  <span class="muted">· checked 17 Nov 2026, 16:54 (UTC+1)</span><br>
+  <span>Score 100/100 · passed 2 · verified fixed 1 · needs a human 0 · wallet steps not run 4 · couldn't check 1 · other site 1 · Kane runs 5</span>
+  <p class="small muted">Earlier run of the same guide on the same day. Here Claude read the guide&#39;s &quot;apply filters or search by the approved spender address&quot; as two separate steps, and Wayproof&#39;s planner added an &quot;ERC20&quot; filter the guide never mentions. Kane found no filters control on today&#39;s page (true: only &quot;Search by Spender&quot; exists), so Claude proposed using the search field and Kane proved it — a Verified fix. The later main report checks the guide&#39;s own wording (filters OR search) and passes. Both runs are real; the difference shows how reading a guide&#39;s steps affects verdicts. This run also contains a since-fixed bug: Etherscan step 12 was checked on revoke.cash (&quot;Couldn&#39;t check&quot;).</p></li></ul>
+<h2>Uniswap — How to bridge tokens using the Uniswap web app</h2><ul><li class="card"><a href="reports/uniswap-bridge-2026-11-17/report.html"><b>Uniswap bridging guide · main report</b></a>
+  <span class="muted">· checked 17 Nov 2026, 22:36 (UTC+1)</span><br>
+  <span>Score 100/100 · passed 4 · verified fixed 0 · needs a human 0 · wallet steps not run 4 · couldn't check 1 · other site 0 · Kane runs 4</span>
+  </li><li class="card"><a href="reports/uniswap-bridge-2026-11-17-earlier/report.html"><b>Uniswap bridging guide · earlier run</b></a>
+  <span class="muted">· checked 17 Nov 2026, 17:30 (UTC+1)</span><br>
+  <span>Score 100/100 · passed 1 · verified fixed 0 · needs a human 0 · wallet steps not run 4 · couldn't check 1 · other site 0 · Kane runs 1</span>
+  <p class="small muted">Earlier run of the same guide on the same day. Steps 5–7 were all reported &quot;Couldn&#39;t check&quot;: the plan for that group was refused by Wayproof&#39;s safety gate because one step&#39;s check mentioned the &quot;Approve and swap&quot; button. Wayproof now re-plans a refused group one step at a time, so in the main report steps 6–7 were checked and passed, and only the Review step stays &quot;Couldn&#39;t check&quot;.</p></li></ul>
+</main></body></html>

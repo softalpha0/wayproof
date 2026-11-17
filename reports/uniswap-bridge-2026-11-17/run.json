@@ -1,0 +1,455 @@
+{
+  "id": "2026-11-17T21-36-55Z-w1he",
+  "source": "cli",
+  "createdAt": "2026-11-17T21:36:55.890Z",
+  "finishedAt": "2026-11-17T21:52:32.534Z",
+  "status": "finished",
+  "guideUrl": "https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app",
+  "guideTitle": "How to bridge tokens using the Uniswap web app",
+  "allowedDomains": [
+    "support.uniswap.org",
+    "app.uniswap.org"
+  ],
+  "creditBudget": 300,
+  "kaneCredits": 91.3750525,
+  "creditsCounted": 99.3750525,
+  "kaneRuns": 4,
+  "claudeTokens": {
+    "input": 13309,
+    "output": 3974
+  },
+  "steps": [
+    {
+      "n": 1,
+      "action": "Open the web app",
+      "expected": "The Uniswap web app is displayed",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 2,
+      "action": "Connect your wallet",
+      "expected": "Your wallet is connected to the Uniswap web app",
+      "needsWallet": true,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 3,
+      "action": "Select the token drop-down",
+      "expected": "A list of tokens appears",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 4,
+      "action": "Select the token you want to bridge",
+      "expected": "The selected token is shown as the token to bridge",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 5,
+      "action": "Select the token drop-down",
+      "expected": "A list of tokens and networks appears",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 6,
+      "action": "Select the network you want to bridge to",
+      "expected": "The destination network is selected",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 7,
+      "action": "Enter the amount you would like to bridge, or select the \"Max\" option",
+      "expected": "The amount is entered; \"Max\" automatically inputs the total amount of the token you have available in your wallet",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 8,
+      "action": "Select \"Review\"",
+      "expected": "A review of the bridge is shown with an \"Approve and swap\" option",
+      "needsWallet": false,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 9,
+      "action": "Select \"Approve and swap\"",
+      "expected": "Your wallet prompts you to approve Uniswap to access your tokens",
+      "needsWallet": true,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 10,
+      "action": "Using your wallet, approve Uniswap to access your tokens (requires a network cost)",
+      "expected": "Uniswap is approved to access your tokens",
+      "needsWallet": true,
+      "url": "https://app.uniswap.org"
+    },
+    {
+      "n": 11,
+      "action": "In your wallet, confirm the bridge (requires a network cost)",
+      "expected": "The tokens are bridged to the other network; once complete, the received tokens are in your wallet and the swap details can be viewed in the portfolio activity section",
+      "needsWallet": true,
+      "url": "https://app.uniswap.org"
+    }
+  ],
+  "checks": [
+    {
+      "id": "check-1",
+      "stepNumbers": [
+        1
+      ],
+      "stepText": "Open the web app",
+      "expected": "The Uniswap web app is displayed",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Open the web app",
+          "objective": "Do not connect a wallet or sign anything. Never press 'Connect', 'Swap', 'Approve' or 'Confirm Swap'. Open the Uniswap web app at https://app.uniswap.org and wait for the page to finish loading. Assert that the Uniswap web app is displayed, with visible Uniswap text such as the word 'Uniswap' or the app's main navigation or swap interface text (e.g. 'Swap') shown on the page.",
+          "url": "https://app.uniswap.org",
+          "startedAt": "2026-11-17T21:37:08.677Z",
+          "endedAt": "2026-11-17T21:40:34.520Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Waited for the Uniswap web app to finish loading.\nThe Uniswap homepage loaded successfully, showing the Uniswap name, main navigation, and Swap interface text.\nNo wallet was connected and no swap-related action was taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://app.uniswap.org/",
+              "uniswap_text_visible": "true",
+              "main_navigation_visible": "true",
+              "swap_interface_text_visible": "true"
+            },
+            "credits": 16.430854999999998,
+            "durationMs": 205790,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://app.uniswap.org"
+              },
+              {
+                "status": "done",
+                "remark": "wait: PRIMARY: wait for the page to finish loading"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: swap interface text (e.g. 'Swap') is shown on the page"
+              },
+              {
+                "status": "done",
+                "remark": "assert: the Uniswap web app is displayed, with visible Uniswap text such as the word 'Un"
+              }
+            ],
+            "rawLog": "kane/check-1-attempt-1.ndjson",
+            "evidence": "evidence/check-1-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane loaded the Uniswap web app and saw the Uniswap name, the main navigation and the Swap interface text, which matches the expected result.",
+            "quote": "The Uniswap homepage loaded successfully, showing the Uniswap name, main navigation, and Swap interface text.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-2",
+      "stepNumbers": [
+        2
+      ],
+      "stepText": "Connect your wallet",
+      "expected": "Your wallet is connected to the Uniswap web app",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-3",
+      "stepNumbers": [
+        3,
+        4,
+        5
+      ],
+      "stepText": "Select the token drop-down\nSelect the token you want to bridge\nSelect the token drop-down",
+      "expected": "A list of tokens appears Then: The selected token is shown as the token to bridge Then: A list of tokens and networks appears",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Select the token drop-down\nSelect the token you want to bridge\nSelect the token drop-down",
+          "objective": "Do not connect a wallet or sign anything. Never press 'Swap', 'Review', 'Confirm Swap', 'Approve' or 'Connect'. On the Uniswap app swap page, click the token drop-down in the 'Sell' section. Check that a list of tokens appears, then select any token from that list. Check that the selected token now appears as the token in the 'Sell' section. Next, click the token drop-down in the 'Buy' section. Assert that a list of tokens appears along with network names or a network selector.",
+          "url": "https://app.uniswap.org/swap",
+          "startedAt": "2026-11-17T21:40:41.428Z",
+          "endedAt": "2026-11-17T21:43:43.143Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "You asked to choose a token to sell on the Uniswap swap page and then open the token picker for the buy field.\nOpened the Sell token list and selected USDT, which appeared in the Sell section.\nOpened the Buy token list, where tokens and a network selector were visible.\nNo wallet was connected and no swap, review, approval, or confirmation action was taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://app.uniswap.org/swap",
+              "sell_selected_token": "USDT",
+              "buy_token_list_visible": "true",
+              "network_names_or_selector_visible": "true"
+            },
+            "credits": 34.50009,
+            "durationMs": 181573,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://app.uniswap.org/swap"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking the Sell token drop-down to select ETH"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: a list of tokens appears"
+              },
+              {
+                "status": "done",
+                "remark": "assert: a list of tokens appears"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking USDT token in Sell quick-token row"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, \"the selected token appears as the token in the 'Sell' s"
+              },
+              {
+                "status": "done",
+                "remark": "assert: the selected token now appears as the token in the 'Sell' section"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking the token drop-down in the Buy section"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: network names or a network selector appears"
+              },
+              {
+                "status": "done",
+                "remark": "assert: a list of tokens appears along with network names or a network selector"
+              }
+            ],
+            "rawLog": "kane/check-3-attempt-1.ndjson",
+            "evidence": "evidence/check-3-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane opened the Sell token list, selected USDT which appeared in the Sell section, and then saw the Buy token list along with a network selector, matching every expected result.",
+            "quote": "Opened the Buy token list, where tokens and a network selector were visible.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-4.1",
+      "stepNumbers": [
+        6
+      ],
+      "stepText": "Select the network you want to bridge to",
+      "expected": "The destination network is selected",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Select the network you want to bridge to",
+          "objective": "Do not connect a wallet or sign anything. On the Uniswap app, open the swap form and find the network selector for the token you want to receive (the destination side, labelled 'Buy' or 'You receive'). Click it and select a destination network from the list, such as any network shown there that differs from the source network. Never press 'Connect wallet', 'Swap', 'Review', 'Approve' or 'Confirm Swap'. Assert that the name of the chosen destination network is shown as text on the destination side of the swap form.",
+          "url": "https://app.uniswap.org",
+          "startedAt": "2026-11-17T21:44:04.858Z",
+          "endedAt": "2026-11-17T21:49:12.576Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Opened the Uniswap swap form and selected a different network for the destination side.\nThe destination side showed “Base ETH,” confirming that Base was selected as the receiving network.\nDid not connect a wallet or initiate, review, approve, or confirm a swap.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://app.uniswap.org/swap",
+              "destination_network_display": "Base ETH",
+              "destination_network_name_shown": "true"
+            },
+            "credits": 24.770685,
+            "durationMs": 307689,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://app.uniswap.org/"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Trade in the top navigation to open the swap form"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking Select token in the Buy destination panel"
+              },
+              {
+                "status": "done",
+                "remark": "click: Clicking the destination network selector button"
+              },
+              {
+                "status": "done",
+                "remark": "click: Selecting a destination network from the list"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, 'The chosen destination network name is shown as text on"
+              },
+              {
+                "status": "done",
+                "remark": "assert: the name of the chosen destination network is shown as text on the destination s"
+              }
+            ],
+            "rawLog": "kane/check-4.1-attempt-1.ndjson",
+            "evidence": "evidence/check-4.1-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane selected a different destination network and reported the destination side showing \"Base ETH,\" which confirms Base was selected as the receiving network.",
+            "quote": "The destination side showed “Base ETH,” confirming that Base was selected as the receiving network.",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-4.2",
+      "stepNumbers": [
+        7
+      ],
+      "stepText": "Enter the amount you would like to bridge, or select the \"Max\" option",
+      "expected": "The amount is entered; \"Max\" automatically inputs the total amount of the token you have available in your wallet",
+      "needsWallet": false,
+      "verdict": "passed",
+      "verdictWhy": "Kane followed the guide and saw the expected result.",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Enter the amount you would like to bridge, or select the \"Max\" option",
+          "objective": "Do not connect a wallet or sign anything. On the Uniswap app swap page, click the amount field in the 'Sell' section and type the amount 0.01. Do not press 'Max', since it needs a connected wallet to fill in a balance. Never press 'Connect wallet', 'Swap', 'Review', 'Confirm Swap' or 'Approve'. Assert that the amount 0.01 is visibly shown in the 'Sell' amount field.",
+          "url": "https://app.uniswap.org/swap",
+          "startedAt": "2026-11-17T21:49:21.763Z",
+          "endedAt": "2026-11-17T21:52:16.288Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "Entered 0.01 in the Sell amount field on the Uniswap swap page.\nThe Sell field visibly showed 0.01, and no wallet was connected or transaction action was taken.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": {
+              "url": "https://app.uniswap.org/swap",
+              "sell_amount_field_value": "0.01"
+            },
+            "credits": 15.673422500000001,
+            "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7NQS3QBG3KCC3NJTPPHFNNZ/dashboard/share/US_4YDFDNZXOAWKLDLQRX6YL2DH6PBL2PC7LLJEQA19TFSBG3SY99FTBB7RE7DQLVFN?type=summary&agentView=true&fqdn=summary-page",
+            "durationMs": 174491,
+            "steps": [
+              {
+                "status": "done",
+                "remark": "navigate: Navigate to https://app.uniswap.org/swap"
+              },
+              {
+                "status": "done",
+                "remark": "type: Entering 0.01 in the Sell amount field"
+              },
+              {
+                "status": "done",
+                "remark": "analyze: ANALYZE(textual_visual, \"the amount 0.01 is visibly shown in the 'Sell' amount f"
+              },
+              {
+                "status": "done",
+                "remark": "assert: the amount 0.01 is visibly shown in the 'Sell' amount field"
+              }
+            ],
+            "rawLog": "kane/check-4.2-attempt-1.ndjson",
+            "evidence": "evidence/check-4.2-attempt-1.evidence"
+          },
+          "judge": {
+            "outcome": "pass",
+            "reason": "Kane entered 0.01 in the Sell field and confirmed it was visibly shown, which matches the expected result that the amount is entered.",
+            "quote": "The Sell field visibly showed 0.01, and no wallet was connected",
+            "model": "claude-opus-5-5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check-4.3",
+      "stepNumbers": [
+        8
+      ],
+      "stepText": "Select \"Review\"",
+      "expected": "A review of the bridge is shown with an \"Approve and swap\" option",
+      "needsWallet": false,
+      "verdict": "couldnt_check",
+      "verdictWhy": "Wayproof's AI could not plan this check: Claude's answer was rejected twice. Last problem: The safety gate refused it: The objective asks for a wallet or fund-moving action (approve, confirm or send a transaction).",
+      "errorCode": "ERR-AI",
+      "attempts": []
+    },
+    {
+      "id": "check-5",
+      "stepNumbers": [
+        9
+      ],
+      "stepText": "Select \"Approve and swap\"",
+      "expected": "Your wallet prompts you to approve Uniswap to access your tokens",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-6",
+      "stepNumbers": [
+        10
+      ],
+      "stepText": "Using your wallet, approve Uniswap to access your tokens (requires a network cost)",
+      "expected": "Uniswap is approved to access your tokens",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    },
+    {
+      "id": "check-7",
+      "stepNumbers": [
+        11
+      ],
+      "stepText": "In your wallet, confirm the bridge (requires a network cost)",
+      "expected": "The tokens are bridged to the other network; once complete, the received tokens are in your wallet and the swap details can be viewed in the portfolio activity section",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "attempts": []
+    }
+  ]
+}
