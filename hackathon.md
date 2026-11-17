@@ -143,7 +143,7 @@ Winners announcement date · workshops and recordings · team-change rules / one
 ### 3.3 Tools the project uses [Proposed in TDD.md]
 | Tool | Why | Official docs |
 |---|---|---|
-| Node.js (LTS, 20+) | Runs Kane CLI, the CLI, the server and the web app | https://nodejs.org/ |
+| Node.js (LTS, 22+) | Runs Kane CLI, the CLI, the server and the web app (22+ decided 17 Nov: execa 10 needs it) | https://nodejs.org/ |
 | pnpm | Manages the monorepo packages | https://pnpm.io/ |
 | Git + GitHub | Public repo (required) | https://git-scm.com/ · https://docs.github.com/ |
 | GitHub CLI (`gh`) — optional | Create the repo from the terminal | https://cli.github.com/ |

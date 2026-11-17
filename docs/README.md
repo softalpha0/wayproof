@@ -77,6 +77,8 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | Real guides: Claude proposes, owner approves before use | 16 Nov 2026 |
 | Real guides approved (TC-1): **Revoke.cash** and **Arbitrum**; **Across** as backup | 16 Nov 2026 |
 | Arbitrum replaced by **Uniswap — "How to bridge tokens using the Uniswap web app"** (Arbitrum's pages are behind a bot check Kane can't pass; its blocked result is kept as a Couldn't-check example) (TC-15) | 16 Nov 2026 |
+| Score counts only Passed, Verified fixed and Needs a human; otherwise "no score" (FR-51) | 17 Nov 2026 |
+| Node.js **22 or newer** for everything, including the runner image | 17 Nov 2026 |
 | Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
 
 ## To-confirm register

@@ -110,7 +110,7 @@ AC: only suggests a replacement if another provided official source shows it; Ka
 AC: shows run date/time, guide title and URL, score, counts per verdict, every check with attempts, Kane evidence (screenshots, summary, `test_url` if present), Claude reasons and fixes.
 
 **FR-51 — Score.** *F-3 · S-04*
-AC: score = 100 × (Passed + Verified fixed) ÷ (checks run − Couldn't check − Not checked); shown with the formula on hover/tap. **[Proposed]**
+AC: score = 100 × (Passed + Verified fixed) ÷ (Passed + Verified fixed + Needs a human); shown with the formula on hover/tap. Every other verdict (Couldn't check, Not checked — wallet / outside allowed domains, Not run — budget, Stopped by you) is left out because Kane never got a fair go at it. If nothing counts, the report shows "no score", never 0. **[Proposed]**; denominator **[Decided 17 Nov 2026]**
 
 **FR-52 — Share.** *F-3 · UF-4 · S-04*
 AC: copy link `/report/:id`; reports are read-only; no personal data (BR-7).

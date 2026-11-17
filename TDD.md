@@ -168,19 +168,19 @@ Status column: what is installed **on the owner's computer** (checked 16 Nov 202
 |---|---|---|---|---|---|---|
 | **Kane CLI** `@testmuai/kane-cli` | Browser verification; engine (C-5) | Required by the hackathon | — | Needs Chrome; credits | CONFIRMED [Rule][Kane doc]; Windows CONFIRMED [Observed] (TC-13 resolved) | Installed 0.10.4, logged in, first run passed |
 | **Google Chrome (stable)** | Used by Kane | Required by Kane | — | Must exist on runner host | CONFIRMED [Kane doc] | Installed 157.0.8103.78 stable, standard path (no `KANE_CLI_CHROME_PATH` needed) |
-| **Node.js 20+ LTS** | Runtime for everything | Kane is an npm package needing Node 18+; one language for all parts | Python (would split the codebase) | — | RECOMMENDATION | Installed v26.13.0 (LTS); Corepack not bundled |
-| **TypeScript** | All code | Type safety helps a beginner + agent catch mistakes early | JavaScript | Build step | RECOMMENDATION | — |
-| **pnpm workspaces** | Monorepo (engine, cli, runner, web) | Share the engine package without publishing it | npm workspaces | Extra tool | RECOMMENDATION | Installed 12.18.0 (via npm) |
+| **Node.js 22+ LTS** | Runtime for everything | Kane is an npm package needing Node 18+; execa 10 needs Node 22+; Node 20 reached end of life in April 2026; one language for all parts | Python (would split the codebase) | — | RECOMMENDATION; 22+ [Decided 17 Nov 2026] | Installed v26.13.0 (LTS); Corepack not bundled |
+| **TypeScript** | All code | Type safety helps a beginner + agent catch mistakes early | JavaScript | Build step | RECOMMENDATION | In project: 7.0.2 (root dev dependency); `pnpm typecheck` |
+| **pnpm workspaces** | Monorepo (engine, cli, runner, web) | Share the engine package without publishing it | npm workspaces | Extra tool | RECOMMENDATION | Installed 12.18.0 (via npm); workspace set up 17 Nov with `packages/engine` (cli, runner, web added later) |
 | **Anthropic SDK (Claude)** | Extract / plan / judge / fix (C-7) | Owner decision | — | Cost; budget TC-3 | CONFIRMED provider and model `claude-opus-5-5` [Decided]; budget NEEDS CONFIRMATION | SDK not installed; API key in `.env` verified 16 Nov |
-| **Zod** | Validate config, Kane NDJSON, Claude JSON, API bodies | One validation tool everywhere | Ajv | — | RECOMMENDATION | — |
+| **Zod** | Validate config, Kane NDJSON, Claude JSON, API bodies | One validation tool everywhere | Ajv | — | RECOMMENDATION | In project: 4.6.7 (engine dependency) |
 | **Commander** | CLI commands | Small and common | yargs, oclif | — | RECOMMENDATION | — |
-| **execa** | Spawn `kane-cli` without a shell | Safe argument arrays, streaming stdout | Node `child_process` | — | RECOMMENDATION | — |
+| **execa** | Spawn `kane-cli` without a shell | Safe argument arrays, streaming stdout | Node `child_process` | Needs Node 22+ | RECOMMENDATION | In project: 10.2.1 (engine dependency) |
 | **Readability (Mozilla) + jsdom** | Extract the main text of a guide page | Removes menus/ads before sending to Claude | Raw HTML to Claude (costly, noisy) | Some pages render content with JavaScript (then the extract may be empty → ERR-NO-STEPS) | RECOMMENDATION | — |
 | **Hono** | Runner API + Server-Sent Events | Small, fast, built-in SSE helper | Express, Fastify | — | RECOMMENDATION | — |
 | **SQLite** (`better-sqlite3`) | Runner storage for runs, codes, usage | One file, no separate database service | Postgres (more setup) | One server only | RECOMMENDATION (TC-12) | — |
 | **Next.js (App Router) + React** | Web pages S-01…S-09 | Pages + shareable report URLs | Vite + React SPA | — | RECOMMENDATION | — |
 | **Tailwind CSS** | Styling from tokens in `docs/03` §7 | Fast to apply a token-based design | Plain CSS modules | — | RECOMMENDATION | — |
-| **Vitest** | Tests | Fast, TypeScript-friendly | Jest | — | RECOMMENDATION | — |
+| **Vitest** | Tests | Fast, TypeScript-friendly | Jest | — | RECOMMENDATION | In project: 5.1.0 (root dev dependency); `pnpm test` |
 | **GitHub + GitHub Actions** | Public repo (required), CI | Required public repo; free CI | — | — | CONFIRMED repo [Rule]; CI RECOMMENDATION | Not created |
 | **Hosting: web front end** | Next.js site | — | Vercel, Netlify, same container | — | NEEDS CONFIRMATION (TC-11) | — |
 | **Hosting: runner** | Container with Chrome + kane-cli + persistent disk | Kane needs Chrome and long runs | Any container host with a persistent disk | Free tiers may sleep or lack disks | NEEDS CONFIRMATION (TC-4) | — |
@@ -575,7 +575,7 @@ Every screen has loading, empty, success and error states (`docs/03`).
 | **Production (judging)** | Web front end (TC-11) + runner container with Chrome, kane-cli, persistent disk for SQLite + files (TC-4) | Host secrets: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, Kane login (`LT_USERNAME`, `LT_ACCESS_KEY` for `kane-cli login` [Kane doc]), `RUNNER_PUBLIC_ORIGIN`, `WEB_ORIGIN`, `CREDIT_BUDGET_PER_RUN`, `VISITOR_DAILY_RUNS`; web: `NEXT_PUBLIC_RUNNER_URL` |
 
 **Build:** `pnpm install` → `pnpm build` (engine, cli, runner, web) → `pnpm test`.
-**Runner image:** Node 20 + Chrome stable + `npm i -g @testmuai/kane-cli` + app; on start: `kane-cli login --username … --access-key …` then `wayproof doctor`-style health check (A-9). Kane's docs include Docker/CI recipes [Kane doc] — follow them rather than inventing install steps.
+**Runner image:** Node 22 or newer (LTS) + Chrome stable + `npm i -g @testmuai/kane-cli` + app; on start: `kane-cli login --username … --access-key …` then `wayproof doctor`-style health check (A-9). Kane's docs include Docker/CI recipes [Kane doc] — follow them rather than inventing install steps.
 **Deploy:** push to `main` → CI tests → host deploys (exact mechanism depends on TC-4/TC-11).
 **Rollback:** redeploy the previous container image / previous web deployment; SQLite file backed up before each deploy (copy).
 **Never** put real credentials in docs or the repo; `.env.example` lists names only.
