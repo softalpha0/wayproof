@@ -6,6 +6,7 @@
 //   - fix:   the expected result is copied by code (BR-5); the new text must pass the wallet check (BR-1)
 
 import * as z from "zod";
+import { checkUrl } from "../safety/domains.ts";
 import { gateBeforeRun } from "../safety/gate.ts";
 import { checkObjective, SAFETY_SENTENCE } from "../safety/wallet.ts";
 import { askJson, untrusted, type AskResult } from "./ask.ts";
@@ -88,7 +89,8 @@ const PLAN_SYSTEM = [
   "Assert on visible text or numbers on the page, never on icons, colours or logos (an icon-based check failed on 16 Nov 2026).",
   "Never ask Kane to connect a wallet, sign, approve, confirm, send, or press buttons that move funds (Revoke, Move funds, Approve, Confirm Swap, Claim, Stake, Swap…).",
   'You may forbid such buttons with a sentence that starts with "Never press", e.g. "Never press \'Move funds\'."',
-  "url is the https page Kane should start on; it must be on the allowed sites list.",
+  "url is the https page Kane should start on. Use a page on the allowed sites list. If the steps clearly happen on another",
+  "site (e.g. a block explorer that is not allowed), give that other site's https address anyway — Wayproof will then mark the steps as outside the allowed sites.",
   DATA_RULE,
 ].join("\n");
 
@@ -99,10 +101,18 @@ export interface PlannedCheck {
   expected: string;
 }
 
+export type PlanResult = AskResult<PlannedCheck> | { ok: false; code: "OUTSIDE_ALLOWED_SITES"; why: string; url: string };
+
 export async function planObjective(
   llm: Llm,
-  input: { steps: GuideStep[]; allowedDomains: string[]; startUrlHint?: string },
-): Promise<AskResult<PlannedCheck>> {
+  input: {
+    steps: GuideStep[];
+    allowedDomains: string[];
+    startUrlHint?: string;
+    /** Feedback from the judge when the previous check was worded badly (check_wording). */
+    previousProblem?: string;
+  },
+): Promise<PlanResult> {
   if (input.steps.length === 0 || input.steps.length > 3) throw new Error("plan needs 1 to 3 steps");
   const expected = input.steps.map((s) => s.expected).join(" Then: ");
   const stepsText = input.steps.map((s) => `${s.n}. ${s.action}\n   Expected: ${s.expected}`).join("\n");
@@ -115,6 +125,9 @@ export async function planObjective(
       user: [
         `Allowed sites: ${input.allowedDomains.join(", ")}`,
         input.startUrlHint ? `Suggested start page: ${input.startUrlHint}` : "",
+        input.previousProblem
+          ? `The previous check for these steps could not be confirmed by Kane even though the result looked right. Judge's note: ${input.previousProblem}\nWrite a different check of the SAME expected result, based on visible text or numbers.`
+          : "",
         untrusted("untrusted_guide_steps", stepsText),
       ]
         .filter(Boolean)
@@ -124,11 +137,23 @@ export async function planObjective(
     },
     (a) => {
       if (!a.objective.trimStart().startsWith(SAFETY_SENTENCE)) return `The objective must start with "${SAFETY_SENTENCE}"`;
-      const gate = gateBeforeRun({ objective: a.objective, url: a.url, allowedDomains: input.allowedDomains });
-      return gate.allowed ? undefined : `The safety gate refused it: ${gate.why}`;
+      const wallet = checkObjective(a.objective);
+      if (!wallet.ok) return `The safety gate refused it: ${wallet.why}`;
+      let parsed: URL;
+      try {
+        parsed = new URL(a.url);
+      } catch {
+        return `url is not a valid web address: ${a.url}`;
+      }
+      if (parsed.protocol !== "https:") return `url must start with https:// — got ${a.url}`;
+      return undefined; // the allowed-sites decision is made below, without a retry
     },
   );
   if (!result.ok) return result;
+  const site = checkUrl(result.value.url, input.allowedDomains);
+  if (!site.ok) return { ok: false, code: "OUTSIDE_ALLOWED_SITES", why: site.why, url: result.value.url };
+  const gate = gateBeforeRun({ objective: result.value.objective, url: result.value.url, allowedDomains: input.allowedDomains });
+  if (!gate.allowed) return { ok: false, code: "ERR-AI", why: `The safety gate refused the planned check: ${gate.why}`, attempts: result.attempts, usage: result.usage };
   return { ...result, value: { objective: result.value.objective.trim(), url: result.value.url, expected } };
 }
 

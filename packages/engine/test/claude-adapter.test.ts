@@ -135,9 +135,18 @@ describe("plan (FR-20, BR-1, BR-2, BR-5)", () => {
     expect(llm.asked[1]?.user).toContain("safety gate refused");
   });
 
-  it("an objective on another site is refused (BR-2)", async () => {
-    const bad = ok({ objective: `${S} Open the approvals page.`, url: "https://etherscan.io" });
-    expect(await planObjective(new FakeLlm([bad, bad]), { steps, allowedDomains: allowed })).toMatchObject({ ok: false });
+  it("steps on another site → OUTSIDE_ALLOWED_SITES straight away, no retry (BR-2)", async () => {
+    const other = ok({ objective: `${S} Open the approvals page.`, url: "https://etherscan.io/tokenapprovalchecker" });
+    const llm = new FakeLlm([other]);
+    const r = await planObjective(llm, { steps, allowedDomains: allowed });
+    expect(r).toMatchObject({ ok: false, code: "OUTSIDE_ALLOWED_SITES", url: "https://etherscan.io/tokenapprovalchecker" });
+    expect(llm.asked).toHaveLength(1);
+  });
+
+  it("a rewrite request passes the judge's note to Claude (check_wording)", async () => {
+    const llm = new FakeLlm([ok({ objective: `${S} Type vitalik.eth and press Enter. Assert that the text 'Approvals' is shown.`, url: "https://revoke.cash" })]);
+    await planObjective(llm, { steps, allowedDomains: allowed, previousProblem: "The check relied on an icon." });
+    expect(llm.asked[0]?.user).toContain("The check relied on an icon.");
   });
 
   it("the safety sentence must come first", async () => {
