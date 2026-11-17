@@ -30,5 +30,26 @@ export {
   type JudgeInput,
   type PlanAnswer,
   type PlannedCheck,
+  type PlanResult,
   type ProposedFix,
 } from "./claude/prompts.ts";
+export {
+  newRunId,
+  RunStore,
+  type AttemptKind,
+  type AttemptRecord,
+  type CheckRecord,
+  type KaneAttemptRecord,
+  type RunRecord,
+} from "./loop/record.ts";
+export {
+  allowedSites,
+  buildChecks,
+  checkGuide,
+  CREDIT_MARGIN_PER_RUN,
+  DEFAULT_CREDIT_BUDGET,
+  MAX_KANE_RUNS_PER_CHECK,
+  type CheckGuideOptions,
+  type LoopDeps,
+  type LoopEvent,
+} from "./loop/check-guide.ts";
