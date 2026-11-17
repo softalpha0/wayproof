@@ -9,6 +9,7 @@ export { runKane, type KaneRunResult, type RunKaneOptions } from "./kane/run.ts"
 export { checkUrl, normalizeDomain, type DomainResult, type UrlResult } from "./safety/domains.ts";
 export { checkObjective, checkRemark, SAFETY_SENTENCE, type ObjectiveResult, type RemarkResult } from "./safety/wallet.ts";
 export { gateAfterRun, gateBeforeRun, type GateDecision, type GateInput } from "./safety/gate.ts";
+export { fetchGuide, htmlToText, mainText, USER_AGENT, type FetchGuideOptions, type FetchGuideResult } from "./fetch/guide.ts";
 export type { Effort, Llm, LlmRequest, LlmResponse, LlmUsage, PromptName } from "./claude/llm.ts";
 export { AnthropicLlm, type AnthropicLlmOptions } from "./claude/anthropic.ts";
 export { askJson, untrusted, type AnswerCheck, type AskFailure, type AskResult, type AskSuccess } from "./claude/ask.ts";

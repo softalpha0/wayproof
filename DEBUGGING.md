@@ -127,6 +127,7 @@ pnpm test -- <file-or-name>            # one test file
 pnpm --filter @wayproof/engine kane:explain <file.ndjson> [--exit N]   # what the adapter makes of a saved Kane output (no credits)
 pnpm --filter @wayproof/engine safety:check "<objective>" <url> [--allow d1,d2]   # would the safety gate let Kane run this? (no credits)
 pnpm --filter @wayproof/engine claude:judge <file.ndjson> "<expected>"   # ask the real Claude judge about a saved Kane run (~1 US cent)
+pnpm --filter @wayproof/engine guide:fetch <url> [--allow d1,d2]   # what text Wayproof gets from a guide page (free) — first stop for ERR-FETCH / ERR-NO-STEPS
 ```
 Isolate Kane from Wayproof: if a check fails, run the **same objective** directly with `kane-cli run` (copy it from `run.json`). If Kane fails on its own too, the problem is not in Wayproof's code.
 

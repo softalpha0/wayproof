@@ -81,6 +81,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | Node.js **22 or newer** for everything, including the runner image | 17 Nov 2026 |
 | Judge gets a 5th answer, **`check_wording`** (the guide is right; Kane's check was worded too strictly) → rewrite the check once, never blame the guide (FR-22) | 17 Nov 2026 |
 | Allowed sites cover their sub-sites (BR-2) | 17 Nov 2026 |
+| End-to-end block: up to 3 steps per Kane run · **300 Kane credits per guide check** by default · self-checks and published reports on **GitHub Pages** · real-run allowance ≈ 600 Kane credits + ≈ $1 Claude · `wayproof.yml` deferred (options for now) | 17 Nov 2026 |
 | **Claude refusal fallback on**: if Claude Opus 5.5 declines, the API retries on another Claude model; the report records which model answered | 17 Nov 2026 |
 | **Self-verification (F-10, FR-65):** following the hackathon challenge ("Build it with any agent, verify it with Kane"), every Wayproof screen/report is verified by Kane before it counts as done; results kept in `verification/kane/` | 17 Nov 2026 |
 | Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
@@ -103,7 +104,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | TC-12 | Whether to store web app reports in a database or files | Shareable report links | Owner + architect (proposal: SQLite, TDD.md ADR-003) |
 | ~~TC-13~~ | Whether Kane CLI runs on Windows — **resolved 16 Nov 2026: yes.** Kane 0.10.4 installed with npm and passed a headless Chrome run on Windows 11 [Observed] | Local CLI on the owner's computer | Done (setup steps 6 and 9) |
 | TC-14 | Why the account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **about +2 on each of the 6 day-0 runs** (100.89 credits used in total) — a per-run fee? | Budgets (BR-9, BR-10) and `ERR-BUDGET` would undercount real spend | Budget with `credits_consumed` + 2 for now; ask in Slack |
-| TC-16 | **New:** can Kane open Wayproof's own pages served on this computer (`http://localhost:…` or a local `report.html`), or only public `https://` sites? Decides how FR-65 self-checks run before the web app is deployed | F-10 timing | One Kane run when the report builder exists (~15 credits) |
+| ~~TC-16~~ | How Kane opens Wayproof's own pages for FR-65 self-checks — **decided 17 Nov 2026:** reports are published on GitHub Pages (https) and Kane checks them there; no localhost exception in the safety gate | F-10 timing | Done |
 | ~~TC-15~~ | Arbitrum's bridge and portal pages show Kane a **Cloudflare bot check** (day-0, 16 Nov). **Decided:** replaced by Uniswap's bridging guide, https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app — a Kane test run did all its pre-wallet steps (TDD.md §13.1, U-1) | Demo; PRD success metric "≥ 2 real guides checked" | Done |
 
 ---
