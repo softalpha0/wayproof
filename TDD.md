@@ -684,7 +684,7 @@ flowchart LR
 
 | Claude adapter (C-7) | FR-2, FR-20, FR-22, FR-24 (+ BR-1/3/5/11, ERR-AI) | `packages/engine/src/claude/{llm,anthropic,ask,prompts}.ts`, `test/claude-adapter.test.ts`, `scripts/claude-{live-check,judge}.ts`, `fixtures/claude/` | **Implemented** — 22 adapter tests (110 in total) with a fake Claude; live check done (≈ $0.10); owner tested and approved 17 Nov |
 
-| Guide fetcher (C-8) | FR-2 (fetch), ERR-FETCH, BR-2 | `packages/engine/src/fetch/guide.ts`, `test/fetcher.test.ts`, `scripts/guide-fetch.ts` | Built 17 Nov, 15 fetcher tests pass (125 in total); works on Revoke.cash, Uniswap (via Zendesk API) and Arbitrum docs — **waiting for owner test** |
+| Guide fetcher (C-8) | FR-2 (fetch), ERR-FETCH, BR-2 | `packages/engine/src/fetch/guide.ts`, `test/fetcher.test.ts`, `scripts/guide-fetch.ts` | **Implemented** — 15 fetcher tests (125 in total); works on Revoke.cash, Uniswap (via Zendesk API) and Arbitrum docs; owner tested 17 Nov (results matched; approval taken from the test run) |
 | Fix loop (C-1) | FR-20–25, BR-3/4/5/10 | — | Planned (approved 17 Nov) |
 | Report builder (C-9) | FR-50/51/53/54 | — | Planned (approved 17 Nov) |
 | CLI `doctor`, `check` (C-2) | FR-55, FR-60, FR-61 (options instead of `wayproof.yml` for now) | — | Planned (approved 17 Nov) |

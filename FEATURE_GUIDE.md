@@ -62,3 +62,11 @@ pnpm test
   ```bash
   pnpm --filter @wayproof/engine claude:judge fixtures/kane/uniswap-bridge-assertion-too-strict.ndjson "The page shows an amount of ETH to receive on Base."
   ```
+
+### Guide fetcher (FR-2, ERR-FETCH, BR-2) — tested 17 Nov 2026
+- **What it does:** downloads a guide page as "Wayproof" (never pretending to be a browser). It follows redirects one hop at a time and checks each hop against the allowed sites; a redirect elsewhere is refused and never visited. It has a 20 s time limit and a 2 MB size limit. Help-centre articles (like Uniswap's) are read through their official public API. The main text is pulled out with Mozilla Readability, and no page scripts are run.
+- **Code:** `packages/engine/src/fetch/guide.ts` · **Tests:** `packages/engine/test/fetcher.test.ts`
+- **Try it by hand (free):**
+  ```bash
+  pnpm --filter @wayproof/engine guide:fetch https://revoke.cash/learn/approvals/how-to-revoke-token-approvals
+  ```
