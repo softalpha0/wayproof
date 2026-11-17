@@ -1,0 +1,30 @@
+{
+  "reports": [
+    {
+      "slug": "revoke-cash-2026-11-17",
+      "group": "Revoke.cash — How to revoke token approvals",
+      "label": "Revoke.cash guide · main report",
+      "run": ".wayproof/runs/2026-11-17T16-16-45Z-iyvp"
+    },
+    {
+      "slug": "revoke-cash-2026-11-17-earlier",
+      "group": "Revoke.cash — How to revoke token approvals",
+      "label": "Revoke.cash guide · earlier run",
+      "run": ".wayproof/runs/2026-11-17T15-54-14Z-33p4",
+      "note": "Earlier run of the same guide on the same day. Here Claude read the guide's \"apply filters or search by the approved spender address\" as two separate steps, and Wayproof's planner added an \"ERC20\" filter the guide never mentions. Kane found no filters control on today's page (true: only \"Search by Spender\" exists), so Claude proposed using the search field and Kane proved it — a Verified fix. The later main report checks the guide's own wording (filters OR search) and passes. Both runs are real; the difference shows how reading a guide's steps affects verdicts. This run also contains a since-fixed bug: Etherscan step 12 was checked on revoke.cash (\"Couldn't check\")."
+    },
+    {
+      "slug": "uniswap-bridge-2026-11-17",
+      "group": "Uniswap — How to bridge tokens using the Uniswap web app",
+      "label": "Uniswap bridging guide · main report",
+      "run": ".wayproof/runs/2026-11-17T21-36-55Z-w1he"
+    },
+    {
+      "slug": "uniswap-bridge-2026-11-17-earlier",
+      "group": "Uniswap — How to bridge tokens using the Uniswap web app",
+      "label": "Uniswap bridging guide · earlier run",
+      "run": ".wayproof/runs/2026-11-17T16-30-47Z-eikc",
+      "note": "Earlier run of the same guide on the same day. Steps 5–7 were all reported \"Couldn't check\": the plan for that group was refused by Wayproof's safety gate because one step's check mentioned the \"Approve and swap\" button. Wayproof now re-plans a refused group one step at a time, so in the main report steps 6–7 were checked and passed, and only the Review step stays \"Couldn't check\"."
+    }
+  ]
+}

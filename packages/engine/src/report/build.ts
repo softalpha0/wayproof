@@ -61,8 +61,18 @@ export async function writeReport(store: RunStore, run: RunRecord): Promise<{ ht
   return { htmlPath, markdownPath };
 }
 
-export function buildReport(run: RunRecord): BuiltReport {
-  return { html: buildHtml(run), markdown: buildMarkdown(run) };
+export interface ReportOptions {
+  /**
+   * Public copy (published website): Kane's sealed evidence packs are NOT linked, because they contain
+   * the Kane account's email, username and ids [Observed 17 Nov 2026] (BR-7). Raw output and TestMu links stay.
+   */
+  publicCopy?: boolean;
+  /** Plain-text note shown at the top (e.g. why an earlier run differs). */
+  note?: string;
+}
+
+export function buildReport(run: RunRecord, options: ReportOptions = {}): BuiltReport {
+  return { html: buildHtml(run, options), markdown: buildMarkdown(run, options) };
 }
 
 // ---------------------------------------------------------------------------
@@ -152,7 +162,7 @@ function headline(run: RunRecord): string {
 // ---------------------------------------------------------------------------
 // HTML
 
-function buildHtml(run: RunRecord): string {
+function buildHtml(run: RunRecord, options: ReportOptions): string {
   const verdicts = run.checks.map((c) => c.verdict).filter((v): v is Verdict => v !== undefined);
   const s = score(verdicts);
   const c = counts(run);
@@ -163,7 +173,7 @@ function buildHtml(run: RunRecord): string {
     .map((v) => `<li class="badge ${COLOUR[v]}"><span aria-hidden="true">${VERDICT_INFO[v].icon}</span> ${escapeHtml(VERDICT_INFO[v].label)} <b>${c.get(v)}</b></li>`)
     .join("");
 
-  const checks = sortedChecks(run).map((ch) => checkHtml(run, ch)).join("\n");
+  const checks = sortedChecks(run).map((ch) => checkHtml(ch, options)).join("\n");
 
   return `<!doctype html>
 <html lang="en">
@@ -181,6 +191,7 @@ function buildHtml(run: RunRecord): string {
   <h1>${escapeHtml(title)}</h1>
   <p class="meta">Checked <time datetime="${escapeHtml(run.createdAt)}">${escapeHtml(formatDate(run.createdAt))}</time> · ${link(run.guideUrl, run.guideUrl)}</p>
   <p class="lead">${escapeHtml(headline(run))}</p>
+  ${options.note ? `<p class="callout">${escapeHtml(options.note)}</p>` : ""}
   <p class="note">Kane CLI followed this guide in a real browser. Wayproof never connects a wallet, signs or sends anything, so steps that need a wallet are marked “Not checked”. This report is a snapshot of ${escapeHtml(formatDate(run.createdAt))}, not live status.</p>
 </section>
 
@@ -221,12 +232,12 @@ function buildHtml(run: RunRecord): string {
 `;
 }
 
-function checkHtml(run: RunRecord, ch: CheckRecord): string {
+function checkHtml(ch: CheckRecord, options: ReportOptions): string {
   const v = ch.verdict;
   const info = v ? VERDICT_INFO[v] : { label: "Not finished", icon: "⏳" };
   const tone = v ? COLOUR[v] : "muted";
   const lastKane = [...ch.attempts].reverse().find((a) => a.kane)?.kane;
-  const attempts = ch.attempts.map((a) => attemptHtml(a)).join("\n");
+  const attempts = ch.attempts.map((a) => attemptHtml(a, options)).join("\n");
   return `<details class="check card" id="${escapeHtml(ch.id)}"${v === "needs_human" || v === "verified_fixed" ? " open" : ""}>
   <summary>
     <span class="badge ${tone}"><span aria-hidden="true">${info.icon}</span> ${escapeHtml(info.label)}</span>
@@ -245,7 +256,7 @@ function checkHtml(run: RunRecord, ch: CheckRecord): string {
 </details>`;
 }
 
-function attemptHtml(a: AttemptRecord): string {
+function attemptHtml(a: AttemptRecord, options: ReportOptions): string {
   const k = a.kane;
   const evidence = localHref(k?.evidence);
   const raw = localHref(k?.rawLog);
@@ -261,7 +272,7 @@ function attemptHtml(a: AttemptRecord): string {
   ${a.error ? `<p class="bad-t"><code>${escapeHtml(a.error.code)}</code> ${escapeHtml(a.error.why)}</p>` : ""}
   ${
     k
-      ? `<p class="small evidence">Evidence: ${evidence ? `<a href="${evidence}" download>Kane evidence pack</a> (open with <code>kane-cli evidence serve ${escapeHtml(k.evidence)}</code>)` : "Kane evidence pack not saved on this computer"}${raw ? ` · <a href="${raw}">raw Kane output</a>` : ""}${safeHref(k.testUrl) ? ` · ${link(k.testUrl, "Kane run on TestMu ↗")}` : ""}</p>`
+      ? `<p class="small evidence">Evidence: ${options.publicCopy ? "Kane's sealed evidence pack is kept private (it contains Kane account details)" : evidence ?`<a href="${evidence}" download>Kane evidence pack</a> (open with <code>kane-cli evidence serve ${escapeHtml(k.evidence)}</code>)` : "Kane evidence pack not saved on this computer"}${raw ? ` · <a href="${raw}">raw Kane output</a>` : ""}${safeHref(k.testUrl) ? ` · ${link(k.testUrl, "Kane run on TestMu ↗")}` : ""}</p>`
       : ""
   }
 </li>`;
@@ -279,7 +290,7 @@ function round(n: number): string {
 // ---------------------------------------------------------------------------
 // Markdown
 
-function buildMarkdown(run: RunRecord): string {
+function buildMarkdown(run: RunRecord, options: ReportOptions): string {
   const verdicts = run.checks.map((c) => c.verdict).filter((v): v is Verdict => v !== undefined);
   const s = score(verdicts);
   const md = (t: unknown) => String(t ?? "").replace(/\r?\n/g, " ").replace(/\|/g, "\\|");
@@ -290,6 +301,7 @@ function buildMarkdown(run: RunRecord): string {
     "",
     `**${headline(run)}**`,
     "",
+    ...(options.note ? [`> ${md(options.note)}`, ""] : []),
     `Score: ${s.kind === "score" ? `${s.value}/100` : "no score"} — ${explainScore(s)}`,
     "",
     `Kane runs ${run.kaneRuns} · Kane credits ${round(run.kaneCredits)} · allowed sites: ${run.allowedDomains.join(", ")}`,
@@ -333,6 +345,7 @@ h2{font-size:22px;line-height:30px;margin:32px 0 8px}
 .meta,.small{font-size:14px;line-height:20px}
 .meta{color:var(--muted);overflow-wrap:anywhere}
 .lead{font-size:18px;line-height:28px;font-weight:600}
+.callout{font-size:15px;line-height:22px;border:1px solid var(--accent);border-radius:8px;padding:12px 16px;background:var(--surface)}
 .note{font-size:14px;line-height:20px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
 .muted{color:var(--muted)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}

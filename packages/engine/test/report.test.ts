@@ -94,6 +94,23 @@ describe("the Proof Report (FR-50)", () => {
   });
 });
 
+describe("public copy for the published website (BR-7)", () => {
+  it("never links Kane's sealed evidence pack (it holds account details) but keeps the raw output link", () => {
+    const { html } = buildReport(sample(), { publicCopy: true });
+    expect(html).not.toMatch(/[\w-]+\.evidence\b(?!\{)/); // no evidence-pack file anywhere (the CSS class ".evidence{" is fine)
+    expect(html).not.toContain('href="evidence/');
+    expect(html).not.toContain("kane-cli evidence serve");
+    expect(html).toContain("Kane's sealed evidence pack is kept private (it contains Kane account details)");
+    expect(html).toContain('href="kane/check-1-attempt-1.ndjson"');
+  });
+
+  it("shows a note at the top, as text", () => {
+    const { html, markdown } = buildReport(sample(), { note: "Earlier run <b>not bold</b>." });
+    expect(html).toContain('<p class="callout">Earlier run &lt;b&gt;not bold&lt;/b&gt;.</p>');
+    expect(markdown).toContain("> Earlier run <b>not bold</b>.");
+  });
+});
+
 describe("untrusted text is shown as text, never run", () => {
   const hostile = (): RunRecord => {
     const run = sample();

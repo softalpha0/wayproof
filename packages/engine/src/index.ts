@@ -42,7 +42,7 @@ export {
   type KaneAttemptRecord,
   type RunRecord,
 } from "./loop/record.ts";
-export { buildReport, escapeHtml, formatDate, writeReport, type BuiltReport } from "./report/build.ts";
+export { buildReport, escapeHtml, formatDate, writeReport, type BuiltReport, type ReportOptions } from "./report/build.ts";
 export {
   allowedSites,
   buildChecks,
