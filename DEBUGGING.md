@@ -124,6 +124,7 @@ echo $LASTEXITCODE                     # exit code of the last command (PowerShe
 kane-cli evidence serve <path-to-.evidence>
 pnpm test                              # all tests
 pnpm test -- <file-or-name>            # one test file
+pnpm --filter @wayproof/engine kane:explain <file.ndjson> [--exit N]   # what the adapter makes of a saved Kane output (no credits)
 ```
 Isolate Kane from Wayproof: if a check fails, run the **same objective** directly with `kane-cli run` (copy it from `run.json`). If Kane fails on its own too, the problem is not in Wayproof's code.
 

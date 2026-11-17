@@ -670,8 +670,10 @@ flowchart LR
 | Feature | Requirement | Code | Status |
 |---|---|---|---|
 | Workspace skeleton | — | `package.json`, `pnpm-workspace.yaml`, `packages/engine` | Built 17 Nov (`pnpm typecheck`, `pnpm test` pass) |
-| Verdicts and score | FR-51 | `packages/engine/src/domain/{verdict,score}.ts`, `test/score.test.ts` | Built 17 Nov, 12 tests pass — **waiting for owner test** |
-| Kane adapter | FR-21, BR-3, BR-6 | — | Planned (approved 17 Nov) |
+| Verdicts and score | FR-51 | `packages/engine/src/domain/{verdict,score}.ts`, `test/score.test.ts` | **Implemented** — owner tested and approved 17 Nov |
+| Kane adapter (C-5) | FR-21, BR-3, BR-6, BR-8 | `packages/engine/src/kane/{args,output,outcome,run}.ts`, `test/kane-adapter.test.ts`, `test/fake-kane.mjs`, `scripts/kane-explain.ts` | Built 17 Nov, 31 adapter tests pass (43 in total; contract tests on all 8 fixtures; Windows process-tree kill verified) — **waiting for owner test** |
+
+**Kane adapter outcomes** (as built): own stopwatch fired or exit 3 → `timeout` · exit 2 → `error` · no valid `run_end` → `error` · `reason_code` starts with `blocker.` → `blocked` (Couldn't check, BR-6) · exit 0 **and** status `passed` → `passed` · exit 0 with any other status, or exit 1 → `failed` (to the judge) · any other exit code → `error`. Hand-check any saved output with `pnpm --filter @wayproof/engine kane:explain <file.ndjson>`.
 
 **Cut order if late:** F-8 screens gate → links Kane proofs (keep probe) → access codes (operator-only runs) → web polish. CLI + published reports alone still satisfy the rules.
 
