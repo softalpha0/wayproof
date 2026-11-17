@@ -665,6 +665,14 @@ flowchart LR
 | Wed 18 | Runner API + SQLite + SSE; web S-01…S-06 (+S-07, S-09 basic); deploy (TC-4/TC-11); publish reports; links check if time. **Feature freeze 20:00** | Live web check end to end | Planned |
 | Thu 19 | README, `FEATURE_GUIDE.md`, video (~3–5 min), 2 public posts, submit by **15:00** | Submission confirmed | Planned |
 
+**Build progress** (a feature is *Implemented* only after the owner has tested and approved it):
+
+| Feature | Requirement | Code | Status |
+|---|---|---|---|
+| Workspace skeleton | — | `package.json`, `pnpm-workspace.yaml`, `packages/engine` | Built 17 Nov (`pnpm typecheck`, `pnpm test` pass) |
+| Verdicts and score | FR-51 | `packages/engine/src/domain/{verdict,score}.ts`, `test/score.test.ts` | Built 17 Nov, 12 tests pass — **waiting for owner test** |
+| Kane adapter | FR-21, BR-3, BR-6 | — | Planned (approved 17 Nov) |
+
 **Cut order if late:** F-8 screens gate → links Kane proofs (keep probe) → access codes (operator-only runs) → web polish. CLI + published reports alone still satisfy the rules.
 
 ---
