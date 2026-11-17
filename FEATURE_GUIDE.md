@@ -70,3 +70,16 @@ pnpm test
   ```bash
   pnpm --filter @wayproof/engine guide:fetch https://revoke.cash/learn/approvals/how-to-revoke-token-approvals
   ```
+
+### Fix loop (FR-20–FR-25, BR-3/4/5/10/11) — approved 17 Nov 2026
+- **What it does:** checks one guide from start to verdicts. It fetches the guide, has Claude extract the steps, never runs wallet steps or steps on other sites, and groups the rest (up to 3 per Kane run). For each group it plans an objective, passes it through the safety gate and the credit budget, runs Kane, checks where Kane ended up, and asks the judge:
+  - **pass** → Passed (Verified fixed if a fix came first)
+  - **defect** → Claude proposes new wording and Kane re-runs it to prove it
+  - **check_wording** → the check is rewritten once; the guide is not blamed
+  - **flaky** → run once more
+  - **blocked / Kane error** → Couldn't check
+  - **timeout** → one retry with more time
+  - **wallet prompt** → stopped safely
+- **Limits:** at most 3 Kane runs per check (BR-4). "Needs a human" only when Kane actually showed a problem (BR-11). Budget of 300 Kane credits per guide by default, counting `credits_consumed` + 2 per run (BR-10).
+- **Saved:** `run.json` after every attempt, Kane's raw output in `kane/`, and Kane's evidence packs copied into `evidence/` (BR-8).
+- **Code:** `packages/engine/src/loop/` · **Tests:** `packages/engine/test/fix-loop.test.ts`
