@@ -1,0 +1,91 @@
+{
+  "recorded": "2026-11-17T11:56:00.933Z",
+  "requestedModel": "claude-opus-5-5",
+  "prompt": "extract",
+  "guideUrl": "https://revoke.cash/learn/approvals/how-to-revoke-token-approvals",
+  "result": {
+    "ok": true,
+    "value": {
+      "title": "How to Revoke Token Approvals and Permissions",
+      "steps": [
+        {
+          "n": 1,
+          "action": "On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar or connect your wallet",
+          "expected": "Your address is loaded and you can choose a network",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 2,
+          "action": "Select the network for which you want to revoke approvals",
+          "expected": "After loading finishes, a list of all the token approvals you have on that network is shown",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 3,
+          "action": "Sort the list, apply filters, or search by the approved spender address. If you suspect a malicious approval, sort by \"Newest to Oldest\"",
+          "expected": "The list is reordered or filtered, and with \"Newest to Oldest\" the most recently signed approvals appear first",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 4,
+          "action": "Find the approval you want to revoke and click the Revoke button",
+          "expected": "The selected approval is revoked",
+          "needsWallet": true,
+          "url": null
+        },
+        {
+          "n": 5,
+          "action": "Alternatively, click the pencil icon next to the approved amount to update the approval to a different amount",
+          "expected": "The approval is updated to the new amount, which lowers your risk while keeping the approval for future use",
+          "needsWallet": true,
+          "url": null
+        },
+        {
+          "n": 6,
+          "action": "On Etherscan, open the Token Approvals page through the More menu in the top navigation bar",
+          "expected": "The Token Approvals page opens",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 7,
+          "action": "Enter your wallet address",
+          "expected": "Your address is entered on the Token Approvals page",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 8,
+          "action": "Select the token type (ERC20, ERC721, ERC1155) that you want to check approvals for",
+          "expected": "After loading, a list of all token approvals for the selected token type is shown",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 9,
+          "action": "Flip the switch for Show all approvals",
+          "expected": "All of your approvals are shown",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 10,
+          "action": "Find the approval you want to revoke and click the Revoke button",
+          "expected": "The selected approval is revoked",
+          "needsWallet": true,
+          "url": null
+        }
+      ]
+    },
+    "model": "claude-opus-5-5",
+    "fallbackUsed": false,
+    "attempts": 1,
+    "usage": {
+      "inputTokens": 2414,
+      "outputTokens": 1229
+    }
+  }
+}

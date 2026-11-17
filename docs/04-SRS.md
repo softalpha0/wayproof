@@ -70,7 +70,7 @@ AC: for each checkable step (or group of up to [Proposed] 3 consecutive steps), 
 AC: runs `kane-cli run "<objective>" --url <url> --agent --headless --timeout <s> --max-steps <n>` **[Kane doc]**; reads NDJSON; records every event; uses `run_end` and the exit code as the result **[Kane doc]**; missing `run_end` = error.
 
 **FR-22 — Judge the result.** *F-2 · UF-2*
-AC: Claude receives the expected result, `run_end.summary`, `final_state` and the failing step's remark; returns `pass | defect | flaky | blocked` with a one-sentence reason quoting Kane's output; a judge may not turn a Kane failure into a pass.
+AC: Claude receives the expected result, `run_end.summary`, `final_state` and the failing step's remark; returns `pass | defect | flaky | check_wording | blocked` with a one-sentence reason and an exact quote from Kane's output (checked in code); a judge may not turn a Kane failure into a pass. `check_wording` **[Decided 17 Nov 2026]**: Kane's output shows the expected result was visible but the check was worded so Kane couldn't confirm it (e.g. it relied on an icon) → the check is rewritten once with the same expected result and re-run; the guide is not blamed (BR-11).
 
 **FR-23 — Flaky re-run.** *F-2 · UF-2*
 AC: if the judge says `flaky` (loading/timing), re-run once with the same objective before deciding.

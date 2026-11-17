@@ -79,6 +79,9 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | Arbitrum replaced by **Uniswap — "How to bridge tokens using the Uniswap web app"** (Arbitrum's pages are behind a bot check Kane can't pass; its blocked result is kept as a Couldn't-check example) (TC-15) | 16 Nov 2026 |
 | Score counts only Passed, Verified fixed and Needs a human; otherwise "no score" (FR-51) | 17 Nov 2026 |
 | Node.js **22 or newer** for everything, including the runner image | 17 Nov 2026 |
+| Judge gets a 5th answer, **`check_wording`** (the guide is right; Kane's check was worded too strictly) → rewrite the check once, never blame the guide (FR-22) | 17 Nov 2026 |
+| Allowed sites cover their sub-sites (BR-2) | 17 Nov 2026 |
+| **Claude refusal fallback on**: if Claude Opus 5.5 declines, the API retries on another Claude model; the report records which model answered | 17 Nov 2026 |
 | **Self-verification (F-10, FR-65):** following the hackathon challenge ("Build it with any agent, verify it with Kane"), every Wayproof screen/report is verified by Kane before it counts as done; results kept in `verification/kane/` | 17 Nov 2026 |
 | Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
 

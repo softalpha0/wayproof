@@ -1,0 +1,23 @@
+{
+  "recorded": "2026-11-17T11:58:31.923Z",
+  "requestedModel": "claude-opus-5-5",
+  "prompt": "judge",
+  "fixture": "revoke-lookup-pass",
+  "kaneOutcome": "passed",
+  "expected": "A list of token approvals is shown.",
+  "result": {
+    "ok": true,
+    "value": {
+      "outcome": "pass",
+      "reason": "Kane completed the run and reported that the token approvals list was displayed after sorting from newest to oldest.",
+      "quote": "A token approvals list was displayed, and no wallet was connected or transaction signed."
+    },
+    "model": "claude-opus-5-5",
+    "fallbackUsed": false,
+    "attempts": 1,
+    "usage": {
+      "inputTokens": 963,
+      "outputTokens": 81
+    }
+  }
+}

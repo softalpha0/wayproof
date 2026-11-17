@@ -1,0 +1,43 @@
+{
+  "recorded": "2026-11-17T11:58:26.438Z",
+  "requestedModel": "claude-opus-5-5",
+  "prompt": "plan",
+  "steps": [
+    {
+      "n": 1,
+      "action": "On Revoke.cash, enter your wallet address (or ENS name / other alias) in the search bar or connect your wallet",
+      "expected": "Your address is loaded and you can choose a network",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 2,
+      "action": "Select the network for which you want to revoke approvals",
+      "expected": "After loading finishes, a list of all the token approvals you have on that network is shown",
+      "needsWallet": false,
+      "url": null
+    },
+    {
+      "n": 3,
+      "action": "Sort the list, apply filters, or search by the approved spender address. If you suspect a malicious approval, sort by \"Newest to Oldest\"",
+      "expected": "The list is reordered or filtered, and with \"Newest to Oldest\" the most recently signed approvals appear first",
+      "needsWallet": false,
+      "url": null
+    }
+  ],
+  "result": {
+    "ok": true,
+    "value": {
+      "objective": "Do not connect a wallet or sign anything. Never press 'Revoke' or any button that changes approvals. On revoke.cash, type the public ENS name vitalik.eth into the address search bar at the top of the page and press Enter. When the address page loads, choose 'Ethereum' from the network selector. Wait for loading to finish. Open the sort control above the approvals list and choose 'Newest to Oldest'. Assert that the page shows a list of token approvals with spender and date text for the address, and that the sort control now reads 'Newest to Oldest'.",
+      "url": "https://revoke.cash",
+      "expected": "Your address is loaded and you can choose a network Then: After loading finishes, a list of all the token approvals you have on that network is shown Then: The list is reordered or filtered, and with \"Newest to Oldest\" the most recently signed approvals appear first"
+    },
+    "model": "claude-opus-5-5",
+    "fallbackUsed": false,
+    "attempts": 2,
+    "usage": {
+      "inputTokens": 1774,
+      "outputTokens": 637
+    }
+  }
+}

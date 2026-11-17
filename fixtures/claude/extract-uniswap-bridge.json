@@ -1,0 +1,91 @@
+{
+  "recorded": "2026-11-17T11:58:16.519Z",
+  "requestedModel": "claude-opus-5-5",
+  "prompt": "extract",
+  "guideUrl": "https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app",
+  "result": {
+    "ok": true,
+    "value": {
+      "title": "How to bridge tokens using the Uniswap web app",
+      "steps": [
+        {
+          "n": 1,
+          "action": "Open the web app and connect your wallet.",
+          "expected": "Wallet is connected to the Uniswap web app.",
+          "needsWallet": true,
+          "url": null
+        },
+        {
+          "n": 2,
+          "action": "Select the token drop-down.",
+          "expected": "A token selection list opens.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 3,
+          "action": "Select the token you want to bridge.",
+          "expected": "The chosen token is set as the token to bridge.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 4,
+          "action": "Select the token drop-down.",
+          "expected": "A token/network selection list opens.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 5,
+          "action": "Select the network you want to bridge to.",
+          "expected": "The destination network is selected.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 6,
+          "action": "Enter the amount you would like to bridge, or select the “Max” option.",
+          "expected": "The amount is filled in; “Max” automatically inputs the total amount of the token available in your wallet.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 7,
+          "action": "Select “Review”.",
+          "expected": "A review of the bridge is shown with an “Approve and swap” option.",
+          "needsWallet": false,
+          "url": null
+        },
+        {
+          "n": 8,
+          "action": "Select “Approve and swap”.",
+          "expected": "Your wallet prompts you to approve Uniswap to access your tokens.",
+          "needsWallet": true,
+          "url": null
+        },
+        {
+          "n": 9,
+          "action": "Using your wallet, approve Uniswap to access your tokens. This step requires a network cost.",
+          "expected": "Token approval is completed.",
+          "needsWallet": true,
+          "url": null
+        },
+        {
+          "n": 10,
+          "action": "In your wallet, confirm the bridge. This step requires a network cost.",
+          "expected": "Congratulations! You have bridged tokens to a different network. Received tokens appear in your wallet and swap details are viewable in the portfolio activity section.",
+          "needsWallet": true,
+          "url": null
+        }
+      ]
+    },
+    "model": "claude-opus-5-5",
+    "fallbackUsed": false,
+    "attempts": 1,
+    "usage": {
+      "inputTokens": 1552,
+      "outputTokens": 662
+    }
+  }
+}

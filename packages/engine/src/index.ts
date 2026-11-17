@@ -9,3 +9,25 @@ export { runKane, type KaneRunResult, type RunKaneOptions } from "./kane/run.ts"
 export { checkUrl, normalizeDomain, type DomainResult, type UrlResult } from "./safety/domains.ts";
 export { checkObjective, checkRemark, SAFETY_SENTENCE, type ObjectiveResult, type RemarkResult } from "./safety/wallet.ts";
 export { gateAfterRun, gateBeforeRun, type GateDecision, type GateInput } from "./safety/gate.ts";
+export type { Effort, Llm, LlmRequest, LlmResponse, LlmUsage, PromptName } from "./claude/llm.ts";
+export { AnthropicLlm, type AnthropicLlmOptions } from "./claude/anthropic.ts";
+export { askJson, untrusted, type AnswerCheck, type AskFailure, type AskResult, type AskSuccess } from "./claude/ask.ts";
+export {
+  extractSteps,
+  judgeRun,
+  planObjective,
+  proposeFix,
+  ExtractSchema,
+  FixSchema,
+  JudgeSchema,
+  PlanSchema,
+  type ExtractAnswer,
+  type ExtractResult,
+  type FixAnswer,
+  type GuideStep,
+  type JudgeAnswer,
+  type JudgeInput,
+  type PlanAnswer,
+  type PlannedCheck,
+  type ProposedFix,
+} from "./claude/prompts.ts";

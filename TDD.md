@@ -415,6 +415,7 @@ Total balance drop: **135.36 credits** (11,182.78 → 11,047.42). Blocked runs s
 
 ### 13.3 Public project websites (E-2)
 Only the guides the owner approves (TC-1). Fetched with plain HTTP (GET/HEAD) and visited by Kane. Some sites may block automated visits → `ERR-FETCH`/`ERR-KANE`, reported honestly.
+**For the fetcher (C-8) — RECOMMENDATION from 17 Nov:** Wayproof identifies itself honestly (`User-Agent: Wayproof/0.1 (+https://github.com/softalpha0/wayproof)`) and never pretends to be a browser to get past a site's defences (same spirit as BR-6). [Observed] Uniswap's Zendesk help-centre pages answer HTTP 403 to non-browser clients, but Zendesk's official public article API (`/api/v2/help_center/<locale>/articles/<id>.json`) answers 200 with the same title and text — the fetcher should use it for `/hc/<locale>/articles/<id>` addresses. Revoke.cash answers 200 to the honest identity.
 
 ### 13.4 GitHub (optional, CLI only)
 Opening a PR with the corrected guide (FR-53 extension) is **Could**; uses `GITHUB_TOKEN`; never pushes to a default branch.
@@ -473,6 +474,8 @@ stateDiagram-v2
   Judge --> Passed: pass, attempt 1
   Judge --> VerifiedFixed: pass after fix
   Judge --> RunKane: flaky (once, same objective)
+  Judge --> Plan: check_wording (once - rewrite the CHECK, same expected; guide not blamed)
+  Judge --> CouldntCheck: blocked
   Judge --> Fix: defect, attempts < 3
   Judge --> NeedsHuman: defect, attempts = 3
   Fix --> Gate: new step text, SAME expected
@@ -485,10 +488,13 @@ stateDiagram-v2
 **Claude prompt contracts (C-7):**
 | Prompt | Input | Output schema |
 |---|---|---|
-| `extract` | Guide main text | `{title, steps:[{n:int, action:str, expected:str, needsWallet:bool, url?:str}]}` |
-| `plan` | ≤ 3 consecutive steps, allowed domains | `{objective:str, url:str, expected:str}` (objective must include "Do not connect a wallet or sign anything.") |
-| `judge` | expected, `run_end.summary`, `final_state`, failing remark | `{outcome:"pass"|"defect"|"flaky"|"blocked", reason:str}` — may not turn a Kane failure into pass (BR-3) |
-| `fix` | step text, judge reason, Kane remarks | `{newStepText:str (≤ 3 sentences), rationale:str}` — `expected` copied, never edited (BR-5) |
+| `extract` | Guide main text | `{title, steps:[{n:int, action:str, expected:str, needsWallet:bool, url:str|null}]}` — `needsWallet` only when the step ITSELF needs a wallet (tightened 17 Nov after the live check marked all Uniswap steps as wallet steps); 0 steps → `ERR-NO-STEPS` |
+| `plan` | ≤ 3 consecutive steps, allowed domains | `{objective:str, url:str}` — objective must **start** with "Do not connect a wallet or sign anything." and pass the safety gate (C-6); **`expected` is copied by code, not written by Claude** (BR-5; changed 17 Nov) |
+| `judge` | objective, expected, Kane outcome (passed/failed only), `summary`, `final_state`, reason, failing remark | `{outcome:"pass"|"defect"|"flaky"|"check_wording"|"blocked", reason:str, quote:str}` — "pass" refused unless Kane passed (BR-3); `quote` must really appear in Kane's output (BR-11); `check_wording` added 17 Nov [Decided] |
+| `fix` | step text, judge reason, Kane remarks | `{newStepText:str (≤ 3 sentences), rationale:str}` — `expected` copied, never edited (BR-5); new text must pass the wallet check (BR-1) |
+
+**As built (C-7, `packages/engine/src/claude/`):** `@anthropic-ai/sdk` **1.8.0** (not 1.9.0: pnpm's supply-chain rule holds back packages under a day old, and installing 1.9.0 made pnpm add an exception to `pnpm-workspace.yaml` by itself — removed); `client.beta.messages.parse` with `output_config.format = zodOutputFormat(schema)`; effort medium (extract, plan) / high (judge, fix); `stop_reason` checked (refusal → ERR-AI, no retry; cut-off → retry); server-side refusal fallback on (`betas: ["server-side-fallback-2026-07-01"]`, `fallbacks: "default"`) [Decided 17 Nov], the answer records which model replied; one retry with the problem explained, then ERR-AI; website and Kane text wrapped in `<untrusted_…>`/`<kane_output>` tags.
+**Live check 17 Nov 2026 [Observed]** (saved in `fixtures/claude/`, ≈ $0.10 in total): extract Revoke.cash → 10 steps, Revoke/edit buttons correctly marked wallet steps; extract Uniswap → 10 steps, 2–7 checkable, 1 and 8–10 wallet; plan Revoke.cash → safe objective accepted first time; judge Uniswap U-1 → `check_wording` with a real quote; judge Revoke R-1 → `pass`. All answers from `claude-opus-5-5`, no fallback, 1 attempt each.
 
 ### 14.3 CLI check (UF-9)
 `wayproof check` → load + validate `wayproof.yml` → for each guide: fetch → extract → loop (§14.2) → print T-03 lines → write `run.json` after each attempt → report files → T-04 summary → exit code (FR-55: 0/1/2/3).
@@ -675,6 +681,8 @@ flowchart LR
 | Kane adapter (C-5) | FR-21, BR-3, BR-6, BR-8 | `packages/engine/src/kane/{args,output,outcome,run}.ts`, `test/kane-adapter.test.ts`, `test/fake-kane.mjs`, `scripts/kane-explain.ts` | **Implemented** — 31 adapter tests (43 in total; contract tests on all 8 fixtures; Windows process-tree kill verified); owner tested and approved 17 Nov |
 
 | Safety gate (C-6) | BR-1, BR-2, FR-26 (+ FR-3 domain rule) | `packages/engine/src/safety/{domains,wallet,gate}.ts`, `test/safety-gate.test.ts`, `scripts/safety-check.ts`; live tripwire hook in `src/kane/run.ts` | **Implemented** — 45 gate tests (88 in total; 0 false alarms on 72 real Kane remarks); owner tested and approved 17 Nov |
+
+| Claude adapter (C-7) | FR-2, FR-20, FR-22, FR-24 (+ BR-1/3/5/11, ERR-AI) | `packages/engine/src/claude/{llm,anthropic,ask,prompts}.ts`, `test/claude-adapter.test.ts`, `scripts/claude-{live-check,judge}.ts`, `fixtures/claude/` | Built 17 Nov, 22 adapter tests pass (110 in total) with a fake Claude; live check done (≈ $0.10) — **waiting for owner test** |
 
 **Safety gate rules** (as built): before a run — wallet steps never run; the objective must contain "Do not connect a wallet or sign anything." and, apart from that sentence and purely negative button lists ("Never press 'Move'."), must not ask to connect/sign/approve/confirm/send or press fund-moving buttons (Revoke, Move funds, Approve and swap, Confirm Swap, Claim, Stake…) or mention seed phrases/keys → else **Not checked — wallet step** (`ERR-BOUNDARY`); the start URL must be `https://`, no user/password part, no port, no IP/localhost, on the allowed list (an entry covers its sub-sites) → else **Not checked — outside allowed domains**. During a run — every Kane progress line is checked; a wallet sign (MetaMask/WalletConnect…, signature request, confirming a transaction, wallet pop-up, clicking Connect wallet) stops Kane at once → outcome `stopped_safely` (always on; callers can't switch it off). After a run — Kane's final page must be on the allowed list. Hand check: `pnpm --filter @wayproof/engine safety:check "<objective>" <url> [--allow d1,d2]`.
 

@@ -1,0 +1,23 @@
+{
+  "recorded": "2026-11-17T11:58:29.501Z",
+  "requestedModel": "claude-opus-5-5",
+  "prompt": "judge",
+  "fixture": "uniswap-bridge-assertion-too-strict",
+  "kaneOutcome": "failed",
+  "expected": "The page shows an amount of ETH to receive on Base.",
+  "result": {
+    "ok": true,
+    "value": {
+      "outcome": "check_wording",
+      "reason": "Kane's summary says the Buy field showed an ETH amount with the Base network badge, but the assertion did not recognise the network icon, so the guide is fine and only the check's wording failed.",
+      "quote": "the Buy field showed 0.00999713 ETH with the Base network badge"
+    },
+    "model": "claude-opus-5-5",
+    "fallbackUsed": false,
+    "attempts": 1,
+    "usage": {
+      "inputTokens": 1050,
+      "outputTokens": 109
+    }
+  }
+}
