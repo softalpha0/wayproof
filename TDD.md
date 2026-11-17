@@ -48,7 +48,7 @@
 
 **Why it fits the hackathon — CONFIRMED [Rule]:** bar 2 "Kane CLI caught or proved something" = every verdict is Kane evidence; bar 3 "your agent and Kane CLI talked to each other" = the fix loop (§14.2); Closed loop = Kane result → Claude fix → Kane re-run.
 
-**Features** (`docs/01` §5): F-1 Guide check (Must) · F-2 Fix loop (Must) · F-3 Proof Report (Must) · F-4 Web app (Must) · F-5 CLI (Must) · F-6 Links check (Should) · F-7 Recorded fallback (Must) · F-8 Screens gate (Could) · F-9 Corrected guide download (Should).
+**Features** (`docs/01` §5): F-1 Guide check (Must) · F-2 Fix loop (Must) · F-3 Proof Report (Must) · F-4 Web app (Must) · F-5 CLI (Must) · F-6 Links check (Should) · F-7 Recorded fallback (Must) · F-8 Screens gate (Could) · F-9 Corrected guide download (Should) · **F-10 Self-verification (Must, decided 17 Nov): Kane verifies Wayproof's own screens and reports (FR-65)**.
 
 **Feature dependencies:**
 ```mermaid
@@ -594,10 +594,11 @@ Every screen has loading, empty, success and error states (`docs/03`).
 | UI | Responsive at 360/768/1280 px; keyboard; contrast (NFR-5, NFR-6) | Manual + browser tools |
 | Security | Tripwire and domain tests; secret scan before submit; CORS check | Vitest + manual |
 | Performance | One full guide check duration and credits recorded in the report | Report metrics |
+| **Self-verification (FR-65)** | Kane runs a plain-English objective against every screen/report Wayproof shows (CLI `report.html`; web S-01, S-04, S-05, S-09); results saved in `verification/kane/` | Kane CLI via the adapter (C-5); minimal `wayproof gate` (FR-64) |
 
 **Requirement → test map (minimum):** FR-1 URL validation unit · FR-2 extract schema + `ERR-NO-STEPS` · FR-21 adapter contract · FR-22 judge cannot pass a Kane failure · FR-24/BR-5 fix keeps `expected` · FR-26/BR-1 tripwire · BR-2 gate · FR-27 SSE replay integration · FR-51 score unit · FR-55 exit codes.
 
-**A feature is accepted only when:** its tests pass (real output shown), the owner has tested it by hand, and the owner approves. Then commit and push. Bugs follow `DEBUGGING.md`.
+**A feature is accepted only when:** its tests pass (real output shown), **for anything a user sees, a Kane self-check passed (FR-65)**, the owner has tested it by hand, and the owner approves. Then commit and push. Bugs follow `DEBUGGING.md`.
 
 ---
 
@@ -671,11 +672,13 @@ flowchart LR
 |---|---|---|---|
 | Workspace skeleton | — | `package.json`, `pnpm-workspace.yaml`, `packages/engine` | Built 17 Nov (`pnpm typecheck`, `pnpm test` pass) |
 | Verdicts and score | FR-51 | `packages/engine/src/domain/{verdict,score}.ts`, `test/score.test.ts` | **Implemented** — owner tested and approved 17 Nov |
-| Kane adapter (C-5) | FR-21, BR-3, BR-6, BR-8 | `packages/engine/src/kane/{args,output,outcome,run}.ts`, `test/kane-adapter.test.ts`, `test/fake-kane.mjs`, `scripts/kane-explain.ts` | Built 17 Nov, 31 adapter tests pass (43 in total; contract tests on all 8 fixtures; Windows process-tree kill verified) — **waiting for owner test** |
+| Kane adapter (C-5) | FR-21, BR-3, BR-6, BR-8 | `packages/engine/src/kane/{args,output,outcome,run}.ts`, `test/kane-adapter.test.ts`, `test/fake-kane.mjs`, `scripts/kane-explain.ts` | **Implemented** — 31 adapter tests (43 in total; contract tests on all 8 fixtures; Windows process-tree kill verified); owner tested and approved 17 Nov |
 
 **Kane adapter outcomes** (as built): own stopwatch fired or exit 3 → `timeout` · exit 2 → `error` · no valid `run_end` → `error` · `reason_code` starts with `blocker.` → `blocked` (Couldn't check, BR-6) · exit 0 **and** status `passed` → `passed` · exit 0 with any other status, or exit 1 → `failed` (to the judge) · any other exit code → `error`. Hand-check any saved output with `pnpm --filter @wayproof/engine kane:explain <file.ndjson>`.
 
-**Cut order if late:** F-8 screens gate → links Kane proofs (keep probe) → access codes (operator-only runs) → web polish. CLI + published reports alone still satisfy the rules.
+**Self-verification in the build order (F-10):** report builder (C-9) → first Kane self-check on a generated `report.html` (also answers TC-16) · each web screen → its Kane self-check before "Implemented" · before submission → one final Kane pass over the deployed site, kept as evidence for the judges. Kane credit allowance for self-checks: about 20 runs (~500 credits at day-0 prices) — RECOMMENDATION.
+
+**Cut order if late:** F-8 screens gate (the *customer-facing* gate; F-10 self-checks stay) → links Kane proofs (keep probe) → access codes (operator-only runs) → web polish. CLI + published reports alone still satisfy the rules.
 
 ---
 
@@ -693,6 +696,7 @@ flowchart LR
 | TC-12 | Storage choice (SQLite recommended) | §11 |
 | ~~TC-13~~ | Kane CLI on Windows — **resolved 16 Nov 2026**: works (0.10.4, headless Chrome run passed) [Observed] | Local CLI |
 | TC-14 | Account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **+~2 on each of 6 day-0 runs** — what is the extra (a per-run fee?) | Budgets BR-9/BR-10, `ERR-BUDGET` |
+| TC-16 | **New:** can Kane open Wayproof's own pages on this computer (`http://localhost`, local `report.html`)? The adapter accepts only `https://` start URLs today, so a narrow, explicit exception for Wayproof's own local address would be needed — owner approval before changing it | F-10 timing, C-5/C-6 |
 | ~~TC-15~~ | Arbitrum's pages show Kane a Cloudflare bot check. **Decided 16 Nov 2026:** replaced by Uniswap "How to bridge tokens using the Uniswap web app" (its pre-wallet steps run in Kane — U-1); Arbitrum's blocked result kept as an honest Couldn't-check example | Demo, success metric "≥ 2 real guides" |
 | ~~ASSUMED-1~~ | Owner's computer is Windows with PowerShell — **confirmed 16 Nov 2026**: Windows 11 Pro 64-bit, Windows PowerShell 5.1 | Setup commands |
 | ASSUMED-2 | Grouping ≤ 3 steps per Kane run keeps failures locatable | Credits vs precision |

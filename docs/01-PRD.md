@@ -47,6 +47,7 @@ Full personas in [02-UX-USER-FLOWS.md §1](02-UX-USER-FLOWS.md).
 | F-7 | **Recorded fallback** for judges (committed run artifacts + video), as required by the rules **[Rule]** | Must | Repo |
 | F-8 | **Screens check / CI gate**: key screens verified before a front-end deploy; non-zero exit on failure | Could | CLI |
 | F-9 | Corrected guide download (Markdown) | Should | CLI, Web |
+| F-10 | **Self-verification**: every Wayproof screen or report a user sees is verified by Kane CLI before it counts as done; Kane's results are kept in the repo as evidence. Follows the hackathon challenge: "Build it with any agent, verify it with Kane" **[Rule]** — **[Decided 17 Nov 2026]** | Must | CLI report, Web |
 
 **Out of scope (v1):** wallet connection, signing or transactions; mobile app targets (need macOS Apple Silicon or a paid plan **[Kane doc]**); accounts and logins for Wayproof users; self-built demo site with planted mistakes **[Decided]**; checking pages not declared by the user.
 

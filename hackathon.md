@@ -88,6 +88,7 @@ Winners announcement date · workshops and recordings · team-change rules / one
 **One line:** Wayproof checks whether a crypto project's **how-to guides**, **official links** and **key screens** actually work: **Kane CLI** follows them in a real browser, **Claude** proposes a fix for anything that fails, and Kane re-runs to **prove** the fix. Output: a **Proof Report** with Kane's evidence.
 
 - Interfaces: **command line (`wayproof`)** and **web app** [Decided]
+- **Wayproof is itself verified with Kane** (F-10, FR-65) [Decided 17 Nov]: every screen and report we build is checked by Kane before it counts as done, as the challenge says — "Build it with any agent, verify it with Kane."
 - AI for Wayproof's own agents: **Claude (Anthropic API)** [Decided]
 - **Real projects only**, no fake demo site [Decided]
 - **Never connects a wallet, signs or sends a transaction**; only visits allowed domains [Proposed, business rules BR-1/BR-2]

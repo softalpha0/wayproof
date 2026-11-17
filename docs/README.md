@@ -79,6 +79,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | Arbitrum replaced by **Uniswap — "How to bridge tokens using the Uniswap web app"** (Arbitrum's pages are behind a bot check Kane can't pass; its blocked result is kept as a Couldn't-check example) (TC-15) | 16 Nov 2026 |
 | Score counts only Passed, Verified fixed and Needs a human; otherwise "no score" (FR-51) | 17 Nov 2026 |
 | Node.js **22 or newer** for everything, including the runner image | 17 Nov 2026 |
+| **Self-verification (F-10, FR-65):** following the hackathon challenge ("Build it with any agent, verify it with Kane"), every Wayproof screen/report is verified by Kane before it counts as done; results kept in `verification/kane/` | 17 Nov 2026 |
 | Claude model for Wayproof: **Claude Opus 5.5** (`claude-opus-5-5`, $4 / $20 per million input / output tokens) | 16 Nov 2026 |
 
 ## To-confirm register
@@ -99,6 +100,7 @@ Nothing outside these labels is assumed. If a number, model name, price or behav
 | TC-12 | Whether to store web app reports in a database or files | Shareable report links | Owner + architect (proposal: SQLite, TDD.md ADR-003) |
 | ~~TC-13~~ | Whether Kane CLI runs on Windows — **resolved 16 Nov 2026: yes.** Kane 0.10.4 installed with npm and passed a headless Chrome run on Windows 11 [Observed] | Local CLI on the owner's computer | Done (setup steps 6 and 9) |
 | TC-14 | Why the account balance falls by more than `run_end.credits_consumed`: +14.3 on the first run, then **about +2 on each of the 6 day-0 runs** (100.89 credits used in total) — a per-run fee? | Budgets (BR-9, BR-10) and `ERR-BUDGET` would undercount real spend | Budget with `credits_consumed` + 2 for now; ask in Slack |
+| TC-16 | **New:** can Kane open Wayproof's own pages served on this computer (`http://localhost:…` or a local `report.html`), or only public `https://` sites? Decides how FR-65 self-checks run before the web app is deployed | F-10 timing | One Kane run when the report builder exists (~15 credits) |
 | ~~TC-15~~ | Arbitrum's bridge and portal pages show Kane a **Cloudflare bot check** (day-0, 16 Nov). **Decided:** replaced by Uniswap's bridging guide, https://support.uniswap.org/hc/en-us/articles/31092864580877-How-to-bridge-tokens-using-the-Uniswap-web-app — a Kane test run did all its pre-wallet steps (TDD.md §13.1, U-1) | Demo; PRD success metric "≥ 2 real guides checked" | Done |
 
 ---

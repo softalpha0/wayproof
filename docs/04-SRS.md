@@ -138,8 +138,11 @@ AC: interactive prompts; writes a commented `wayproof.yml`; never overwrites wit
 **FR-63 — `wayproof report <id>`.** *F-5*
 AC: rebuilds the report from `run.json` without network calls.
 
-**FR-64 — `wayproof gate --url`.** *F-8 (Could) · UF-10*
-AC: runs screens checks against the URL; exit codes per FR-55.
+**FR-64 — `wayproof gate --url`.** *F-8 (Could) · F-10 (Must) · UF-10*
+AC: runs screens checks against the URL; exit codes per FR-55. A minimal version is needed for FR-65.
+
+**FR-65 — Kane verifies Wayproof itself.** *F-10 · UF-11 · T-03, S-01, S-04, S-05, S-09* **[Decided 17 Nov 2026]**
+AC: every surface a user sees (the CLI's `report.html`, and on the web S-01 Home, S-04 Report, S-05 Check detail, S-09 How it works) has at least one plain-English Kane objective run against it before the feature is marked Implemented; each objective names the visible text the screen must show; the saved result (exit code, `run_end` summary, evidence path, date) goes in `verification/kane/` and is listed in `FEATURE_GUIDE.md`; a failing self-check means the feature is not done. Same safety rules as every Kane run (BR-1, BR-2: only Wayproof's own address is allowed). A failed self-check found during development is fixed in Wayproof's code, then Kane re-runs — the same closed loop Wayproof offers its users.
 
 ---
 
@@ -205,3 +208,4 @@ AC: runs screens checks against the URL; exit codes per FR-55.
 | F-7 Recorded fallback | NFR-9 | UF-11 | S-04 (published) |
 | F-8 Screens gate | FR-64 | UF-10 | T-03/T-04 |
 | F-9 Corrected guide | FR-53 | UF-1 | S-06 |
+| F-10 Self-verification | FR-64 (minimal), FR-65 | UF-11 | T-03 report, S-01, S-04, S-05, S-09 |

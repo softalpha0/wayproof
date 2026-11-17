@@ -383,6 +383,7 @@ Must stay available on phones: **everything** in surfaces 1–3 (no desktop-only
 | Queued state + copy run link | Important | Fixes friction found above |
 | CLI `init`, `report <id>` | Optional | Nice for P-2 |
 | CI gate | Optional (Could) | — |
+| Self-verification of Wayproof's own screens by Kane (F-10, FR-65) | **MVP essential** [Decided 17 Nov] | The hackathon challenge: "Build it with any agent, verify it with Kane" |
 | Accounts, history, settings, admin UI, pricing, blog, docs portal, native app, wallet anything | **Out of scope** | No user need for a 3-day hackathon; adds risk |
 
 **Trade-off:** the web app is the most visible part but also the riskiest (hosting TC-4). The CLI + published reports alone meet the rules, so they are built first (TDD §23).
