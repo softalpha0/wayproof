@@ -15,6 +15,7 @@ const PLAIN: Record<string, string> = {
   blocked: "BLOCKED: the site stopped Kane (e.g. a bot check). Shown as \"Couldn't check\". Never a guide defect (BR-6).",
   error: "ERROR: Kane couldn't run properly. Shown as \"Couldn't check\" (ERR-KANE). Not a guide problem.",
   timeout: "TIMEOUT: ran out of time. Wayproof retries once, then ERR-KANE-TIMEOUT.",
+  stopped_safely: "STOPPED SAFELY: a wallet prompt appeared, so Wayproof stopped Kane (ERR-BOUNDARY, BR-1).",
 };
 
 const argv = process.argv.slice(2);

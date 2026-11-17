@@ -24,6 +24,12 @@ if (mode === "echo-args") {
   writeFileSync(process.env.FAKE_KANE_PIDFILE, JSON.stringify({ fake: process.pid, grandchild: grandchild.pid }));
   process.stdout.write(JSON.stringify({ type: "stream_start", v: 1 }) + "\n");
   setTimeout(() => process.exit(0), 120000);
+} else if (mode === "wallet-prompt") {
+  // Behaves like Kane reaching a wallet prompt, then hangs: the tripwire must stop it.
+  process.stdout.write(JSON.stringify({ type: "stream_start", v: 1 }) + "\n");
+  process.stdout.write(JSON.stringify({ step: 2, status: "running", remark: "Step 1" }) + "\n");
+  process.stdout.write(JSON.stringify({ step: 2, status: "done", remark: "click: Clicking the Connect Wallet button" }) + "\n");
+  setTimeout(() => process.exit(0), 120000);
 } else {
   process.stderr.write(`fake-kane: unknown FAKE_KANE_MODE ${mode}\n`);
   process.exit(2);

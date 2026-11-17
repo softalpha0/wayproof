@@ -23,7 +23,7 @@ No user accounts. **[Decided]** Access codes are the only web permission mechani
 | ID | Rule | Source |
 |---|---|---|
 | **BR-1** | Wayproof never connects a wallet, never signs, never submits a transaction. Steps that need a wallet are marked “Not checked — wallet step”. If Kane reaches a wallet prompt, the run stops (`ERR-BOUNDARY`). | [Proposed] safety; owner pains (security) [Decided] |
-| **BR-2** | Kane only visits URLs on the check's **allowed domains** list. The list starts with the guide's own domain and domains the guide links to for its steps; the user confirms it on S-02 / in `wayproof.yml`. | [Proposed] |
+| **BR-2** | Kane only visits URLs on the check's **allowed domains** list. The list starts with the guide's own domain and domains the guide links to for its steps; the user confirms it on S-02 / in `wayproof.yml`. An entry covers itself and its sub-sites (`uniswap.org` allows `app.uniswap.org`; `docs.x.com` does not allow `x.com`) **[Decided 17 Nov 2026]**. Only `https://` addresses without a user/password part, port or IP address are allowed. | [Proposed] |
 | **BR-3** | A check is **Passed** only if Kane's `run_end.status` is passed (exit code 0) **and** the judge confirms the expected result. | [Kane doc] exit codes; [Proposed] |
 | **BR-4** | A failed check gets at most **3 attempts** in total (1 original + 2 fixes). Then it is **Needs a human**. | [Proposed] |
 | **BR-5** | A fix may change the **wording of the guide step** (or a link), never the **expected result** being checked. A fix that changes the expected result is rejected. | [Proposed] — prevents “passing” by weakening the test |

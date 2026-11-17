@@ -10,7 +10,8 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
-    "kane:explain": "node scripts/kane-explain.ts"
+    "kane:explain": "node scripts/kane-explain.ts",
+    "safety:check": "node scripts/safety-check.ts"
   },
   "dependencies": {
     "execa": "10.2.1",

@@ -6,7 +6,7 @@
 
 import type { KaneOutput } from "./output.ts";
 
-export type KaneOutcomeKind = "passed" | "failed" | "blocked" | "error" | "timeout";
+export type KaneOutcomeKind = "passed" | "failed" | "blocked" | "error" | "timeout" | "stopped_safely";
 
 export interface KaneOutcome {
   kind: KaneOutcomeKind;
@@ -20,9 +20,14 @@ export interface ClassifyInput {
   output: KaneOutput;
   /** True when Wayproof's own stopwatch stopped Kane. */
   stoppedByStopwatch?: boolean;
+  /** Set when the wallet tripwire stopped Kane (BR-1, FR-26). Wins over everything else. */
+  stoppedForSafety?: string;
 }
 
-export function classifyKaneRun({ exitCode, output, stoppedByStopwatch }: ClassifyInput): KaneOutcome {
+export function classifyKaneRun({ exitCode, output, stoppedByStopwatch, stoppedForSafety }: ClassifyInput): KaneOutcome {
+  if (stoppedForSafety !== undefined) {
+    return { kind: "stopped_safely", why: `Stopped safely before any wallet step. ${stoppedForSafety}` };
+  }
   if (stoppedByStopwatch) {
     return { kind: "timeout", why: "Wayproof stopped Kane because it ran past the time limit." };
   }

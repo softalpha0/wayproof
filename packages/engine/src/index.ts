@@ -6,3 +6,6 @@ export { buildKaneArgs, InvalidKaneSpecError, type KaneRunSpec } from "./kane/ar
 export { parseKaneOutput, RunEndSchema, type KaneOutput, type ProgressEvent, type RunEnd } from "./kane/output.ts";
 export { classifyKaneRun, type ClassifyInput, type KaneOutcome, type KaneOutcomeKind } from "./kane/outcome.ts";
 export { runKane, type KaneRunResult, type RunKaneOptions } from "./kane/run.ts";
+export { checkUrl, normalizeDomain, type DomainResult, type UrlResult } from "./safety/domains.ts";
+export { checkObjective, checkRemark, SAFETY_SENTENCE, type ObjectiveResult, type RemarkResult } from "./safety/wallet.ts";
+export { gateAfterRun, gateBeforeRun, type GateDecision, type GateInput } from "./safety/gate.ts";
