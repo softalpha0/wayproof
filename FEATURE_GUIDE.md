@@ -96,3 +96,17 @@ pnpm test
   ```bash
   pnpm --filter @wayproof/engine report:build fixtures/runs/sample-layout-run.json --out report-preview
   ```
+
+### `wayproof` command line (FR-55, FR-60, FR-61) — approved 17 Nov 2026
+- **`pnpm wayproof doctor`** checks Node 22+, Chrome, kane-cli installed and logged in, Kane credits, and the Claude key and model (it never prints the key). Each problem shows the command that fixes it.
+- **`pnpm wayproof check <guide-url> [--allow other-sites] [--budget 300]`** runs the whole fix loop with live lines in the terminal, then writes `report.html` and `report.md` into `.wayproof/runs/<id>/`.
+- **Exit codes:** 0 everything checked works · 1 a step needs a human · 2 setup or input problem · 3 credit budget reached.
+- **Code:** `packages/cli/src/` · **Tests:** `packages/cli/test/cli.test.ts`
+- **Try it:**
+  ```bash
+  pnpm wayproof doctor
+  ```
+  ```bash
+  pnpm wayproof check https://revoke.cash/learn/approvals/how-to-revoke-token-approvals
+  ```
+  (The real check uses Kane credits and Claude: about 60–160 credits and a few cents per guide.)
