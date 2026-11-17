@@ -88,6 +88,7 @@ Copy this block into Claude Code each time something breaks.
 | `ERR-ACCESS` | Access codes | C-4 | Code hash, limit, expiry |
 | `ERR-NOT-FOUND` | Report lookup | C-4 / C-10 | Report id; storage (TC-12) |
 | Web page stuck / no live updates | Server-Sent Events | C-3 / C-4 | Browser Network tab → `/api/runs/:id/events`; runner logs |
+| `ERR-ORIGIN` on Start | Same-site check | C-4 | Server log line `Refused POST … origin=…`; the `Referrer-Policy` header must stay `same-origin` (with `no-referrer` browsers send `Origin: null`) |
 | Wrong verdict (e.g. Passed when Kane failed) | Fix loop | C-1 | `run.json` attempts: Kane exit code vs judge outcome (BR-3: a Kane failure can never become a pass) |
 | Fix changed the expected result | Fix loop | C-1 | BR-5 check; `expected` field across attempts |
 | Report missing evidence | Report builder | C-9 | Evidence path in the attempt; file exists (BR-8) |
@@ -129,6 +130,8 @@ pnpm --filter @wayproof/engine safety:check "<objective>" <url> [--allow d1,d2] 
 pnpm --filter @wayproof/engine claude:judge <file.ndjson> "<expected>"   # ask the real Claude judge about a saved Kane run (~1 US cent)
 pnpm --filter @wayproof/engine guide:fetch <url> [--allow d1,d2]   # what text Wayproof gets from a guide page (free) — first stop for ERR-FETCH / ERR-NO-STEPS
 pnpm --filter @wayproof/engine report:build <run-folder>   # rebuild report.html / report.md from run.json (free, no network)
+pnpm web                               # web app on http://localhost:3000; refused form posts are logged with their origin
+pnpm --filter @wayproof/engine self:check <https-url> "<must show>" <name>   # Kane checks a page Wayproof made (FR-65, one Kane run)
 ```
 Isolate Kane from Wayproof: if a check fails, run the **same objective** directly with `kane-cli run` (copy it from `run.json`). If Kane fails on its own too, the problem is not in Wayproof's code.
 
@@ -189,4 +192,9 @@ Keep one line per bug (newest first) so judges and future-me can see what happen
 
 | Date | Bug | Root cause | Fix (commit) | Verified by me |
 |---|---|---|---|---|
-| | | | | |
+| 18 Nov | Web: every Start refused (ERR-ORIGIN) in a real browser | `Referrer-Policy: no-referrer` made the browser send `Origin: null`; the same-site check rightly refused it | Policy → `same-origin`, header pinned by a test (c8fcc36) | Owner to confirm |
+| 18 Nov | CLI crashed on start (ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX) | Node strips TypeScript types and cannot run constructor parameter properties; Vitest could, so tests passed | Rewrote the class; `erasableSyntaxOnly` on so typecheck catches it (07aedc6) | Yes (CLI approved) |
+| 17 Nov | Uniswap steps 5–7 all "Couldn't check" | Safety gate (correctly) refused one step's "Approve and swap" wording, which sank the whole group | Re-plan a refused group one step at a time; gate unchanged (2231ad2) | Yes (fix approved) |
+| 17 Nov | 3-step Kane run cut off at 303 s | Wayproof stopwatch 240 + 60 s too short for real runs | Kane limit 360 s (2231ad2) | Yes (fix approved) |
+| 17 Nov | Etherscan step sent to revoke.cash; planner added an "ERC20" filter | Extract left step sites empty; planner over-specified | Extract gives every step its site; planner checks only what the guide says (0e99dce) | Yes |
+| 17 Nov | Words missing from Arbitrum guide text | Readability drops `<button>` glossary terms inside sentences | Keep their text (68c7c5a) | Yes (fetcher approved) |

@@ -670,7 +670,7 @@ flowchart LR
 |---|---|---|---|
 | Mon 16 | Setup (`hackathon.md` Part 4); approve guides (TC-1); record real Kane output (TC-2); repo + docs; domain + Kane adapter | Real `run_end` saved; adapter test passes on it | Planned |
 | Tue 17 | Claude adapter, safety gate, loop, report builder, CLI `doctor`/`check` | `wayproof check` on a real guide → report with evidence | Planned |
-| Wed 18 | Runner API + SQLite + SSE; web S-01…S-06 (+S-07, S-09 basic); deploy (TC-4/TC-11); publish reports; links check if time. **Feature freeze 20:00** | Live web check end to end | Planned |
+| Wed 18 | Runner API + SQLite + SSE; web S-01…S-06 (+S-07, S-09 basic); deploy (TC-4/TC-11); publish reports; links check if time. **Feature freeze 20:00** | Live web check end to end | **Done locally 18 Nov** (no SQLite: runs stay as run folders; reports published on GitHub Pages; Kane self-checks passed). Not done: public hosting (TC-4), links check (F-6), Stop (FR-30) |
 | Thu 19 | README, `FEATURE_GUIDE.md`, video (~3–5 min), 2 public posts, submit by **15:00** | Submission confirmed | Planned |
 
 **Build progress** (a feature is *Implemented* only after the owner has tested and approved it):
