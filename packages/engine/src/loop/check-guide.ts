@@ -25,6 +25,7 @@ import { gateAfterRun, gateBeforeRun } from "../safety/gate.ts";
 import { newRunId, type AttemptKind, type AttemptRecord, type CheckRecord, type RunRecord, type RunStore } from "./record.ts";
 
 export const DEFAULT_CREDIT_BUDGET = 300;
+export const DEFAULT_KANE_TIMEOUT_SECONDS = 360;
 /** Added to Kane's credits_consumed for every run: the account balance falls by about this much more (TC-14). */
 export const CREDIT_MARGIN_PER_RUN = 2;
 /** BR-4: 1 original + 2 more Kane runs per check, whatever the reason for the re-runs. */
@@ -65,7 +66,8 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
   const runKane = deps.runKane ?? realRunKane;
   const emit = deps.onEvent ?? (() => {});
   const groupSize = options.groupSize ?? 3;
-  const timeoutSeconds = options.kaneTimeoutSeconds ?? 240;
+  // 360 s: a real 3-step Revoke.cash run took 303–335 s on 17 Nov and was cut off at the old 240 (+60) limit.
+  const timeoutSeconds = options.kaneTimeoutSeconds ?? DEFAULT_KANE_TIMEOUT_SECONDS;
   const maxSteps = options.kaneMaxSteps ?? 25;
 
   const allowed = allowedSites(options.guideUrl, options.allowedDomains ?? []);
@@ -122,13 +124,23 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
 
     // 2. Each check, in guide order
     let largestRun = 0;
-    for (const check of run.checks) {
+    for (let i = 0; i < run.checks.length; i++) {
+      const check = run.checks[i]!;
       if (check.verdict !== undefined) {
         emit({ type: "check_done", check });
         continue;
       }
       const steps = extracted.value.steps.filter((s) => check.stepNumbers.includes(s.n));
-      await runCheck(check, steps);
+      const outcome = await runCheck(check, steps);
+      if (outcome === "split") {
+        // The plan for the whole group was refused (e.g. by the safety gate because of ONE step's wording):
+        // check each step on its own so the others still get checked (TDD §18 "split on failure").
+        const singles = steps.map((s, k) => ({ ...buildChecks([s], allowed, 1)[0]!, id: `${check.id}.${k + 1}` }));
+        run.checks.splice(i, 1, ...singles);
+        await save();
+        i--;
+        continue;
+      }
       emit({ type: "check_done", check });
     }
 
@@ -139,7 +151,7 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
     return run;
 
     // ---- one check: plan → gate → Kane → judge → fix ----
-    async function runCheck(check: CheckRecord, originalSteps: GuideStep[]): Promise<void> {
+    async function runCheck(check: CheckRecord, originalSteps: GuideStep[]): Promise<void | "split"> {
       let planned: PlannedCheck | undefined;
       let kind: AttemptKind = "original";
       let currentText = check.stepText;
@@ -185,6 +197,7 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
             if (plan.code === "OUTSIDE_ALLOWED_SITES") {
               return finish("not_checked_outside_domains", `These steps happen on ${plan.url}, which is not on the allowed sites list.`);
             }
+            if (originalSteps.length > 1 && !fixed && check.attempts.length === 0) return "split";
             return finish("couldnt_check", `Wayproof's AI could not plan this check: ${plan.why}`, "ERR-AI");
           }
           planned = { ...plan.value, expected: check.expected }; // BR-5: the check's expected result, always

@@ -273,7 +273,28 @@ describe("the loop, path by path", () => {
     const kane = scriptedKane([{ outcome: timeout }, { outcome: timeout }]);
     const run = await setup(claude, kane).go();
     expect(run.checks[0]).toMatchObject({ verdict: "couldnt_check", errorCode: "ERR-KANE-TIMEOUT" });
-    expect(kane.calls.map((c) => c.timeoutSeconds)).toEqual([240, 360]);
+    expect(kane.calls.map((c) => c.timeoutSeconds)).toEqual([360, 540]);
+  });
+
+  it("the safety gate refuses a group's plan → each step is planned on its own; the others still get checked (seen 17 Nov: Uniswap 'Approve and swap')", async () => {
+    const refused = ok({ objective: `${S} Type 0.01, select 'Review'. Assert that the review shows an 'Approve and swap' option.`, url: "https://revoke.cash" });
+    const claude = new ScriptedClaude({
+      plan: [refused, refused, planAnswer("Pick the network."), planAnswer("Type 0.01."), refused, refused],
+      judge: [judge("pass", PASS_QUOTE), judge("pass", PASS_QUOTE)],
+    });
+    const kane = scriptedKane([
+      { fixture: "revoke-lookup-pass", exit: 0, finalUrl: "https://revoke.cash/address/vitalik.eth" },
+      { fixture: "revoke-lookup-pass", exit: 0, finalUrl: "https://revoke.cash/address/vitalik.eth" },
+    ]);
+    const run = await setup(claude, kane).go([step(1, "Select the network"), step(2, "Enter the amount"), step(3, "Select Review")]);
+    expect(run.checks.map((c) => [c.id, c.stepNumbers, c.verdict])).toEqual([
+      ["check-1.1", [1], "passed"],
+      ["check-1.2", [2], "passed"],
+      ["check-1.3", [3], "couldnt_check"],
+    ]);
+    expect(run.checks[2]?.errorCode).toBe("ERR-AI");
+    expect(kane.calls).toHaveLength(2);
+    for (const c of kane.calls) expect(c.objective).not.toMatch(/Approve and swap/);
   });
 
   it("re-runs that never show a problem end as Couldn't check, never Needs a human (BR-11)", async () => {

@@ -49,6 +49,7 @@ export {
   checkGuide,
   CREDIT_MARGIN_PER_RUN,
   DEFAULT_CREDIT_BUDGET,
+  DEFAULT_KANE_TIMEOUT_SECONDS,
   MAX_KANE_RUNS_PER_CHECK,
   type CheckGuideOptions,
   type LoopDeps,

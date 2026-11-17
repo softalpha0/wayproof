@@ -6,7 +6,7 @@ import { existsSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Command, InvalidArgumentError } from "commander";
 import { execa } from "execa";
-import { AnthropicLlm, checkGuide, checkUrl, DEFAULT_CREDIT_BUDGET, RunStore, writeReport } from "@wayproof/engine";
+import { AnthropicLlm, checkGuide, checkUrl, DEFAULT_CREDIT_BUDGET, DEFAULT_KANE_TIMEOUT_SECONDS, RunStore, writeReport } from "@wayproof/engine";
 import { fileExists, formatDoctor, runDoctor } from "./doctor.ts";
 import { exitCodeFor, formatEvent, formatSummary } from "./output.ts";
 
@@ -66,7 +66,7 @@ program
   .option("--allow <sites>", "extra allowed sites, comma-separated (the guide's own site is always allowed)", "")
   .option("--budget <credits>", "Kane credit budget for this check", positiveInt, DEFAULT_CREDIT_BUDGET)
   .option("--runs-dir <folder>", "where run folders are saved", ".wayproof/runs")
-  .option("--kane-timeout <seconds>", "Kane --timeout per run", positiveInt, 240)
+  .option("--kane-timeout <seconds>", "Kane --timeout per run (Wayproof also stops Kane 60 s after it)", positiveInt, DEFAULT_KANE_TIMEOUT_SECONDS)
   .option("--max-steps <n>", "Kane --max-steps per run", positiveInt, 25)
   .action(async (guideUrl: string, opts: { allow: string; budget: number; runsDir: string; kaneTimeout: number; maxSteps: number }) => {
     loadDotEnv(process.cwd());
