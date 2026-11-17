@@ -14,7 +14,8 @@
     "safety:check": "node scripts/safety-check.ts",
     "claude:live-check": "node scripts/claude-live-check.ts",
     "claude:judge": "node scripts/claude-judge.ts",
-    "guide:fetch": "node scripts/guide-fetch.ts"
+    "guide:fetch": "node scripts/guide-fetch.ts",
+    "report:build": "node scripts/report-build.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.8.0",

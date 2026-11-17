@@ -1,0 +1,119 @@
+{
+  "id": "SAMPLE-made-up-data",
+  "source": "cli",
+  "createdAt": "2026-11-17T13:05:00.000Z",
+  "finishedAt": "2026-11-17T13:16:42.000Z",
+  "status": "finished",
+  "guideUrl": "https://revoke.cash/learn/approvals/how-to-revoke-token-approvals",
+  "guideTitle": "SAMPLE (made-up data for testing the report layout — not a real check)",
+  "allowedDomains": ["revoke.cash"],
+  "creditBudget": 300,
+  "kaneCredits": 112.4,
+  "creditsCounted": 122.4,
+  "kaneRuns": 5,
+  "claudeTokens": { "input": 21000, "output": 6400 },
+  "error": null,
+  "steps": [],
+  "checks": [
+    {
+      "id": "check-1",
+      "stepNumbers": [1, 2, 3],
+      "stepText": "Enter your address in the search bar.\nSelect the network.\nSort by \"Newest to Oldest\".",
+      "expected": "A list of token approvals is shown, newest first.",
+      "needsWallet": false,
+      "verdict": "verified_fixed",
+      "verdictWhy": "Kane followed the corrected wording and saw the expected result.",
+      "errorCode": null,
+      "correctedText": "Type your address into the search bar at the top and press Enter, then choose the network and sort by \"Newest to Oldest\".",
+      "attempts": [
+        {
+          "n": 1,
+          "kind": "original",
+          "stepText": "Enter your address in the search bar.\nSelect the network.\nSort by \"Newest to Oldest\".",
+          "objective": "Do not connect a wallet or sign anything. SAMPLE objective, attempt 1.",
+          "url": "https://revoke.cash",
+          "startedAt": "2026-11-17T13:05:10.000Z",
+          "endedAt": "2026-11-17T13:08:20.000Z",
+          "kane": {
+            "exitCode": 1,
+            "outcome": "failed",
+            "why": "Kane could not complete the objective: SAMPLE.",
+            "summary": "SAMPLE: no search button was visible; the field accepted Enter instead.",
+            "reason": "SAMPLE",
+            "reasonCode": "assertion_error.final_verification",
+            "finalState": {},
+            "credits": 23.1,
+            "testUrl": "https://test-manager.lambdatest.com/<redacted-share-link>",
+            "durationMs": 190000,
+            "steps": [{ "status": "done", "remark": "navigate: SAMPLE" }, { "status": "failed", "remark": "click: SAMPLE search button not found" }],
+            "rawLog": "kane/check-1-attempt-1.ndjson",
+            "evidence": "evidence/check-1-attempt-1.evidence"
+          },
+          "judge": { "outcome": "defect", "reason": "SAMPLE: the guide's search button does not exist; Enter works.", "quote": "no search button was visible", "model": "claude-opus-5-5" },
+          "fix": { "newStepText": "Type your address into the search bar at the top and press Enter, then choose the network and sort by \"Newest to Oldest\".", "rationale": "SAMPLE: Kane pressed Enter successfully.", "model": "claude-opus-5-5" }
+        },
+        {
+          "n": 2,
+          "kind": "after_fix",
+          "stepText": "Type your address into the search bar at the top and press Enter, then choose the network and sort by \"Newest to Oldest\".",
+          "objective": "Do not connect a wallet or sign anything. SAMPLE objective, attempt 2.",
+          "url": "https://revoke.cash",
+          "startedAt": "2026-11-17T13:08:30.000Z",
+          "endedAt": "2026-11-17T13:11:10.000Z",
+          "kane": {
+            "exitCode": 0,
+            "outcome": "passed",
+            "why": "Kane completed the objective (exit code 0, status passed).",
+            "summary": "SAMPLE: the approvals list was shown, newest first.",
+            "reason": "Objective completed",
+            "reasonCode": "success.complete",
+            "finalState": { "url": "https://revoke.cash/address/vitalik.eth" },
+            "credits": 24.0,
+            "testUrl": "https://test-manager.lambdatest.com/<redacted-share-link>",
+            "durationMs": 160000,
+            "steps": [{ "status": "done", "remark": "type: SAMPLE" }, { "status": "done", "remark": "assert: SAMPLE" }],
+            "rawLog": "kane/check-1-attempt-2.ndjson",
+            "evidence": "evidence/check-1-attempt-2.evidence"
+          },
+          "judge": { "outcome": "pass", "reason": "SAMPLE: the expected list was shown.", "quote": "the approvals list was shown", "model": "claude-opus-5-5" }
+        }
+      ]
+    },
+    {
+      "id": "check-2",
+      "stepNumbers": [4],
+      "stepText": "Click the Revoke button next to the approval.",
+      "expected": "The approval is revoked.",
+      "needsWallet": true,
+      "verdict": "not_checked_wallet",
+      "verdictWhy": "This step needs a wallet. Wayproof never connects one (BR-1).",
+      "errorCode": null,
+      "correctedText": null,
+      "attempts": []
+    },
+    {
+      "id": "check-3",
+      "stepNumbers": [5],
+      "stepText": "SAMPLE: open the explorer's approvals page.",
+      "expected": "SAMPLE",
+      "needsWallet": false,
+      "verdict": "couldnt_check",
+      "verdictWhy": "Kane was blocked by the site (blocker.captcha: Hard blocker: captcha). This is not a problem with the guide.",
+      "errorCode": "ERR-KANE",
+      "correctedText": null,
+      "attempts": []
+    },
+    {
+      "id": "check-4",
+      "stepNumbers": [6],
+      "stepText": "SAMPLE: a step that still fails after two fixes.",
+      "expected": "SAMPLE",
+      "needsWallet": false,
+      "verdict": "needs_human",
+      "verdictWhy": "Kane showed a problem: SAMPLE. The proposed fix was not proven within 3 Kane runs.",
+      "errorCode": null,
+      "correctedText": null,
+      "attempts": []
+    }
+  ]
+}
