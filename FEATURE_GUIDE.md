@@ -35,3 +35,15 @@ pnpm test
   ```bash
   pnpm --filter @wayproof/engine kane:explain fixtures/kane/etherscan-captcha-blocked.ndjson
   ```
+
+### Safety gate (BR-1, BR-2, FR-26) — approved 17 Nov 2026
+- **What it does:** decides what Kane may do and where it may go. It fails closed.
+  - **Before a run:** wallet steps never run. The objective must contain "Do not connect a wallet or sign anything." and must not ask to connect, sign, approve, confirm or send, press fund-moving buttons (Revoke, Move funds, Approve and swap, Confirm Swap, Claim, Stake…) or mention seed phrases or keys → otherwise **Not checked — wallet step** (`ERR-BOUNDARY`). The start address must be `https://`, with no user/password part, port or IP address, and on the allowed-sites list → otherwise **Not checked — outside allowed domains**. An allowed site covers its sub-sites (`uniswap.org` allows `app.uniswap.org`).
+  - **While Kane runs:** every progress line is checked; at the first sign of a wallet (MetaMask, WalletConnect, a signature request, confirming a transaction, a wallet pop-up, clicking Connect wallet) Kane is stopped at once → **stopped safely**. This cannot be switched off.
+  - **After a run:** if Kane ended on a site that isn't allowed (a redirect), the step is **Not checked — outside allowed domains**.
+- **Code:** `packages/engine/src/safety/` (`domains.ts`, `wallet.ts`, `gate.ts`); the live check is wired into `src/kane/run.ts`.
+- **Tests:** `packages/engine/test/safety-gate.test.ts` — the real objectives pass, dangerous ones and address tricks are blocked, no false alarms on the 72 real Kane progress lines, and a fake Kane that reaches a Connect Wallet button is stopped.
+- **Try it by hand (no credits):**
+  ```bash
+  pnpm --filter @wayproof/engine safety:check "Do not connect a wallet or sign anything. Find the USDC approval and click 'Revoke'." https://revoke.cash
+  ```
