@@ -210,6 +210,12 @@ importers:
         specifier: 30.0.0
         version: 30.0.0
 
+  packages/web:
+    dependencies:
+      '@wayproof/engine':
+        specifier: workspace:*
+        version: link:../engine
+
 packages:
 
   '@anthropic-ai/sdk@1.8.0':

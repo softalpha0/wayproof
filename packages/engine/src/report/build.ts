@@ -50,8 +50,8 @@ export interface BuiltReport {
   markdown: string;
 }
 
-export async function writeReport(store: RunStore, run: RunRecord): Promise<{ htmlPath: string; markdownPath: string }> {
-  const { html, markdown } = buildReport(run);
+export async function writeReport(store: RunStore, run: RunRecord, options: ReportOptions = {}): Promise<{ htmlPath: string; markdownPath: string }> {
+  const { html, markdown } = buildReport(run, options);
   const dir = store.dir(run.id);
   await mkdir(dir, { recursive: true });
   const htmlPath = join(dir, "report.html");

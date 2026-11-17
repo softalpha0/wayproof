@@ -43,10 +43,13 @@ export {
   type RunRecord,
 } from "./loop/record.ts";
 export { buildReport, escapeHtml, formatDate, writeReport, type BuiltReport, type ReportOptions } from "./report/build.ts";
+export { formatEvent, stepsLabel, verdictLine } from "./report/lines.ts";
+export { buildIndexHtml, cleanText, findPersonal, type SiteEntry } from "./site/publish.ts";
 export {
   allowedSites,
   buildChecks,
   checkGuide,
+  prepareGuide,
   CREDIT_MARGIN_PER_RUN,
   DEFAULT_CREDIT_BUDGET,
   DEFAULT_KANE_TIMEOUT_SECONDS,

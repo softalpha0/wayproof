@@ -1,0 +1,15 @@
+{
+  "name": "@wayproof/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wayproof web app (C-3 + C-4): server-rendered screens and the run queue, built on Node's own http server.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@wayproof/engine": "workspace:*"
+  }
+}

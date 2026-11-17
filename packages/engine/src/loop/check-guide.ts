@@ -41,6 +41,40 @@ export interface CheckGuideOptions {
   kaneTimeoutSeconds?: number;
   kaneMaxSteps?: number;
   source?: "cli" | "web";
+  /**
+   * Steps already extracted and shown to the person (web "Set up check", S-02). When given, the run uses
+   * exactly these steps instead of fetching and asking Claude again (same steps the person approved; no second cost).
+   */
+  prepared?: { title: string; steps: GuideStep[] };
+  /** Run id to use (the web app creates it before the run starts). */
+  runId?: string;
+}
+
+/** Fetch + extract only (web S-02 "Set up check"): no Kane, no credits. */
+export async function prepareGuide(
+  guideUrl: string,
+  allowedDomains: string[],
+  deps: { llm: Llm; fetchGuide?: LoopDeps["fetchGuide"] },
+): Promise<
+  | { ok: true; title: string; steps: GuideStep[]; allowed: string[]; suggestedDomains: string[] }
+  | { ok: false; code: string; why: string }
+> {
+  const allowed = allowedSites(guideUrl, allowedDomains);
+  const page = await (deps.fetchGuide ?? realFetchGuide)(guideUrl, { allowedDomains: allowed });
+  if (!page.ok) return { ok: false, code: page.code, why: page.why };
+  const extracted = await extractSteps(deps.llm, { guideUrl, pageText: page.text });
+  if (!extracted.ok) return { ok: false, code: extracted.code, why: extracted.why };
+  // FR-3: suggest the sites the steps happen on, so the person can choose to allow them.
+  const suggested = [
+    ...new Set(
+      extracted.value.steps
+        .map((s) => (s.url ? normalizeDomain(new URL(s.url).hostname) : undefined))
+        .filter((d): d is { ok: true; domain: string } => d?.ok === true)
+        .map((d) => d.domain)
+        .filter((d) => !allowed.includes(d)),
+    ),
+  ];
+  return { ok: true, title: extracted.value.title || page.title, steps: extracted.value.steps, allowed, suggestedDomains: suggested };
 }
 
 export type LoopEvent =
@@ -72,7 +106,7 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
 
   const allowed = allowedSites(options.guideUrl, options.allowedDomains ?? []);
   const run: RunRecord = {
-    id: newRunId(now()),
+    id: options.runId ?? newRunId(now()),
     source: options.source ?? "cli",
     createdAt: now().toISOString(),
     finishedAt: undefined,
@@ -108,19 +142,26 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
   emit({ type: "run_started", runId: run.id, guideUrl: run.guideUrl });
 
   try {
-    // 1. Fetch and extract (FR-2)
-    const page = await fetchGuide(options.guideUrl, { allowedDomains: allowed });
-    if (!page.ok) return await failRun(page.code, page.why);
+    // 1. Fetch and extract (FR-2) — unless the person already approved the steps (web S-02)
+    let guideSteps: GuideStep[];
+    if (options.prepared) {
+      run.guideTitle = options.prepared.title;
+      guideSteps = options.prepared.steps;
+    } else {
+      const page = await fetchGuide(options.guideUrl, { allowedDomains: allowed });
+      if (!page.ok) return await failRun(page.code, page.why);
 
-    const extracted = await extractSteps(deps.llm, { guideUrl: options.guideUrl, pageText: page.text });
-    if ("usage" in extracted) addTokens(extracted.usage);
-    if (!extracted.ok) return await failRun(extracted.code, extracted.why);
+      const extracted = await extractSteps(deps.llm, { guideUrl: options.guideUrl, pageText: page.text });
+      if ("usage" in extracted) addTokens(extracted.usage);
+      if (!extracted.ok) return await failRun(extracted.code, extracted.why);
+      run.guideTitle = extracted.value.title || page.title;
+      guideSteps = extracted.value.steps;
+    }
 
-    run.guideTitle = extracted.value.title || page.title;
-    run.steps = extracted.value.steps;
-    run.checks = buildChecks(extracted.value.steps, allowed, groupSize);
+    run.steps = guideSteps;
+    run.checks = buildChecks(guideSteps, allowed, groupSize);
     await save();
-    emit({ type: "steps_found", title: run.guideTitle, steps: extracted.value.steps, checks: run.checks.length });
+    emit({ type: "steps_found", title: run.guideTitle ?? run.guideUrl, steps: guideSteps, checks: run.checks.length });
 
     // 2. Each check, in guide order
     let largestRun = 0;
@@ -130,7 +171,7 @@ export async function checkGuide(options: CheckGuideOptions, deps: LoopDeps): Pr
         emit({ type: "check_done", check });
         continue;
       }
-      const steps = extracted.value.steps.filter((s) => check.stepNumbers.includes(s.n));
+      const steps = guideSteps.filter((s) => check.stepNumbers.includes(s.n));
       const outcome = await runCheck(check, steps);
       if (outcome === "split") {
         // The plan for the whole group was refused (e.g. by the safety gate because of ONE step's wording):

@@ -381,6 +381,21 @@ describe("the loop, path by path", () => {
     expect(existsSync(join(t.store.dir(run.id), ev!))).toBe(true);
   });
 
+  it("a run with steps the person already approved (web S-02) uses exactly those steps: no fetch, no second extract", async () => {
+    const claude = new ScriptedClaude({ plan: [planAnswer()], judge: [judge("pass", PASS_QUOTE)] });
+    const kane = scriptedKane([{ fixture: "revoke-lookup-pass", exit: 0, finalUrl: "https://revoke.cash/address/vitalik.eth" }]);
+    const store = new RunStore(mkdtempSync(join(tmpdir(), "wayproof-loop-")));
+    let fetched = 0;
+    const run = await checkGuide(
+      { guideUrl: "https://revoke.cash/learn/guide", prepared: { title: "Approved title", steps: [step(1, "Type your address")] }, runId: "web-run-1" },
+      { llm: claude, store, runKane: kane.impl, fetchGuide: async () => (fetched++, page()) },
+    );
+    expect(fetched).toBe(0);
+    expect(claude.count("extract")).toBe(0);
+    expect(run).toMatchObject({ id: "web-run-1", guideTitle: "Approved title", status: "finished" });
+    expect(run.checks[0]?.verdict).toBe("passed");
+  });
+
   it("tells the terminal what is happening (events)", async () => {
     const claude = new ScriptedClaude({ plan: [planAnswer()], judge: [judge("pass", PASS_QUOTE)] });
     const kane = scriptedKane([{ fixture: "revoke-lookup-pass", exit: 0, finalUrl: "https://revoke.cash/address/vitalik.eth" }]);

@@ -10,7 +10,9 @@
   "scripts": {
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "wayproof": "node packages/cli/src/main.ts"
+    "wayproof": "node packages/cli/src/main.ts",
+    "web": "node packages/web/src/main.ts",
+    "web:hash-code": "node packages/web/src/main.ts hash-code"
   },
   "devDependencies": {
     "@types/node": "26.6.6",
