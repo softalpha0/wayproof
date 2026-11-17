@@ -22,7 +22,10 @@ import {
 /** A pretend Claude: answers from a list, one per call, and remembers what it was asked. */
 class FakeLlm implements Llm {
   readonly asked: LlmRequest<unknown>[] = [];
-  constructor(private readonly answers: LlmResponse<unknown>[]) {}
+  private readonly answers: LlmResponse<unknown>[];
+  constructor(answers: LlmResponse<unknown>[]) {
+    this.answers = answers;
+  }
   async call<T>(request: LlmRequest<T>): Promise<LlmResponse<T>> {
     this.asked.push(request as LlmRequest<unknown>);
     const next = this.answers.shift();

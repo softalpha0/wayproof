@@ -33,7 +33,10 @@ const ok = (value: unknown): LlmResponse<unknown> => ({ ok: true, value, model: 
 /** A pretend Claude that answers each job from its own list, and remembers what it was asked. */
 class ScriptedClaude implements Llm {
   readonly asked: LlmRequest<unknown>[] = [];
-  constructor(private readonly script: Partial<Record<"extract" | "plan" | "judge" | "fix", LlmResponse<unknown>[]>>) {}
+  readonly script: Partial<Record<"extract" | "plan" | "judge" | "fix", LlmResponse<unknown>[]>>;
+  constructor(script: Partial<Record<"extract" | "plan" | "judge" | "fix", LlmResponse<unknown>[]>>) {
+    this.script = script;
+  }
   async call<T>(request: LlmRequest<T>): Promise<LlmResponse<T>> {
     this.asked.push(request as LlmRequest<unknown>);
     const next = this.script[request.name]?.shift();
@@ -105,7 +108,7 @@ function setup(claude: ScriptedClaude, kane: ReturnType<typeof scriptedKane>, bu
     events,
     saves,
     go: (steps: GuideStep[] = [step(1, "Type your address"), step(2, "Pick the network"), step(3, "Sort by Newest")]) => {
-      claude["script"].extract = [ok({ title: "How to revoke", steps }), ...(claude["script"].extract ?? [])];
+      claude.script.extract = [ok({ title: "How to revoke", steps }), ...(claude.script.extract ?? [])];
       return checkGuide(
         { guideUrl: "https://revoke.cash/learn/guide", ...(budget !== undefined ? { creditBudget: budget } : {}) },
         { llm: claude, store, runKane: kane.impl, fetchGuide: async () => page(), onEvent: (e) => events.push(e) },

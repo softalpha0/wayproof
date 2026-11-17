@@ -93,7 +93,10 @@ export function newRunId(now: Date): string {
 
 /** Keeps each run in its own folder: <root>/<id>/run.json, kane/, evidence/. */
 export class RunStore {
-  constructor(readonly root: string) {}
+  readonly root: string;
+  constructor(root: string) {
+    this.root = root;
+  }
 
   dir(runId: string): string {
     return join(this.root, runId);

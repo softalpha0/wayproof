@@ -1,0 +1,19 @@
+{
+  "name": "@wayproof/cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "wayproof command line: doctor and check (TDD.md C-2).",
+  "type": "module",
+  "bin": {
+    "wayproof": "./src/main.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@wayproof/engine": "workspace:*",
+    "commander": "15.1.0",
+    "execa": "10.2.1"
+  }
+}
