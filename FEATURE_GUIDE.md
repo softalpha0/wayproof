@@ -83,3 +83,16 @@ pnpm test
 - **Limits:** at most 3 Kane runs per check (BR-4). "Needs a human" only when Kane actually showed a problem (BR-11). Budget of 300 Kane credits per guide by default, counting `credits_consumed` + 2 per run (BR-10).
 - **Saved:** `run.json` after every attempt, Kane's raw output in `kane/`, and Kane's evidence packs copied into `evidence/` (BR-8).
 - **Code:** `packages/engine/src/loop/` · **Tests:** `packages/engine/test/fix-loop.test.ts`
+
+### Proof Report builder (FR-50, FR-51, FR-53, FR-54) — approved 17 Nov 2026
+- **What it does:** turns a run's `run.json` into `report.html` and `report.md`.
+  - `report.html` is one self-contained file: no scripts, nothing loaded from the internet, light and dark themes.
+  - It shows the date it was checked, the score with its formula, the verdict counts, and every check (problems first).
+  - Each check shows every Kane attempt: the objective, Kane's own words, the judge's verdict and quote, the proposed fix, and evidence links.
+  - The corrected guide shows only wording Kane proved.
+- **Safety:** all text from websites, Kane and Claude is shown as text, never run. Only web links become links, and evidence links stay inside the run folder.
+- **Code:** `packages/engine/src/report/build.ts` · **Tests:** `packages/engine/test/report.test.ts`
+- **Try it by hand (free; made-up SAMPLE data):**
+  ```bash
+  pnpm --filter @wayproof/engine report:build fixtures/runs/sample-layout-run.json --out report-preview
+  ```
