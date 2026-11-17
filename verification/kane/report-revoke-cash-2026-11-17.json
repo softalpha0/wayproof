@@ -1,0 +1,24 @@
+{
+  "checked": "2026-11-17T23:07:50.807Z",
+  "url": "https://softalpha0.github.io/wayproof/reports/revoke-cash-2026-11-17/report.html",
+  "objective": "Do not connect a wallet or sign anything. Open the page and wait for it to load. Do not click any links. Assert that the page title heading reads 'How to Revoke Token Approvals', the text 'Checked 17 Nov 2026' is shown, the score shows '100' with '/100', and at least one check is labelled 'Passed'.",
+  "kaneExitCode": 0,
+  "outcome": "passed",
+  "why": "Kane completed the objective (exit code 0, status passed).",
+  "kaneSummary": "Opened the report page and allowed it to load.\nConfirmed the report is titled “How to Revoke Token Approvals” and shows “Checked 17 Nov 2026.”\nConfirmed the summary score is 100/100 and that at least one check is marked “Passed.”\nNo wallet was connected, nothing was signed, and no links were clicked.",
+  "finalState": {
+    "url": "https://softalpha0.github.io/wayproof/reports/revoke-cash-2026-11-17/report.html",
+    "page_title": "How to Revoke Token Approvals",
+    "checked_date": "Checked 17 Nov 2026",
+    "score": "100/100",
+    "passed_check_present": "true"
+  },
+  "credits": 11.278949999999998,
+  "testUrl": "https://test-manager.lambdatest.com/projects/01M7H2V70YP7A3ASWA4HQQ8TNH/test-cases/01M7NW4QAZBFK647YZGV9CSA95/dashboard/share/US_VF1OSGPMFVWAHN6O1VHY5K3Y8CNZD94UL5F4XTCQWOGYLWU8O8Y9Y17Q7OEUJU9Z?type=summary&agentView=true&fqdn=summary-page",
+  "kaneSteps": [
+    "✔ navigate: Navigate to https://softalpha0.github.io/wayproof/reports/revoke-cash-2026-11-17",
+    "✔ wait: PRIMARY: wait for the page to load",
+    "✔ analyze: the text 'Checked 17 Nov 2026' is shown",
+    "✔ assert: the page title heading reads 'How to Revoke Token Approvals', the text 'Checked "
+  ]
+}

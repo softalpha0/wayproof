@@ -16,7 +16,8 @@
     "claude:judge": "node scripts/claude-judge.ts",
     "guide:fetch": "node scripts/guide-fetch.ts",
     "report:build": "node scripts/report-build.ts",
-    "site:build": "node scripts/site-build.ts"
+    "site:build": "node scripts/site-build.ts",
+    "self:check": "node scripts/self-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.8.0",

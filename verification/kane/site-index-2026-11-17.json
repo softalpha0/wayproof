@@ -1,0 +1,23 @@
+{
+  "checked": "2026-11-17T23:09:48.750Z",
+  "url": "https://softalpha0.github.io/wayproof/",
+  "objective": "Do not connect a wallet or sign anything. Open the page and wait for it to load. Do not click any links. Assert that the heading 'Wayproof · Proof Reports' is shown, both guide headings 'Revoke.cash' and 'Uniswap' are shown, and four report links are listed (two for each guide).",
+  "kaneExitCode": 0,
+  "outcome": "passed",
+  "why": "Kane completed the objective (exit code 0, status passed).",
+  "kaneSummary": "Opened the Wayproof Proof Reports page and waited for it to load.\nConfirmed that the “Wayproof · Proof Reports” heading, the Revoke.cash and Uniswap guide headings, and four report links were displayed.\nNo report links were opened, and no wallet was connected or transaction was signed.",
+  "finalState": {
+    "url": "https://softalpha0.github.io/wayproof/",
+    "page_heading": "Wayproof · Proof Reports",
+    "revoke_cash_guide_visible": "true",
+    "uniswap_guide_visible": "true",
+    "report_links_count": "4"
+  },
+  "credits": 16.0828625,
+  "kaneSteps": [
+    "✔ navigate: Navigate to https://softalpha0.github.io/wayproof/",
+    "✔ wait: PRIMARY: wait for the page to load",
+    "✔ analyze: four report links are listed (two for each guide)",
+    "✔ assert: the heading 'Wayproof · Proof Reports' is shown, both guide headings 'Revoke.cas"
+  ]
+}

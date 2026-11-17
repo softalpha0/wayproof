@@ -110,3 +110,14 @@ pnpm test
   pnpm wayproof check https://revoke.cash/learn/approvals/how-to-revoke-token-approvals
   ```
   (The real check uses Kane credits and Claude: about 60–160 credits and a few cents per guide.)
+
+### Published Proof Reports and Kane self-checks (F-7, FR-65) — 17–18 Nov 2026
+- **Live site:** https://softalpha0.github.io/wayproof/ — four real reports (Revoke.cash and Uniswap bridging; main and earlier runs with notes), served from the `gh-pages` branch.
+- **Public copies:** built by `pnpm --filter @wayproof/engine site:build` from `publish/site.json`. Kane's sealed evidence packs are never published (they contain Kane account details); Kane's raw output is cleaned of home folders. Every file is scanned for home paths, emails and private words (`WAYPROOF_PRIVATE_TERMS`) before anything is kept.
+- **Kane self-checks (FR-65):** Kane opened our own published pages in a real browser and confirmed what a judge needs to see. Both passed:
+  - `verification/kane/report-revoke-cash-2026-11-17.*` — title, "Checked 17 Nov 2026", score 100/100, a "Passed" check (11.3 credits)
+  - `verification/kane/site-index-2026-11-17.*` — heading, both guides, four report links (16.1 credits)
+- **Run a self-check:**
+  ```bash
+  pnpm --filter @wayproof/engine self:check <https-url> "<what the page must show>" <name>
+  ```
