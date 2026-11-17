@@ -365,6 +365,14 @@ export function allowedSites(guideUrl: string, extra: string[]): string[] {
   return out;
 }
 
+function hostOf(url: string): string | undefined {
+  try {
+    return new URL(url).hostname.toLowerCase();
+  } catch {
+    return undefined;
+  }
+}
+
 /** Wallet steps and steps on other sites get their own check (never run); the rest are grouped, up to `size`. */
 export function buildChecks(steps: GuideStep[], allowed: string[], size: number): CheckRecord[] {
   const checks: CheckRecord[] = [];
@@ -381,24 +389,38 @@ export function buildChecks(steps: GuideStep[], allowed: string[], size: number)
     correctedText: undefined,
     attempts: [],
   });
+  // Consecutive steps on the same not-allowed site become ONE "outside" check (e.g. a guide's Etherscan section).
+  let outside: { host: string; steps: GuideStep[] } | undefined;
+  const flushOutside = () => {
+    if (outside) {
+      checks.push(make(outside.steps, "not_checked_outside_domains", `These steps happen on ${outside.host}, which is not on the allowed sites list.`));
+    }
+    outside = undefined;
+  };
   const flush = () => {
     if (group.length > 0) checks.push(make(group));
     group = [];
   };
   for (const step of steps) {
+    const host = step.url ? hostOf(step.url) : undefined;
+    const notAllowed = step.url !== null && !checkUrl(step.url, allowed).ok;
+    if (!(notAllowed && !step.needsWallet && outside && host === outside.host)) flushOutside();
+
     if (step.needsWallet) {
       flush();
       checks.push(make([step], "not_checked_wallet", "This step needs a wallet. Wayproof never connects one (BR-1)."));
       continue;
     }
-    if (step.url && !checkUrl(step.url, allowed).ok) {
+    if (notAllowed) {
       flush();
-      checks.push(make([step], "not_checked_outside_domains", `This step happens on ${step.url}, which is not on the allowed sites list.`));
+      if (outside && host === outside.host) outside.steps.push(step);
+      else outside = { host: host ?? String(step.url), steps: [step] };
       continue;
     }
     group.push(step);
     if (group.length >= size) flush();
   }
   flush();
+  flushOutside();
   return checks;
 }

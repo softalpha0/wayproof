@@ -141,6 +141,30 @@ describe("grouping steps into checks", () => {
       [[7], undefined],
     ]);
   });
+
+  it("a guide's whole section on another site becomes ONE outside check, even past 3 steps (seen 17 Nov: Etherscan step 12)", () => {
+    const eth = "https://etherscan.io";
+    const checks = buildChecks(
+      [
+        step(1, "Search", { url: "https://revoke.cash" }),
+        step(2, "Click Revoke", { needsWallet: true, url: "https://revoke.cash" }),
+        step(3, "On Etherscan, open Token Approvals", { url: eth }),
+        step(4, "Enter your address", { url: eth }),
+        step(5, "Select ERC20", { url: eth }),
+        step(6, "Flip Show all approvals", { url: eth }),
+        step(7, "Click Revoke", { needsWallet: true, url: eth }),
+      ],
+      ["revoke.cash"],
+      3,
+    );
+    expect(checks.map((c) => [c.stepNumbers, c.verdict])).toEqual([
+      [[1], undefined],
+      [[2], "not_checked_wallet"],
+      [[3, 4, 5, 6], "not_checked_outside_domains"],
+      [[7], "not_checked_wallet"],
+    ]);
+    expect(checks[2]?.verdictWhy).toContain("etherscan.io");
+  });
 });
 
 // ---------------------------------------------------------------------------
