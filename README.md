@@ -72,6 +72,14 @@ Other sites a guide uses must be allowed explicitly, e.g. `--allow app.uniswap.o
 
 **Cost seen on 17 Nov 2026:** 57–138 Kane credits per guide (one Kane run is usually 15–35 credits), and a few US cents of Claude (Claude Opus 5.5).
 
+### Or use the web app (on your computer)
+
+```bash
+pnpm web
+```
+
+Then open http://localhost:3000. Paste a guide link, review the steps Wayproof found (wallet steps are marked and never run), press **Start check**, and watch Kane work live. The finished Proof Report opens in the browser. It uses the same `.env` and Kane login as the command line. One Kane run happens at a time, and each visitor gets 2 live checks per day (optional access codes for more). The web app is not hosted publicly yet; the published reports above are the live demo.
+
 ## Honest limits
 
 - **Wallet steps are never checked.** Wayproof stops where a wallet is needed, on purpose.
@@ -86,7 +94,7 @@ Other sites a guide uses must be allowed explicitly, e.g. `--allow app.uniswap.o
 pnpm test
 ```
 
-176 tests (engine + CLI), with no credits spent. Kane is replaced by a fake that replays **real recorded Kane output** (`fixtures/kane/`), and Claude by a scripted fake. Real Claude replies are recorded in `fixtures/claude/`.
+189 tests (engine, CLI and web app), with no credits spent. Kane is replaced by a fake that replays **real recorded Kane output** (`fixtures/kane/`), and Claude by a scripted fake. Real Claude replies are recorded in `fixtures/claude/`.
 
 ## Project layout
 
@@ -94,6 +102,7 @@ pnpm test
 |---|---|
 | `packages/engine` | The one "brain": Kane adapter, safety gate, Claude adapter, fetcher, fix loop, report builder |
 | `packages/cli` | `wayproof doctor` and `wayproof check` |
+| `packages/web` | The web app (`pnpm web`): set-up review, live check, Proof Report |
 | `fixtures/` | Real Kane output and real Claude replies, used as contract tests |
 | `docs/`, `TDD.md` | Requirements, design, decisions and open questions |
 | `FEATURE_GUIDE.md` | What is built and how to try each part |

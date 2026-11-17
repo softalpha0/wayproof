@@ -121,3 +121,20 @@ pnpm test
   ```bash
   pnpm --filter @wayproof/engine self:check <https-url> "<what the page must show>" <name>
   ```
+
+### Web app (FR-1, FR-3, FR-5, FR-6, FR-27) — built 18 Nov 2026, runs on your computer
+- **Start it:** `pnpm web`, then open http://localhost:3000 (it needs the same `.env` and Kane login as the CLI).
+- **Screens:**
+  - **Home:** paste a guide link (and any other sites its steps use).
+  - **Set up check:** the steps Claude found, wallet steps marked, steps on sites not yet allowed, and suggested sites. No Kane credits are spent until you press Start.
+  - **Live check:** progress streamed as Kane works, with a link to come back later.
+  - **Proof Report:** always the public copy, with no evidence packs.
+  - **How it works.**
+- **Protections:**
+  - one Kane run at a time (others wait in a queue);
+  - 2 live checks and 10 set-ups per visitor per day;
+  - optional access codes (`WAYPROOF_ACCESS_CODE_HASHES`; make a hash with `pnpm web:hash-code <code>`);
+  - form posts are only accepted from Wayproof's own pages;
+  - strict security headers.
+- **Not done:** hosting on a public server (needs a machine with Chrome, kane-cli and a Kane login — TC-4), the Stop button (FR-30).
+- **Code:** `packages/web/src/` · **Tests:** `packages/web/test/web.test.ts`

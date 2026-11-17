@@ -2,7 +2,7 @@
 // S-07 Access code (inline on S-02), S-08 Error, S-09 How it works. No page needs JavaScript except the
 // live updates on S-03 (/static/live.js). All text from websites or Claude is escaped.
 
-import { escapeHtml, type GuideStep } from "@wayproof/engine";
+import { checkUrl, escapeHtml, type GuideStep } from "@wayproof/engine";
 
 const REPO = "https://github.com/softalpha0/wayproof";
 export const PUBLISHED = "https://softalpha0.github.io/wayproof/";
@@ -74,14 +74,16 @@ ${note ? `<p class="err small">${escapeHtml(note)}</p>` : ""}
 }
 
 export function setupPage(p: { id: string; guideUrl: string; title: string; steps: GuideStep[]; allowed: string[]; suggestedDomains: string[] }, opts: { codeRequired: boolean; error?: string }): string {
-  const checkable = p.steps.filter((s) => !s.needsWallet).length;
+  const wallet = p.steps.filter((s) => s.needsWallet).length;
+  const otherSite = p.steps.filter((s) => !s.needsWallet && s.url !== null && !checkUrl(s.url, p.allowed).ok).length;
+  const checkable = p.steps.length - wallet - otherSite;
   return layout(
     "Set up check",
     `<p class="small"><a href="/">← Back</a></p>
 <h1>${escapeHtml(p.title)}</h1>
 <p class="small muted">${escapeHtml(p.guideUrl)}</p>
 ${opts.error ? `<p class="err">${escapeHtml(opts.error)}</p>` : ""}
-<div class="card"><p><b>${p.steps.length} steps found</b> · ${checkable} can be checked · ${p.steps.length - checkable} need a wallet and will not be run.</p>
+<div class="card"><p><b>${p.steps.length} steps found</b> · ${checkable} can be checked · ${wallet} need a wallet and will not be run${otherSite ? ` · ${otherSite} happen on other sites that are not allowed (add them below to check them)` : ""}.</p>
 <ol class="steps">${p.steps
       .map(
         (s) =>

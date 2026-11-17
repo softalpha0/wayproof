@@ -24,7 +24,10 @@ const SECURITY_HEADERS: Record<string, string> = {
   "content-security-policy":
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
   "x-content-type-options": "nosniff",
-  "referrer-policy": "no-referrer",
+  // "same-origin", not "no-referrer": with no-referrer the browser sends `Origin: null` on our own form
+  // posts, and the same-site check then (correctly) refuses them — found in a real browser on 18 Nov.
+  // same-origin still tells other sites nothing.
+  "referrer-policy": "same-origin",
 };
 
 function send(res: ServerResponse, status: number, body: string, type = "text/html; charset=utf-8", extra: Record<string, string> = {}): void {
@@ -107,7 +110,10 @@ export function createApp(deps: AppDeps) {
 
       // Start a check — FR-5, FR-6, BR-9
       if (req.method === "POST" && path === "/api/runs") {
-        if (!sameSite(req)) return send(res, 403, errorPage("ERR-ORIGIN"));
+        if (!sameSite(req)) {
+          console.warn(`Refused POST /api/runs: origin=${String(req.headers.origin)} referer=${req.headers.referer ? "present" : "none"} host=${String(req.headers.host)}`);
+          return send(res, 403, errorPage("ERR-ORIGIN"));
+        }
         const form = await readForm(req);
         if (!form) return send(res, 413, errorPage("ERR-URL-INVALID", "The request was too large."));
         const prepared = deps.runs.getPrepared(form.get("prepared") ?? "");

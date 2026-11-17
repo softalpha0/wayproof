@@ -82,12 +82,20 @@ describe("screens", () => {
     expect(html).toContain("Revoke.cash guide · main report");
     expect(r.headers.get("content-security-policy")).toContain("script-src 'self'");
     expect(r.headers.get("x-content-type-options")).toBe("nosniff");
+    // Must stay "same-origin": with "no-referrer" real browsers send `Origin: null` on our own form posts and
+    // the same-site check refuses every Start (found in a real browser, 18 Nov; this fake fetch can't show it).
+    expect(r.headers.get("referrer-policy")).toBe("same-origin");
+  });
+
+  it("a real browser's `Origin: null` is refused (the check never trusts a missing origin)", async () => {
+    const t = await start();
+    expect((await t.post("/api/runs", { prepared: await t.preparedId() }, "null")).status).toBe(403);
   });
 
   it("Set up check (S-02): steps shown, wallet steps marked, guide text escaped, suggested sites offered", async () => {
     const t = await start();
     const html = await (await fetch(`${t.base}/check/new?url=${encodeURIComponent("https://revoke.cash/learn/guide")}`)).text();
-    expect(html).toContain("2 steps found</b> · 1 can be checked · 1 need a wallet");
+    expect(html).toContain("2 steps found</b> · 1 can be checked · 1 need a wallet and will not be run.");
     expect(html).toContain("wallet step — not checked");
     expect(html).toContain("Type &lt;b&gt;your&lt;/b&gt; address");
     expect(html).toContain("etherscan.io");
