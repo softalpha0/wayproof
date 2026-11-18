@@ -130,7 +130,7 @@ pnpm --filter @wayproof/engine safety:check "<objective>" <url> [--allow d1,d2] 
 pnpm --filter @wayproof/engine claude:judge <file.ndjson> "<expected>"   # ask the real Claude judge about a saved Kane run (~1 US cent)
 pnpm --filter @wayproof/engine guide:fetch <url> [--allow d1,d2]   # what text Wayproof gets from a guide page (free) — first stop for ERR-FETCH / ERR-NO-STEPS
 pnpm --filter @wayproof/engine report:build <run-folder>   # rebuild report.html / report.md from run.json (free, no network)
-pnpm web                               # web app on http://localhost:3000; refused form posts are logged with their origin
+pnpm web                               # web app; open the address it prints (default http://127.0.0.1:4310, next free port if taken); refused form posts are logged with their origin
 pnpm --filter @wayproof/engine self:check <https-url> "<must show>" <name>   # Kane checks a page Wayproof made (FR-65, one Kane run)
 ```
 Isolate Kane from Wayproof: if a check fails, run the **same objective** directly with `kane-cli run` (copy it from `run.json`). If Kane fails on its own too, the problem is not in Wayproof's code.

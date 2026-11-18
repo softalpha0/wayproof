@@ -1,6 +1,6 @@
-// Starts the Wayproof web app on this computer: pnpm web  (then open http://localhost:3000)
+// Starts the Wayproof web app on this computer: pnpm web  (then open the address it prints, e.g. http://127.0.0.1:4310)
 // Settings (environment or .env):
-//   PORT (3000) · HOST (127.0.0.1 — only this computer; set 0.0.0.0 on a server)
+//   PORT (4310; moves to the next free port if taken) · HOST (127.0.0.1 — only this computer; set 0.0.0.0 on a server)
 //   ANTHROPIC_API_KEY, ANTHROPIC_MODEL (required) · Kane must be logged in on this machine
 //   WAYPROOF_CREDIT_BUDGET (300 per check)
 //   WAYPROOF_ACCESS_CODE_HASHES (comma-separated sha256 of access codes; make one with: pnpm web:hash-code <code>)
@@ -8,6 +8,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { createServer } from "node:http";
+import { connect } from "node:net";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { AnthropicLlm, checkGuide, DEFAULT_CREDIT_BUDGET, formatEvent, prepareGuide, RunStore } from "@wayproof/engine";
@@ -66,9 +67,27 @@ const app = createApp({
   published,
 });
 
-const port = num("PORT", 3000);
+/** True if some other program already answers on this port (either address form: 127.0.0.1 or ::1). */
+function portBusy(p: number): Promise<boolean> {
+  const probe = (address: string) =>
+    new Promise<boolean>((done) => {
+      const socket = connect({ host: address, port: p });
+      socket.setTimeout(500);
+      socket.once("connect", () => (socket.destroy(), done(true)));
+      socket.once("timeout", () => (socket.destroy(), done(false)));
+      socket.once("error", () => done(false));
+    });
+  return Promise.all([probe("127.0.0.1"), probe("::1")]).then(([a, b]) => a || b);
+}
+
+// 4310 by default: 3000 is used by many dev servers (on 18 Nov another project on 3000 answered
+// "localhost:3000" in the browser instead of Wayproof). If the port is taken, move to the next free one.
+const wanted = num("PORT", 4310);
+let port = wanted;
+while (await portBusy(port)) port++;
 const host = process.env["HOST"] ?? "127.0.0.1";
 createServer((req, res) => void app(req, res)).listen(port, host, () => {
-  console.log(`Wayproof web app: http://${host === "0.0.0.0" ? "localhost" : host}:${port}`);
+  if (port !== wanted) console.log(`Port ${wanted} is already used by another program, so Wayproof uses ${port}.`);
+  console.log(`Wayproof web app: http://127.0.0.1:${port}   ← open this address`);
   console.log(runs.codeRequired() ? "Live checks need an access code." : `No access codes set: ${runs.options.visitorDailyRuns} live check(s) per visitor per day.`);
 });

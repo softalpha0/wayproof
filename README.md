@@ -78,7 +78,7 @@ Other sites a guide uses must be allowed explicitly, e.g. `--allow app.uniswap.o
 pnpm web
 ```
 
-Then open http://localhost:3000. Paste a guide link, review the steps Wayproof found (wallet steps are marked and never run), press **Start check**, and watch Kane work live. The finished Proof Report opens in the browser. It uses the same `.env` and Kane login as the command line. One Kane run happens at a time, and each visitor gets 2 live checks per day (optional access codes for more). The web app is not hosted publicly yet; the published reports above are the live demo.
+Run it from the project folder, then open the address it prints (usually http://127.0.0.1:4310 — if that port is busy, Wayproof picks the next free one and says so). Paste a guide link, review the steps Wayproof found (wallet steps are marked and never run), press **Start check**, and watch Kane work live. The finished Proof Report opens in the browser. It uses the same `.env` and Kane login as the command line. One Kane run happens at a time, and each visitor gets 2 live checks per day (optional access codes for more). The web app is not hosted publicly yet; the published reports above are the live demo.
 
 ## Honest limits
 

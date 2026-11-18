@@ -123,7 +123,7 @@ pnpm test
   ```
 
 ### Web app (FR-1, FR-3, FR-5, FR-6, FR-27) — built 18 Nov 2026, runs on your computer
-- **Start it:** `pnpm web`, then open http://localhost:3000 (it needs the same `.env` and Kane login as the CLI).
+- **Start it:** from the project folder run `pnpm web`, then open the address it prints (usually http://127.0.0.1:4310; if that port is taken it moves to the next free one). It needs the same `.env` and Kane login as the CLI.
 - **Screens:**
   - **Home:** paste a guide link (and any other sites its steps use).
   - **Set up check:** the steps Claude found, wallet steps marked, steps on sites not yet allowed, and suggested sites. No Kane credits are spent until you press Start.
