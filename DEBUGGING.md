@@ -192,6 +192,7 @@ Keep one line per bug (newest first) so judges and future-me can see what happen
 
 | Date | Bug | Root cause | Fix (commit) | Verified by me |
 |---|---|---|---|---|
+| 18 Nov | `localhost:3000` opened another project (Make It Rain) instead of Wayproof | Both servers used port 3000; the browser resolved localhost to ::1, where only the other one listened | Default port 4310, auto-move to a free port, print the exact address (96ee395) | Owner to confirm |
 | 18 Nov | Web: every Start refused (ERR-ORIGIN) in a real browser | `Referrer-Policy: no-referrer` made the browser send `Origin: null`; the same-site check rightly refused it | Policy → `same-origin`, header pinned by a test (c8fcc36) | Owner to confirm |
 | 18 Nov | CLI crashed on start (ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX) | Node strips TypeScript types and cannot run constructor parameter properties; Vitest could, so tests passed | Rewrote the class; `erasableSyntaxOnly` on so typecheck catches it (07aedc6) | Yes (CLI approved) |
 | 17 Nov | Uniswap steps 5–7 all "Couldn't check" | Safety gate (correctly) refused one step's "Approve and swap" wording, which sank the whole group | Re-plan a refused group one step at a time; gate unchanged (2231ad2) | Yes (fix approved) |
